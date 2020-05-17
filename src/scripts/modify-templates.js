@@ -5,7 +5,7 @@ export default function changeTemplateFill() {
   // Disadvantage: could need more fixing on updates. At least i didn#t make it line based like Kakaroto.. :P
   let oldFun = MeasuredTemplate.prototype.refresh.toString();
   
-  let newFun = oldFun.replace(/this.template.beginTextureFill\(\{.*\}\);/s, `{
+  let newFun = oldFun.replace(/this\.template\.beginTextureFill\(\{[\s\S]*\}\)\;/, `{
       let mat = PIXI.Matrix.IDENTITY;
       // rectangle
       if (this.shape.width && this.shape.height)
