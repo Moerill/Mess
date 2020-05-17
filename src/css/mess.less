@@ -1,0 +1,155 @@
+.dark-mode {
+	#chat {
+		--highlight-color: #3a80e1;
+	}
+
+	.mess-attack-card {
+		--border-color: #444;
+		--font-sub-color: #9c9c9c;
+
+		--color-success: #18520b;
+		--color-fail: #aa0200;
+	}
+}
+
+
+#chat {
+	--highlight-color: red;
+}
+
+.mess-attack-card {
+	--border-color: #FFF;
+	--font-sub-color: #33322e;
+}
+
+
+#chat-controls {
+
+	.mess-roll-control {
+		flex: 1 100%;
+		display: flex;
+		flex-flow: row nowrap;
+		justify-content: space-between;
+		div {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: center;
+			align-items: center;
+		}
+		a {
+			opacity: 0.5;
+			border: 1px solid;
+			border-radius: 3px;
+			padding: 0 3px;
+			margin: 3px;
+
+			&.mess-selected {
+				opacity: 1;
+				border-color: var(--highlight-color);
+			}
+		}
+	}
+}
+
+#chat-log {
+
+	// Hide useless buttons :D
+	button[data-action="attack"] ~ button[data-action="damage"], button[data-action="versatile"] {
+		display: none;
+	}
+
+	.mess-attack-card {
+		display: flex;
+		flex-flow: row wrap;
+		justify-content: space-between;
+		align-items: flex-start;
+
+		button, .mess-dice-result {
+			cursor: pointer;
+			background: rgba(0, 0, 0, 0.1);
+			border: 2px groove var(--border-color);
+			height: 1.5em;
+			line-height: 1.2em;
+			width: 70%;
+			border-radius: 0.3em;
+		}
+		
+		.mess-dice-result {
+			height: auto;
+			span {
+				font-weight: bold;
+			}
+
+			.crit {
+				color: var(--color-success);
+				color: #26a30a;
+			}
+
+			.fumble {
+				color: var(--color-fail);
+				color: #c40502;
+			}
+		}
+
+		.dice-roll {
+			background: rgba(0, 0, 0, 0.1);
+			border: 2px groove var(--border-color);
+			height: 1auto;
+			line-height: 1.2em;
+			width: 70%;
+		}
+	}
+
+	.mess-attack-flavor {
+		flex: 1 100%;
+		border-top: 2px groove var(--border-color);
+		border-bottom: 2px groove var(--border-color);
+		padding: 0.2em 0;
+	}
+	.mess-chat-target {
+		flex:  40%;
+		border-right: 2px groove var(--border-color);
+
+		
+		span {
+			text-overflow: ellipsis;
+			font-size: 0.8em;
+		}
+
+		img {
+			border: none;
+			cursor: pointer;
+
+			&:hover {
+				border: 1px solid var(--highlight-color);
+			}
+		}
+	}
+	.mess-chat-rolls {
+		flex: 60%;
+		display: block;
+
+	}
+
+	.mess-chat-to-hit, .mess-chat-dmg {
+		width: 100%;
+		text-align: center;
+		display: flex;
+		flex-flow: column;
+		align-items: center;
+		justify-content: flex-start;
+	}
+
+	.mess-chat-sub-label {
+		font-size: 0.8em;
+		opacity: 0.8;
+		color: var(--font-sub-color);
+
+		position: relative;
+		top: -0.3em;
+	}
+
+	.mess-chat-roll-type {
+		margin: 0.5em 0 0 0;
+	}
+}
