@@ -47,7 +47,6 @@ async function onChatCardAction (ev) {
 		return renderAttack(ev);
 	if (ev.currentTarget.dataset.action === 'damage')
 		return renderAttack(ev);
-
 	if (ev.currentTarget.dataset.placeTemplate)
 		return renderTemplate(ev);
 
@@ -104,7 +103,7 @@ async function getDmgsData({actor, item, spellLevel = null}) {
 	const actorData = actor.data.data;
 	const itemData = item.data.data;
 	let rollData = item.getRollData();
-	console.log(itemData)
+	
 	if ( spellLevel ) rollData.item.level = spellLevel;
 
 	rollData.parts = duplicate(itemData.damage.parts);
@@ -284,7 +283,11 @@ async function renderAttack(ev) {
 	}
 
 	let targets = game.user.targets;
-	if (!targets.size)
+	// Don't roll for all targets if its an AoE, due to only rolling e.g. dmg once for all targets
+	// TODO: Maybe add target list or chat cards for making saving throws
+	// or not, since it would just spam the chatlog.. hmm
+	const areaSkill = Object.keys(CONFIG.DND5E.areaTargetTypes).includes(getProperty(item, 'data.data.target.type'));
+	if (!targets.size || areaSkill)
 		targets =  [{data: {
 				name: "someone",
 				img: ""
@@ -369,33 +372,97 @@ async function onDblClickTarget(ev) {
 	canvas.animatePan({x: pos.x, y: pos.y})
 }
 
+
+
+function isTokenInside(token) {
+	const grid = canvas.scene.data.grid,
+				templatePos = {x: this.data.x, y: this.data.y};
+	// Check for center of  each square the token uses.
+	// e.g. for large tokens all 4 squares
+	const startX = token.width >= 1 ? 0.5 : token.width / 2;
+	const startY = token.height >= 1 ? 0.5 : token.height / 2;
+	for (let x = startX; x < token.width; x++) {
+		for (let y = startY; y < token.height; y++) {
+			const currGrid = {
+				x: token.x + x * grid - templatePos.x,
+				y: token.y + y * grid - templatePos.y
+			};
+			const contains = this.shape.contains(currGrid.x, currGrid.y);
+			if (contains) return true;
+		}
+	}
+	return false;
+}
+
+function getTargets() {
+
+	const tokens = canvas.scene.getEmbeddedCollection('Token');
+	let targets = [];
+	
+	for (const token of tokens)
+		if (this.isTokenInside(token)) { targets.push(token._id); }
+	game.user.updateTokenTargets(targets);
+}
+
 async function changeAbilityTemplate() {
 	const AbilityTemplate = (await import(/* webpackIgnore: true */ '/systems/dnd5e/module/pixi/ability-template.js')).AbilityTemplate;
-
+	
 	const _originalFromItem = AbilityTemplate.fromItem;
 	AbilityTemplate.fromItem = function(item) {
 		const template = _originalFromItem.bind(this)(item);
 		
 		// generate a texture based on the items dmg type, ...
 		// Add settings to define custom templates for stuff.
-		loadTexture("spellTemplates/727102-fireball 8x8.webm").then(tex => {
-			template.texture = tex;
-			template.refresh();
-		})
-
+		let path = item.getFlag('mess', 'templateTexture');
+		if (!path && item.hasDamage) {
+			const settings = game.settings.get('mess', 'templateTexture');
+			path = settings[item.data.data.damage.parts[0][1]][template.data.t];
+		}
+		if (path)
+			loadTexture(path).then(tex => {
+				template.texture = tex;
+				template.data.texture = path;
+				template.refresh();
+			})
+		template.item = item;
 		return template;
 	}
 
-	const _originalOnDragLeftMove = AbilityTemplate.prototype._onDragLeftMove;
-	AbilityTemplate.prototype._onDragLeftMove = function(event) {
-		_originalDragLeftMove(event);
-		// select targets \o/
-	};
+	//  rather ugly, maybe find a better way at some point :shrug:
+	const origPrevListeners = AbilityTemplate.prototype.activatePreviewListeners.toString();
+	const newFun = origPrevListeners.replace(/this\.refresh\(\)\;/, 
+				// get targets
+					`this.refresh();
+					this.getTargets(this);
+				`);
 
-	// on cancel remove targets?
+	AbilityTemplate.prototype.getTargets = getTargets;
+	AbilityTemplate.prototype.isTokenInside = isTokenInside;
 
-	// add option to let regular templates target stuff?
+	AbilityTemplate.prototype.activatePreviewListeners = Function(`"use strict"; return ( function ${newFun} )`)();
+}
 
+async function itemHook(app, html) {
+	const div = document.createElement('div');
+	div.classList.add('form-group');
+	div.appendChild(document.createElement('label')).innerText = 'Template Texture';
+	const formField = div.appendChild(document.createElement('div'));
+	formField.classList.add('form-fields');
+	const inp = formField.appendChild(document.createElement('input'));
+	inp.dataset.dtype = 'String';
+	inp.type = 'text';
+	inp.name = 'flags.mess.templateTexture';
+	inp.value = app.object.getFlag('mess', 'templateTexture') || "";
+
+	formField.insertAdjacentHTML('beforeend', `
+		<button type="button" class="file-picker" data-type="imagevideo" data-target="flags.mess.templateTexture" title="Browse Files" tabindex="-1">
+			<i class="fas fa-file-import fa-fw"></i>
+		</button>
+	`);
+	const button = formField.querySelector('button');
+	button.style.flex = '0';
+	app._activateFilePicker(button);
+	html[0].querySelector('[name="data.target.units"]').closest('.form-group').after(div);
 }
 
 
@@ -448,7 +515,9 @@ export default function modifyRolling() {
 		if (btn)
 			renderAttack({currentTarget: btn});
 
-	})
+	});
+
+	Hooks.on('renderItemSheet', itemHook)
 
 	changeAbilityTemplate();
 }

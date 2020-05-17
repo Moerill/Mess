@@ -1,0 +1,27 @@
+<form style="display: flex; flex-flow: column nowrap;overflow: hidden;">
+<div>
+	Configure default textures for specific damage type and template type combinations as fallback if no texture for the ability is defined. <br>
+	The dmg type of the first damage type for an ability will be chosen.
+</div>
+<div style="flex: 1; overflow: scroll; border: 1px solid #666;">
+{{#each dmgTypes as |dmgType dmgKey|}}
+	<h2>{{dmgType}}</h2>
+	{{#each @root.templateTypes as |template key| }}
+		<div class="form-group">
+			<label for="texture">{{template}}</label>
+			<div class="form-fields">
+						<button type="button" class="file-picker" data-type="imagevideo" data-target="{{dmgKey}}.{{key}}" title="Browse Files" tabindex="-1">
+							<i class="fas fa-file-import fa-fw"></i>
+					</button>
+					<input class="imagevideo" type="text" name="{{dmgKey}}.{{key}}" placeholder="path/image.png" value="{{lookup (lookup @root.object dmgKey) key }}"/>
+			</div>
+		</div>
+	{{/each}}
+{{/each}}
+</div>
+<div class="form-group">
+	<button type="submit" name="submit">
+			<i class="fas fa-save"></i> Save Configuration
+	</button>
+</div>
+</form>

@@ -80,7 +80,7 @@ Hooks.on('ready', async function() {
 });
 
 Hooks.on('init', async function() {
-	registerSettings();
+	(await import('./settings.js')).MessSettings.init();
 	if (game.settings.get('mess', 'modify-templates'))
 		(await import('./modify-templates.js')).default();
 	if (game.settings.get('mess', 'modify-rolling'))
