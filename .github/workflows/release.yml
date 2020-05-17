@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Zip files
         run: |
-           zip -r token-mold compendia css scripts templates LICENSE module.json 
+           zip -r mess compendia css scripts templates LICENSE module.json 
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -33,6 +33,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: ./token-mold.zip
-          asset_name: token-mold.zip
+          asset_path: ./mess.zip
+          asset_name: mess.zip
           asset_content_type: application/zip
