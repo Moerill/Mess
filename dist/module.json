@@ -9,6 +9,13 @@
 	"packs": [],
 	"esmodules": ["scripts/index.js"],
 	"styles": ["css/mess.css"],
+	"languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+	],
 	"manifest": "https://raw.githubusercontent.com/Moerill/mess/master/src/module.json",
 	"url": "https://github.com/Moerill/mess",
 	"download": "https://github.com/Moerill/mess/releases/download/v0.1.5/mess.zip"

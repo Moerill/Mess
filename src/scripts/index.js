@@ -75,8 +75,8 @@ Hooks.on('ready', async function() {
 	if (game.settings.get('mess', 'add-scrolling'))
 		(await import('./add-scrolling.js')).default();
 	
-	const actor = (await fromUuid('Actor.xV3LUAg05Pz5MFTS'));
-	actor.sheet.render(true);
+	// const actor = (await fromUuid('Actor.xV3LUAg05Pz5MFTS'));
+	// actor.sheet.render(true);
 });
 
 Hooks.on('init', async function() {

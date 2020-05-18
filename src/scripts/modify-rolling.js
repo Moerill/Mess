@@ -134,6 +134,7 @@ async function getDmgsData({actor, item, spellLevel = null}) {
 
 	for (let part of rollData.parts) {
 		let roll = new Roll(part[0], rollData);
+		console.log(part[1])
 		part.push(roll.formula);
 	}
 

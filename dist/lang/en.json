@@ -1,0 +1,6 @@
+{
+	"MESS.target": "Target",
+	"MESS.cardTargetTooltip": "Double click to pan to token, if its scene is currently viewed.",
+	"MESS.toHit": "To Hit",
+	"MESS.damage": "Damage"
+}
