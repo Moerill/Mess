@@ -9,13 +9,13 @@
 	<div class='mess-chat-rolls'>
 		{{#if toHit}}
 		<div class='mess-chat-to-hit'>
-			<label class='mess-chat-roll-type'>To Hit</label>
+			<label class='mess-chat-roll-type'>{{localize 'MESS.toHit'}}</label>
 			<button class='mess-button-to-hit' title="{{toHit.terms}} = {{toHit.formula}} = {{toHit.totalModifier}}"><i class="fas fa-dice-d20"></i>{{toHit.totalModifier}}</button>
 		</div>
 		{{/if}}
 		{{#if dmgs}}
 		<div class='mess-chat-dmg'>
-			<label class='mess-chat-roll-type'>Damage</label>
+			<label class='mess-chat-roll-type'>{{localize 'MESS.damage'}}</label>
 			{{#each dmgs.parts}}
 				<button class='mess-button-dmg' title="{{this.[0]}} = {{this.[2]}}" data-terms="{{this.[0]}}" data-formula="{{this.[2]}}" data-dmg-type="{{this.[1]}}"><i class="fas fa-dice"></i> {{this.[2]}}</button>
 				<label class='mess-chat-sub-label'>{{this.[1]}}</label>

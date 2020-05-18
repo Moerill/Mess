@@ -1,0 +1,124 @@
+.dark-mode #chat {
+  --highlight-color: #3a80e1;
+}
+.dark-mode .mess-attack-card {
+  --border-color: #444;
+  --font-sub-color: #9c9c9c;
+  --color-success: #18520b;
+  --color-fail: #aa0200;
+}
+#chat {
+  --highlight-color: red;
+}
+.mess-attack-card {
+  --border-color: #FFF;
+  --font-sub-color: #33322e;
+}
+#chat-controls .mess-roll-control {
+  flex: 1 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+#chat-controls .mess-roll-control div {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+#chat-controls .mess-roll-control a {
+  opacity: 0.5;
+  border: 1px solid;
+  border-radius: 3px;
+  padding: 0 3px;
+  margin: 3px;
+}
+#chat-controls .mess-roll-control a.mess-selected {
+  opacity: 1;
+  border-color: var(--highlight-color);
+}
+#chat-log button[data-action="attack"] ~ button[data-action="damage"],
+#chat-log button[data-action="versatile"] {
+  display: none;
+}
+#chat-log .mess-attack-card {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+#chat-log .mess-attack-card button,
+#chat-log .mess-attack-card .mess-dice-result {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.1);
+  border: 2px groove var(--border-color);
+  height: 1.5em;
+  line-height: 1.2em;
+  width: 70%;
+  border-radius: 0.3em;
+}
+#chat-log .mess-attack-card .mess-dice-result {
+  height: auto;
+}
+#chat-log .mess-attack-card .mess-dice-result span {
+  font-weight: bold;
+}
+#chat-log .mess-attack-card .mess-dice-result .crit {
+  color: var(--color-success);
+  color: #26a30a;
+}
+#chat-log .mess-attack-card .mess-dice-result .fumble {
+  color: var(--color-fail);
+  color: #c40502;
+}
+#chat-log .mess-attack-card .dice-roll {
+  background: rgba(0, 0, 0, 0.1);
+  border: 2px groove var(--border-color);
+  height: 1auto;
+  line-height: 1.2em;
+  width: 70%;
+}
+#chat-log .mess-attack-flavor {
+  flex: 1 100%;
+  border-top: 2px groove var(--border-color);
+  border-bottom: 2px groove var(--border-color);
+  padding: 0.2em 0;
+}
+#chat-log .mess-chat-target {
+  flex: 40%;
+  border-right: 2px groove var(--border-color);
+}
+#chat-log .mess-chat-target span {
+  text-overflow: ellipsis;
+  font-size: 0.8em;
+}
+#chat-log .mess-chat-target img {
+  border: none;
+  cursor: pointer;
+}
+#chat-log .mess-chat-target img:hover {
+  border: 1px solid var(--highlight-color);
+}
+#chat-log .mess-chat-rolls {
+  flex: 60%;
+  display: block;
+}
+#chat-log .mess-chat-to-hit,
+#chat-log .mess-chat-dmg {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+#chat-log .mess-chat-sub-label {
+  font-size: 0.8em;
+  opacity: 0.8;
+  color: var(--font-sub-color);
+  position: relative;
+  top: -0.3em;
+}
+#chat-log .mess-chat-roll-type {
+  margin: 0.5em 0 0 0;
+}

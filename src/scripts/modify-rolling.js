@@ -134,7 +134,11 @@ async function getDmgsData({actor, item, spellLevel = null}) {
 
 	for (let part of rollData.parts) {
 		let roll = new Roll(part[0], rollData);
-		console.log(part[1])
+		const dmgType = CONFIG.DND5E.damageTypes[part[1]];
+		if (dmgType)
+			part[1] = game.i18n.localize('DND5E.Damage' + CONFIG.DND5E.damageTypes[part[1]]);
+		else if (part[1] === 'versatile')
+			part[1] = game.i18n.localize('DND5E.Versatile');
 		part.push(roll.formula);
 	}
 

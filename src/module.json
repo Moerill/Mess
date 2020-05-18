@@ -2,7 +2,7 @@
 	"name": "mess",
 	"title": "Mess - Moerills enhancing super-suit(e)",
 	"description": "This module is a mix of QoL changes, enhancements for my game and stuff i play around with. For a complete feature list check the URL down below.",
-	"version": "0.1.5",
+	"version": "0.2.0",
 	"minimumCoreVersion": "0.5.7",
 	"compatibleCoreVersion": "0.5.7",
 	"author": "Moerill",
@@ -10,13 +10,13 @@
 	"esmodules": ["scripts/index.js"],
 	"styles": ["css/mess.css"],
 	"languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    }
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		}
 	],
 	"manifest": "https://raw.githubusercontent.com/Moerill/mess/master/src/module.json",
 	"url": "https://github.com/Moerill/mess",
-	"download": "https://github.com/Moerill/mess/releases/download/v0.1.5/mess.zip"
+	"download": "https://github.com/Moerill/mess/releases/download/v0.2.0/mess.zip"
 }
