@@ -27,7 +27,7 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 
 
 ## Module compatiblity
-This module is not designed to be compatible with most other modules, so incompatibilities may arise if some features are enabled. And i do not really care about compatibility with other modules for this Mess!  
+This module is not designed to be compatible with most other modules, so incompatibilities may arise if some features are enabled. And i do not really care about compatibility with other modules for this Mess. (Also there are to many to keep track of now, few parts of this mess are pretty deep changes and would be to much work to make compatible.)  
 So be warned and carefully test the features without other modules enabled before submitting a bug report here!  
 
 ## Bug Reporting
