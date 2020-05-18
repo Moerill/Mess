@@ -405,7 +405,9 @@ function getTargets() {
 }
 
 async function changeAbilityTemplate() {
-	const AbilityTemplate = (await import(/* webpackIgnore: true */ '/systems/dnd5e/module/pixi/ability-template.js')).AbilityTemplate;
+	const importedJS = (await import(/* webpackIgnore: true */ '/systems/dnd5e/module/pixi/ability-template.js'))
+	const AbilityTemplate = importedJS.default || importedJS.AbilityTemplate;
+
 	
 	const _originalFromItem = AbilityTemplate.fromItem;
 	AbilityTemplate.fromItem = function(item) {

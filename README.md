@@ -7,6 +7,7 @@ Just kidding! This module does not serve a more specific purpose, like most of m
 * quality of life improvements,
 * things which i just found kinda interesting to play around with, but not worth their own module,
 * proof of concepts.  
+
 Settings allow to granularly dis-/enable features to your liking. *Important*: If you change the settings you need to refresh the page for all connected clients for the changes to take effect! (This may change in a future update, but currently it only works this way. Shouldn't be to bad, since you'd enable most features once and not change them mid session.)
 
 ## Current Feature List
