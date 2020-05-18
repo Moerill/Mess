@@ -23,6 +23,8 @@
 }
 
 
+
+
 #chat-controls {
 
 	.mess-roll-control {
@@ -36,17 +38,92 @@
 			justify-content: center;
 			align-items: center;
 		}
+
+		.mess-adv-selector {
+			--color-good: rgb(53, 233, 53);
+			--color-bad: red;
+			flex: 0 50%;
+			a {
+				display: none;
+
+				width: 50px;
+				justify-content: center;
+				flex-flow: row nowrap;
+				align-items: center;
+				opacity: 0.8;
+				i {
+					font-size: 1.2em;
+					transform: rotate(45deg);
+				}
+				&.mess-selected {
+					display: flex;
+				}
+			}
+
+			.mess-adv-btn {
+				i:nth-child(1) {
+					color: var(--color-good);
+					font-size: 1.2em;
+					transform: rotate(45deg);
+					z-index: 1;
+					position: relative;
+					left: 0.1em;
+				}
+				i:nth-child(2) {
+					position: relative;
+					left: -0.1em;
+					font-size: 1.0em;
+					filter: brightness(0.6);
+					transform: rotate(30deg);
+					z-index: 0;
+					color: var(--color-bad);
+				}
+			}
+
+			.mess-dis-btn {
+				i:nth-child(1) {
+					font-size: 1.0em;
+					filter: brightness(0.6);
+					transform: rotate(45deg);
+					z-index: 0;
+					color: var(--color-good);
+					position: relative;
+					left: 0.1em;
+				}
+				i:nth-child(2) {
+					color: var(--color-bad);
+					font-size: 1.2em;
+					transform: rotate(30deg);
+					z-index: 1;
+					position: relative;
+					left: -0.1em;
+				}
+			}
+
+			input {
+				color: #ccc;
+
+				&::placeholder {
+					color: #ccca;
+				} 
+			}
+		}
+
+		.mess-autoroll-selector {
+			a {
+				opacity: 0.5;
+				border: 1px solid;
+				border-radius: 3px;
+
+				&.mess-selected {
+					opacity: 1;
+					border-color: var(--highlight-color);
+				}
+			}
+		}
 		a {
-			opacity: 0.5;
-			border: 1px solid;
-			border-radius: 3px;
 			padding: 0 3px;
 			margin: 3px;
-
-			&.mess-selected {
-				opacity: 1;
-				border-color: var(--highlight-color);
-			}
 		}
 	}
 }

@@ -27,7 +27,8 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 
 
 ## Module compatiblity
-This module is not designed to be compatible with most other modules, so incompatibilities may arise if some features are enabled. So be warned and carefully test the features without other modules enabled before submitting a bug report here!  
+This module is not designed to be compatible with most other modules, so incompatibilities may arise if some features are enabled. And i do not really care about compatibility with other modules for this Mess!  
+So be warned and carefully test the features without other modules enabled before submitting a bug report here!  
 
 ## Bug Reporting
 Go to the [GitHub's issue board](https://github.com/Moerill/Mess/issues) and check if the Bug is already reported. If not first test with all other modules disabled! If the bug persists create a new issue, with at least the following information:

@@ -26,16 +26,78 @@
   justify-content: center;
   align-items: center;
 }
-#chat-controls .mess-roll-control a {
+#chat-controls .mess-roll-control .mess-adv-selector {
+  --color-good: #35e935;
+  --color-bad: red;
+  flex: 0 50%;
+}
+#chat-controls .mess-roll-control .mess-adv-selector a {
+  display: none;
+  width: 50px;
+  justify-content: center;
+  flex-flow: row nowrap;
+  align-items: center;
+  opacity: 0.8;
+}
+#chat-controls .mess-roll-control .mess-adv-selector a i {
+  font-size: 1.2em;
+  transform: rotate(45deg);
+}
+#chat-controls .mess-roll-control .mess-adv-selector a.mess-selected {
+  display: flex;
+}
+#chat-controls .mess-roll-control .mess-adv-selector .mess-adv-btn i:nth-child(1) {
+  color: var(--color-good);
+  font-size: 1.2em;
+  transform: rotate(45deg);
+  z-index: 1;
+  position: relative;
+  left: 0.1em;
+}
+#chat-controls .mess-roll-control .mess-adv-selector .mess-adv-btn i:nth-child(2) {
+  position: relative;
+  left: -0.1em;
+  font-size: 1em;
+  filter: brightness(0.6);
+  transform: rotate(30deg);
+  z-index: 0;
+  color: var(--color-bad);
+}
+#chat-controls .mess-roll-control .mess-adv-selector .mess-dis-btn i:nth-child(1) {
+  font-size: 1em;
+  filter: brightness(0.6);
+  transform: rotate(45deg);
+  z-index: 0;
+  color: var(--color-good);
+  position: relative;
+  left: 0.1em;
+}
+#chat-controls .mess-roll-control .mess-adv-selector .mess-dis-btn i:nth-child(2) {
+  color: var(--color-bad);
+  font-size: 1.2em;
+  transform: rotate(30deg);
+  z-index: 1;
+  position: relative;
+  left: -0.1em;
+}
+#chat-controls .mess-roll-control .mess-adv-selector input {
+  color: #ccc;
+}
+#chat-controls .mess-roll-control .mess-adv-selector input::placeholder {
+  color: #ccca;
+}
+#chat-controls .mess-roll-control .mess-autoroll-selector a {
   opacity: 0.5;
   border: 1px solid;
   border-radius: 3px;
-  padding: 0 3px;
-  margin: 3px;
 }
-#chat-controls .mess-roll-control a.mess-selected {
+#chat-controls .mess-roll-control .mess-autoroll-selector a.mess-selected {
   opacity: 1;
   border-color: var(--highlight-color);
+}
+#chat-controls .mess-roll-control a {
+  padding: 0 3px;
+  margin: 3px;
 }
 #chat-log button[data-action="attack"] ~ button[data-action="damage"],
 #chat-log button[data-action="versatile"] {

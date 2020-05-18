@@ -1,0 +1,11 @@
+{
+	"MESS.target": "対象",
+	"MESS.cardTargetTooltip": "ダブルクリックで現在のコマに注目します。",
+	"MESS.toHit": "ヒット",
+	"MESS.damage": "ダメージ",
+	"MESS.rollConfigAdvantage": "有利",
+	"MESS.rollConfigNormal": "通常",
+	"MESS.rollConfigDisadvantage": "不利",
+	"MESS.rollConfigHit": "ヒット",
+	"MESS.rollConfigDmg": "ダメージ"
+}

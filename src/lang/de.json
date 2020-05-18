@@ -1,0 +1,11 @@
+{
+	"MESS.target": "Ziel",
+	"MESS.cardTargetTooltip": "Doppelklick um die Kamera auf das Token zu zentrieren, falls momentan die korrekte Szene betrachtet wird.",
+	"MESS.toHit": "Treffer",
+	"MESS.damage": "Schaden",
+	"MESS.rollConfigAdvantage": "Adv.",
+	"MESS.rollConfigNormal": "Normal",
+	"MESS.rollConfigDisadvantage": "Dis.",
+	"MESS.rollConfigHit": "Treffer",
+	"MESS.rollConfigDmg": "Schaden"
+}

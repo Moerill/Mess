@@ -18,12 +18,18 @@ async function createControls() {
 			ev.preventDefault();
 			ev.stopPropagation();
 
-			if (ev.currentTarget.classList.contains('mess-selected')) return false;
+			// if (ev.currentTarget.classList.contains('mess-selected')) return false;
 
-			ev.currentTarget.parentNode.querySelector('.mess-selected').classList.remove('mess-selected');
-			ev.currentTarget.classList.add('mess-selected');
+			// ev.currentTarget.parentNode.querySelector('.mess-selected').classList.remove('mess-selected');
+			// ev.currentTarget.classList.add('mess-selected');
 
-			game.settings.set('mess', `${game.userId}.adv-selector`, ev.currentTarget.name);
+			// game.settings.set('mess', `${game.userId}.adv-selector`, ev.currentTarget.name);
+			const arr = Array.from(ev.currentTarget.parentNode.querySelectorAll('a'));
+			const currIdx = arr.findIndex(e => e.classList.contains('mess-selected'));
+			arr[currIdx].classList.remove('mess-selected');
+			const newSelected = arr[(currIdx + 1) % arr.length];
+			newSelected.classList.add('mess-selected');
+			game.settings.set('mess', `${game.userId}.adv-selector`, newSelected.name);
 		});
 	});
 	div.querySelectorAll('.mess-autoroll-selector a') .forEach(e => {
