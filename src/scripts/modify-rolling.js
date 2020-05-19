@@ -673,7 +673,7 @@ async function actorSheetHook(app, html, data) {
     }
 
     // Reliable Talent applies to any skill check we have full or better proficiency in
-    const reliableTalent = (skl.value >= 1 && this.getFlag("dnd5e", "reliableTalent"));
+    const reliableTalent = (skl.value >= 1 && app.object.getFlag("dnd5e", "reliableTalent"));
 		data.parts =  parts;
 		data.title = game.i18n.format("DND5E.SkillPromptTitle", {skill: CONFIG.DND5E.skills[skillId]});
 
