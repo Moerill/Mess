@@ -1,3 +1,11 @@
+function getAdvantageSettings() {
+	return game.settings.get('mess', `${game.userId}.adv-selector`);
+}
+
+function getD20Modifier() {
+	return document.getElementById('mess-roll-mod').value;
+}
+
 async function createControls() {
 	const div = document.createElement('div');
 	div.classList.add('mess-roll-control');
@@ -43,7 +51,7 @@ async function createControls() {
 			data[ev.currentTarget.name] = ev.currentTarget.classList.contains('mess-selected');
 			game.settings.set('mess', `${game.userId}.autoroll-selector`, data);
 		})
-	})
+	});
 	return div;
 }
 
@@ -73,12 +81,6 @@ async function getToHitData({actor, item}) {
 		parts.push("@prof");
 	}
 	rollData.parts = parts;
-	// Attack Bonus
-	const actorBonus = actorData.bonuses[itemData.actionType] || {};
-	if ( itemData.attackBonus || actorBonus.attack ) {
-		parts.push("@atk");
-		rollData["atk"] = [itemData.attackBonus, actorBonus.attack].filterJoin(" + ");
-	}
 
 	// Expanded weapon critical threshold
 	if (( item.data.type === "weapon" ) && flags.weaponCriticalThreshold) {
@@ -94,11 +96,31 @@ async function getToHitData({actor, item}) {
 
 	// Apply Halfling Lucky
 	if ( flags.halflingLucky ) rollData.halflingLucky = true;
-	
-	// rollData.formula = rollData.parts.join(" + ");
-	const roll = new Roll(rollData.parts.join('+'), rollData);
+
+	// Attack Bonus
+	const actorBonus = actorData.bonuses[itemData.actionType] || {};
+	if ( itemData.attackBonus || actorBonus.attack ) {
+		// parts.push("@atk");
+		rollData["atk"] = [itemData.attackBonus, actorBonus.attack].filterJoin(" + ");
+		if (!isNaN(Number(rollData["atk"]))) {
+			parts.push("@atk");
+		}
+	}
+
+	let roll = new Roll(rollData.parts.join('+'), rollData);
 	rollData.totalModifier = roll._safeEval(roll.formula);
 	rollData.totalModifier = rollData.totalModifier >= 0 ? '+' + rollData.totalModifier : rollData.totalModifier;
+	if (rollData["atk"] && !roll._formula.includes('@atk')) {
+		rollData.parts.push("@atk");
+		roll = new Roll(rollData.parts.join('+'), rollData);
+		rollData.totalModifier += `+${rollData["atk"]}`;
+	}
+	const situationalModifier = document.getElementById('mess-roll-mod');
+	if (situationalModifier.value) {
+		rollData.parts.push(situationalModifier.value);
+		roll = new Roll(rollData.parts.join('+'), rollData);
+		rollData.totalModifier += `+${situationalModifier.value}`;
+	}
 	rollData.formula = roll.formula;
 	rollData.terms = roll._formula;
 	return rollData;
@@ -157,7 +179,15 @@ async function rollHit(ev) {
 	button.disabled = true;
 	const card = button.closest(".chat-card");
 	const messageId = card.closest(".message").dataset.messageId;
-
+	// Check if user owns chat message, else return
+	if (messageId) {
+		const message = game.messages.get(messageId);
+		
+		if (!message.owner) {
+			ui.notifications.error('You do not own the permissions to make that rolL!');
+			return;
+		}
+	}
 	// Get the Actor from a synthetic Token
 	const actor = CONFIG.Item.entityClass._getChatCardActor(card);
 	if (!actor.owner) return false;
@@ -169,7 +199,7 @@ async function rollHit(ev) {
 	}
 
 	let rollData = await getToHitData({actor, item});
-	let adv = game.settings.get('mess', `${game.userId}.adv-selector`);
+	let adv = getAdvantageSettings();
 	// Determine the d20 roll and modifiers
 	let nd = 1;
 	let mods = rollData.halflingLucky ? "r=1" : "";
@@ -188,7 +218,7 @@ async function rollHit(ev) {
 
 	// Include the d20 roll
 	rollData.parts.unshift(`${nd}d20${mods}`);
-
+	
 	let r = new Roll(rollData.parts.join('+'), rollData);
 	r.roll();
 	let div = document.createElement('div');
@@ -231,6 +261,16 @@ async function rollDmg(ev) {
 	button.disabled = true;
 	const card = button.closest(".chat-card");
 	const messageId = card.closest(".message").dataset.messageId;
+
+	// Check if user owns chat message, else return
+	if (messageId) {
+		const message = game.messages.get(messageId);
+		
+		if (!message.owner) {
+			ui.notifications.error('You do not own the permissions to make that rolL!');
+			return;
+		}
+	}
 	const formula = button.dataset.formula;
 
 	let r = new Roll(formula);
@@ -312,23 +352,30 @@ async function renderAttack(ev) {
 		actor, item,
 		toHit: await getToHitData({actor, item}),
 		dmgs: await getDmgsData({actor, item, spellLevel}),
-		sceneId: canvas.scene.id
+		sceneId: canvas.scene.id,
+		user: game.user.id
 	}
 
 	const autoroll = game.settings.get('mess', `${game.userId}.autoroll-selector`);
 
+	let rollMode = game.settings.get("core", "rollMode");
 	for (const target of targets) {
+		const allowed = await item._handleResourceConsumption({isCard: false, isAttack: true});
 		const attackTemplateData = {
 									...attackData, 
 									target: target.data,
-									flavor: item.data.data.chatFlavor.replace(/\[target\.name\]/g, target.data.name)
+									flavor: item.data.data.chatFlavor.replace(/\[target\.name\]/g, target.data.name),
+									allowed
 								};
 		let html = await renderTemplate(template, attackTemplateData);
+
+		
 
 		if (autoroll.hit || autoroll.dmg) 
 			html = await autoRoll(autoroll, html);
 
-		ChatMessage.create({
+
+		let chatData = {
       user: game.user._id,
       type: CONST.CHAT_MESSAGE_TYPES.OTHER,
       content: html,
@@ -337,7 +384,11 @@ async function renderAttack(ev) {
         token: item.actor.token,
         alias: item.actor.name
 			}
-		});
+		};
+		if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
+		if ( rollMode === "blindroll" ) chatData["blind"] = true;
+	
+		ChatMessage.create(chatData);
 	}
 
 	button.disabled = false;
@@ -406,7 +457,6 @@ function isTokenInside(token) {
 }
 
 function getTargets() {
-
 	const tokens = canvas.scene.getEmbeddedCollection('Token');
 	let targets = [];
 	
@@ -428,8 +478,9 @@ async function changeAbilityTemplate() {
 		// Add settings to define custom templates for stuff.
 		let path = item.getFlag('mess', 'templateTexture');
 		if (!path && item.hasDamage) {
-			const settings = game.settings.get('mess', 'templateTexture');
-			path = settings[item.data.data.damage.parts[0][1]][template.data.t];
+			const settings = game.settings.get('mess', 'templateTexture') || {};
+			path = settings[item.data.data.damage.parts[0][1]] || {};
+			path = path[template.data.t];
 		}
 		if (path)
 			loadTexture(path).then(tex => {
@@ -478,8 +529,161 @@ async function itemHook(app, html) {
 	html[0].querySelector('[name="data.target.units"]').closest('.form-group').after(div);
 }
 
+async function rollD20(data) {
+	// Get the Actor from a synthetic Token
+	// const actor = this;
 
-export default function modifyRolling() {
+	let adv = getAdvantageSettings();
+	// Determine the d20 roll and modifiers
+	let nd = 1;
+	let mods = data.halflingLucky ? "r=1" : "";
+
+	// Handle advantage
+	if ( adv === "advantage" ) {
+		nd = data.elvenAccuracy ? 3 : 2;
+		mods += "kh";
+		data.title += ` (${game.i18n.localize("DND5E.Advantage")})`;
+	}
+
+	// Handle disadvantage
+	else if ( adv === "disadvantage" ) {
+		nd = 2;
+		mods += "kl";
+		data.title += ` (${game.i18n.localize("DND5E.Disadvantage")})`;
+	}
+
+	// Include the d20 roll
+	let diceFormula = `${nd}d20${mods}`;
+	if (data.reliableTalent) diceFormula = `{${nd}d20${mods},10}kh`;
+	data.parts.unshift(diceFormula);
+
+	const d20Mod = getD20Modifier();
+	if (d20Mod)
+		data.parts.push(d20Mod);
+	
+	let r = new Roll(data.parts.join('+'), data);
+	r.roll();
+	const d20 = r.parts[0].total;
+	let templateData = {...data, 
+		tooltip: await r.getTooltip(),
+		roll: r,
+		crit:  d20 >= 20,
+		fumble: d20 <= 1
+	}
+
+	const template = await renderTemplate('modules/mess/templates/roll-card.html', templateData);
+
+	let chatData = {
+		user: game.user._id,
+		type: CONST.CHAT_MESSAGE_TYPES.OTHER,
+		content: template,
+		speaker: {
+			actor: this,
+			alias: this.name
+		}
+	};
+	let rollMode = game.settings.get("core", "rollMode");
+	if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
+	if ( rollMode === "blindroll" ) chatData["blind"] = true;
+
+	ChatMessage.create(chatData);
+}
+
+async function actorSheetHook(app, html, data) {
+	// TODO: Redo this with proper methods... this currently ignores the cool new modifier field
+	// maybe just ignore replace the abilitysave etc functions
+	const abilityMods = html[0].querySelectorAll('.ability-mod, .ability-name');
+	$(abilityMods).off(); // find smth better here!
+	abilityMods.forEach(e => e.addEventListener('click', function(ev) {
+		ev.stopPropagation();
+		ev.preventDefault();
+
+		const abilityId = ev.currentTarget.closest('.ability').dataset.ability;
+		const label = CONFIG.DND5E.abilities[abilityId];
+    const abl = app.object.data.data.abilities[abilityId];
+    const parts = ["@mod"];
+    const data = {mod: abl.mod};
+    const feats = app.object.data.flags.dnd5e || {};
+
+    // Add feat-related proficiency bonuses
+    if ( feats.remarkableAthlete && DND5E.characterFlags.remarkableAthlete.abilities.includes(abilityId) ) {
+      parts.push("@proficiency");
+      data.proficiency = Math.ceil(0.5 * this.data.data.attributes.prof);
+    }
+    else if ( feats.jackOfAllTrades ) {
+      parts.push("@proficiency");
+      data.proficiency = Math.floor(0.5 * this.data.data.attributes.prof);
+    }
+
+    // Add global actor bonus
+    let actorBonus = getProperty(app.object.data.data.bonuses, "abilities.check");
+    if ( !!actorBonus ) {
+      parts.push("@checkBonus");
+      data.checkBonus = actorBonus;
+		}
+		
+		data.parts = parts;
+
+		data.title = game.i18n.format("DND5E.AbilityPromptTitle", {ability: label});
+
+		rollD20.bind(app.object)(data);
+		return true;
+	}));
+	const saveMods = html[0].querySelectorAll('.ability-save');
+	saveMods.forEach(e => e.addEventListener('click', function(ev) {
+		ev.stopPropagation();
+		ev.preventDefault();
+		const abilityId = ev.currentTarget.closest('.ability').dataset.ability;
+		const label = CONFIG.DND5E.abilities[abilityId];
+    const abl = app.object.data.data.abilities[abilityId];
+    const parts = ["@mod"];
+    const data = {mod: abl.mod};
+
+    // Include proficiency bonus
+    if ( abl.prof > 0 ) {
+      parts.push("@prof");
+      data.prof = abl.prof;
+    }
+
+    // Include a global actor ability save bonus
+    const actorBonus = getProperty(app.object.data.data.bonuses, "abilities.save");
+    if ( !!actorBonus ) {
+      parts.push("@saveBonus");
+      data.saveBonus = actorBonus;
+    }
+		data.title = game.i18n.format("DND5E.SavePromptTitle", {ability: label});
+		data.parts = parts;
+		rollD20.bind(app.object)(data);
+	}));
+
+	const skills = html[0].querySelectorAll('.skill-name');
+	$(skills).off();
+	skills.forEach(e => e.addEventListener('click', function(ev) {
+		ev.stopPropagation();
+		ev.preventDefault();
+		const skillId = ev.currentTarget.closest('.skill').dataset.skill;
+		const skl = app.object.data.data.skills[skillId];
+
+    // Compose roll parts and data
+    const parts = ["@mod"];
+    const data = {mod: skl.mod + skl.prof};
+    if ( skl.bonus ) {
+      data["skillBonus"] = skl.bonus;
+      parts.push("@skillBonus");
+    }
+
+    // Reliable Talent applies to any skill check we have full or better proficiency in
+    const reliableTalent = (skl.value >= 1 && this.getFlag("dnd5e", "reliableTalent"));
+		data.parts =  parts;
+		data.title = game.i18n.format("DND5E.SkillPromptTitle", {skill: CONFIG.DND5E.skills[skillId]});
+
+		rollD20.bind(app.object)(data);
+		return false;
+	}))
+}
+
+
+export default async function modifyRolling() {
 	game.settings.register('mess', `${game.userId}.adv-selector`, {
 		name: 'Mess - Advantage Selector',
 		default: 'normal',
@@ -493,6 +697,8 @@ export default function modifyRolling() {
 		scope: 'user'
 	});
 
+	// possible that this function g ets called *after* chatLog creation, so check if its there already, and if yes work with the existing one.
+	// this needs further investigating
 	Hooks.on('renderChatLog', async (app, html, data) => {
 		const div = await createControls();
 		const controls = html[0].querySelector('#chat-controls');
@@ -512,10 +718,6 @@ export default function modifyRolling() {
 
 		html.on('click', '.mess-button-to-hit', rollHit);
 		html.on('click', '.mess-button-dmg', rollDmg);
-
-		// delegate(html[0], {
-		// 	target: '[data-tippy-content]'
-		// });
 	}
 
 	Hooks.on('preCreateChatMessage', async (data) => {
@@ -531,6 +733,8 @@ export default function modifyRolling() {
 	});
 
 	Hooks.on('renderItemSheet', itemHook)
+
+	Hooks.on('renderActorSheet', actorSheetHook)
 
 	changeAbilityTemplate();
 }

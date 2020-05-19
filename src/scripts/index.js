@@ -67,24 +67,32 @@ function registerSettings() {
 
 Hooks.on('ready', async function() {
 	if (game.settings.get('mess', 'actor-item-sort'))
-		(await import('./actor-item-sort-btn.js')).default();
+		(await import(/* webpackChunkName: "item-sort-btns" */ './actor-item-sort-btn.js')).default();
 	if (game.settings.get('mess', 'better-draggable'))
-		(await import('./draggable-items.js')).default();
+		(await import(/* webpackChunkName: "draggable-items" */ './draggable-items.js')).default();
 	if (game.settings.get('mess', 'prepared-spell-tracker'))
-		(await import('./prepared-spell-tracker.js')).default();
+		(await import(/* webpackChunkName: "prepared-spell-tracker" */ './prepared-spell-tracker.js')).default();
 	if (game.settings.get('mess', 'add-scrolling'))
-		(await import('./add-scrolling.js')).default();
+		(await import(/* webpackChunkName: "add-scrolling" */ './add-scrolling.js')).default();
 	
-	// const actor = (await fromUuid('Actor.xV3LUAg05Pz5MFTS'));
-	// actor.sheet.render(true);
+	if (CONFIG.debug.mess) {
+		const actor = (await fromUuid('Actor.xV3LUAg05Pz5MFTS'));
+		actor.sheet.render(true);
+	}
 });
 
 Hooks.on('init', async function() {
+	CONFIG.debug.mess = false;
 	(await import('./settings.js')).MessSettings.init();
+	if (CONFIG.debug.mess) {
+		console.log(game.settings.get('mess', 'modify-templates'))
+		console.log(game.settings.get('mess', 'modify-rolling'))
+		console.log(game.settings.get('mess', 'change-placeables'))
+	}
 	if (game.settings.get('mess', 'modify-templates'))
-		(await import('./modify-templates.js')).default();
+		(await import(/* webpackChunkName: "modify-templates" */ './modify-templates.js')).default();
 	if (game.settings.get('mess', 'modify-rolling'))
-		(await import('./modify-rolling.js')).default();
+		(await import(/* webpackChunkName: "modify-rolling" */ './modify-rolling.js')).default();
 	if (game.settings.get('mess', 'change-placeables'))
-		(await import('./change-placeables.js')).default();
+		(await import(/* webpackChunkName: "change-placeables" */ './change-placeables.js')).default();
 });

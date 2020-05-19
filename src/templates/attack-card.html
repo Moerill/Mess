@@ -1,5 +1,10 @@
-<div class='mess-attack-card chat-card' data-scene-id='{{sceneId}}' data-target-id='{{target._id}}' data-actor-id={{actor.id}} data-item-id={{item.id}}>
+<div class='mess-attack-card chat-card' data-user-id="{{user}}" data-scene-id='{{sceneId}}' data-target-id='{{target._id}}' data-actor-id={{actor.id}} data-item-id={{item.id}}>
 	<span class='mess-attack-flavor'>{{item.name}}{{#if flavor}} - {{flavor}}{{/if}}</span>
+	{{#unless allowed}}
+	<span class='mess-chat-error'>
+		{{localize 'MESS.chatCardResourceError'}}
+	</span>
+	{{/unless}}
 	{{#if target.img}}
 	<div class='mess-chat-target'>
 		<span class='mess-target-name'>{{localize 'MESS.target'}}: <br>{{target.name}}</span>

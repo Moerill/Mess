@@ -15,6 +15,7 @@
   --font-sub-color: #33322e;
 }
 #chat-controls .mess-roll-control {
+  height: 1.8em;
   flex: 1 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -33,7 +34,7 @@
 }
 #chat-controls .mess-roll-control .mess-adv-selector a {
   display: none;
-  width: 50px;
+  min-width: 30px;
   justify-content: center;
   flex-flow: row nowrap;
   align-items: center;
@@ -41,7 +42,7 @@
 }
 #chat-controls .mess-roll-control .mess-adv-selector a i {
   font-size: 1.2em;
-  transform: rotate(45deg);
+  transform: rotate(-25deg);
 }
 #chat-controls .mess-roll-control .mess-adv-selector a.mess-selected {
   display: flex;
@@ -80,10 +81,11 @@
   position: relative;
   left: -0.1em;
 }
-#chat-controls .mess-roll-control .mess-adv-selector input {
+#chat-controls .mess-roll-control .mess-adv-selector #mess-roll-mod {
   color: #ccc;
+  margin: 0 0.5em;
 }
-#chat-controls .mess-roll-control .mess-adv-selector input::placeholder {
+#chat-controls .mess-roll-control .mess-adv-selector #mess-roll-mod::placeholder {
   color: #ccca;
 }
 #chat-controls .mess-roll-control .mess-autoroll-selector a {
@@ -146,6 +148,12 @@
   border-bottom: 2px groove var(--border-color);
   padding: 0.2em 0;
 }
+#chat-log .mess-chat-error {
+  flex: 1 100%;
+  border-bottom: 2px groove var(--border-color);
+  padding: 0.2em 0;
+  color: var(--color-fail);
+}
 #chat-log .mess-chat-target {
   flex: 40%;
   border-right: 2px groove var(--border-color);
@@ -183,4 +191,19 @@
 }
 #chat-log .mess-chat-roll-type {
   margin: 0.5em 0 0 0;
+}
+.dnd5e.actor .ability-mod,
+.dnd5e.actor .ability-save {
+  cursor: pointer;
+}
+.dnd5e.actor .ability-mod:hover,
+.dnd5e.actor .ability-save:hover {
+  color: #000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+.dnd5e.actor .ability-mod:hover,
+.dnd5e.actor .ability-save:hover {
+  color: #3F88E6;
+  text-shadow: 0 0 10px #3F88E6;
 }

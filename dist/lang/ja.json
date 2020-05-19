@@ -3,9 +3,11 @@
 	"MESS.cardTargetTooltip": "ダブルクリックで現在のコマに注目します。",
 	"MESS.toHit": "ヒット",
 	"MESS.damage": "ダメージ",
-	"MESS.rollConfigAdvantage": "有利",
-	"MESS.rollConfigNormal": "通常",
-	"MESS.rollConfigDisadvantage": "不利",
+	"MESS.rollConfigAdvantage": "有利でロールする",
+	"MESS.rollConfigNormal": "通常ロール(d20を1個）をする",
+	"MESS.rollConfigDisadvantage": "不利でロールする(´・ω・`)",
+	"MESS.rollConfigModifierTitle": "d20用の状況修正値",
+	"MESS.rollConfigModifierPlaceholder": "修正値",
 	"MESS.rollConfigHit": "ヒット",
 	"MESS.rollConfigDmg": "ダメージ"
 }

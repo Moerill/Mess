@@ -3,9 +3,11 @@
 	"MESS.cardTargetTooltip": "Doppelklick um die Kamera auf das Token zu zentrieren, falls momentan die korrekte Szene betrachtet wird.",
 	"MESS.toHit": "Treffer",
 	"MESS.damage": "Schaden",
-	"MESS.rollConfigAdvantage": "Adv.",
-	"MESS.rollConfigNormal": "Normal",
-	"MESS.rollConfigDisadvantage": "Dis.",
+	"MESS.rollConfigAdvantage": "W20 mit Vorteil würfeln.",
+	"MESS.rollConfigNormal": "Nur mit einem W20 würfeln.",
+	"MESS.rollConfigDisadvantage": "Mit Nachteil würfeln. :(",
+	"MESS.rollConfigModifierTitle": "Situationsbedingter Modifikator für W20 basierte Würfe.",
+	"MESS.rollConfigModifierPlaceholder": "Modifikator",
 	"MESS.rollConfigHit": "Treffer",
 	"MESS.rollConfigDmg": "Schaden"
 }

@@ -1,11 +1,14 @@
 {
 	"MESS.target": "Target",
 	"MESS.cardTargetTooltip": "Double click to pan to token, if its scene is currently viewed.",
+	"MESS.chatCardResourceError": "There were not enough resources left for this attack!",
 	"MESS.toHit": "To Hit",
 	"MESS.damage": "Damage",
 	"MESS.rollConfigAdvantage": "Roll with Advantage!",
 	"MESS.rollConfigNormal": "Roll with just 1d20!",
 	"MESS.rollConfigDisadvantage": "Roll with Disdvantage! :(",
+	"MESS.rollConfigModifierTitle": "Situational modifier für d20 based rolls.",
+	"MESS.rollConfigModifierPlaceholder": "modifier",
 	"MESS.rollConfigHit": "Hit",
 	"MESS.rollConfigDmg": "Dmg"
 }
