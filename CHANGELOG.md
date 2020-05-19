@@ -1,3 +1,6 @@
+# v0.3.1
+	* Fixed a typo resulting in an error..
+
 # v0.3
 	* Added chat localizations for japanese and german
 		- Thanks to BrotherSharp for the japanese translation!
