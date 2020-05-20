@@ -183,7 +183,7 @@ async function rollHit(ev) {
 	if (messageId) {
 		const message = game.messages.get(messageId);
 		
-		if (!message.owner) {
+		if (!message.owner && message.user.id !== game.user.id) {
 			ui.notifications.error('You do not own the permissions to make that rolL!');
 			return;
 		}
@@ -266,7 +266,7 @@ async function rollDmg(ev) {
 	if (messageId) {
 		const message = game.messages.get(messageId);
 		
-		if (!message.owner) {
+		if (!message.owner && message.user.id !== game.user.id) {
 			ui.notifications.error('You do not own the permissions to make that rolL!');
 			return;
 		}
