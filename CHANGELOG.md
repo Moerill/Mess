@@ -1,3 +1,6 @@
+# v0.3.2
+	* Fixed players with permission lvl "player" not being able to roll their own dice.
+
 # v0.3.1
 	* Fixed a typo resulting in an error..
 
