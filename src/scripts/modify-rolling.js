@@ -182,9 +182,8 @@ async function rollHit(ev) {
 	// Check if user owns chat message, else return
 	if (messageId) {
 		const message = game.messages.get(messageId);
-		
-		if (!message.owner) {
-			ui.notifications.error('You do not own the permissions to make that rolL!');
+		if (!(message.owner || message.isAuthor)) {
+			ui.notifications.error('You do not own the permissions to make that roll!');
 			return;
 		}
 	}
@@ -265,9 +264,8 @@ async function rollDmg(ev) {
 	// Check if user owns chat message, else return
 	if (messageId) {
 		const message = game.messages.get(messageId);
-		
-		if (!message.owner) {
-			ui.notifications.error('You do not own the permissions to make that rolL!');
+		if (!(message.owner || message.isAuthor)) {
+			ui.notifications.error('You do not own the permissions to make that roll!');
 			return;
 		}
 	}
