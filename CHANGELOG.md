@@ -1,3 +1,6 @@
+# v0.3.3
+	* Now using the proper japanese localization code..
+
 # v0.3.2
 	* Fixed players with permission lvl "player" not being able to roll their own dice.
 
