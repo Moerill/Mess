@@ -1,3 +1,7 @@
+# v0.5
+	* Fixed module.json not having updated compatibleCoreVersion
+	* Accidently jumped from 0.4 to 0.5 ....
+
 # v0.4
 <ul>
 	<li>
