@@ -1,3 +1,23 @@
+# v0.4
+<ul>
+	<li>
+		<b style="font-weight: bold;">Important:</b> Automatic template textures for DnD 5e are now independent of the rolling mode! They will get activated when you activate the scaling and video textures for templates!
+	</li>
+	<li>(Hopefully) fixed the module sometimes not properly loading, by removing race conditions created due to dynamic script loading.</li>
+	<li>Improved the roll controls above the chat window-content
+		<ul>
+			<li>Changed the advantage toggle to now using dice to display the current roll mode</li>
+			<li>Added a situational modifier field, which gets applied to all D20 based rolls. (attack rolls, saving throws, skill and ability checks</li>
+		</ul>
+	</li>
+	<li>
+		Restructured a whole lot of the code, so its a little bit less of a mess... (Even though this is the modules name! :P )
+	</li>
+	<li>
+	Removed the default 5e context menu for applying damage, since this resulted in unwanted and confusing behaviour. I will revisit this for the next patch and add <em>some</em> option to apply damage using the rolls. I'm just not sure currently as to how i want to tackle this. Feel free to add ideas to the <a href="https://github.com/Moerill/Mess/issues/9">issue</a>.
+	</li>
+</ul>
+
 # v0.3.3
 	* Now using the proper japanese localization code..
 

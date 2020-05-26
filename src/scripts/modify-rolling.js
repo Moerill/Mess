@@ -52,6 +52,15 @@ async function createControls() {
 			game.settings.set('mess', `${game.userId}.autoroll-selector`, data);
 		})
 	});
+
+	const controls = document.getElementById('chat-controls');
+	if (controls)
+		controls.insertBefore(div, controls.childNodes[0]);
+	else
+		Hooks.on('renderChatLog', (app, html, data) => {
+			const controls = document.getElementById('chat-controls');
+			controls.insertBefore(div, controls.childNodes[0]);
+		})
 	return div;
 }
 
@@ -68,62 +77,6 @@ async function onChatCardAction (ev) {
 }
 
 async function getToHitData({actor, item}) {
-	if (!item.hasAttack) return null;
-	const actorData = actor.data.data;
-	const itemData = item.data.data;
-	const flags = actor.data.flags.dnd5e || {};
-	
-	let rollData = item.getRollData();
-
-	// Define Roll bonuses
-	const parts = [`@mod`];
-	if ( (item.data.type !== "weapon") || itemData.proficient ) {
-		parts.push("@prof");
-	}
-	rollData.parts = parts;
-
-	// Expanded weapon critical threshold
-	if (( item.data.type === "weapon" ) && flags.weaponCriticalThreshold) {
-		rollData.critical = parseInt(flags.weaponCriticalThreshold);
-	}
-
-	// Elven Accuracy
-	if ( ["weapon", "spell"].includes(item.data.type) ) {
-		if (flags.elvenAccuracy && ["dex", "int", "wis", "cha"].includes(item.abilityMod)) {
-			rollData.elvenAccuracy = true;
-		}
-	}
-
-	// Apply Halfling Lucky
-	if ( flags.halflingLucky ) rollData.halflingLucky = true;
-
-	// Attack Bonus
-	const actorBonus = actorData.bonuses[itemData.actionType] || {};
-	if ( itemData.attackBonus || actorBonus.attack ) {
-		// parts.push("@atk");
-		rollData["atk"] = [itemData.attackBonus, actorBonus.attack].filterJoin(" + ");
-		if (!isNaN(Number(rollData["atk"]))) {
-			parts.push("@atk");
-		}
-	}
-
-	let roll = new Roll(rollData.parts.join('+'), rollData);
-	rollData.totalModifier = roll._safeEval(roll.formula);
-	rollData.totalModifier = rollData.totalModifier >= 0 ? '+' + rollData.totalModifier : rollData.totalModifier;
-	if (rollData["atk"] && !roll._formula.includes('@atk')) {
-		rollData.parts.push("@atk");
-		roll = new Roll(rollData.parts.join('+'), rollData);
-		rollData.totalModifier += `+${rollData["atk"]}`;
-	}
-	const situationalModifier = document.getElementById('mess-roll-mod');
-	if (situationalModifier.value) {
-		rollData.parts.push(situationalModifier.value);
-		roll = new Roll(rollData.parts.join('+'), rollData);
-		rollData.totalModifier += `+${situationalModifier.value}`;
-	}
-	rollData.formula = roll.formula;
-	rollData.terms = roll._formula;
-	return rollData;
 }
 
 async function getDmgsData({actor, item, spellLevel = null}) {
@@ -697,15 +650,17 @@ export default async function modifyRolling() {
 
 	// possible that this function g ets called *after* chatLog creation, so check if its there already, and if yes work with the existing one.
 	// this needs further investigating
-	Hooks.on('renderChatLog', async (app, html, data) => {
-		const div = await createControls();
-		const controls = html[0].querySelector('#chat-controls');
-		controls.insertBefore(div, controls.childNodes[0]);
-	});
+	// Hooks.on('renderChatLog', async (app, html, data) => {
+	// 	const div = await createControls();
+	// 	const controls = html[0].querySelector('#chat-controls');
+	// 	controls.insertBefore(div, controls.childNodes[0]);
+	// });
+	// moved the whole script into ready to try to remove a few problems happening with loading it, etc.
+	createControls();
 
-	// roundabout way to get the listener do what *I* want...
-	// Since adding my own listener in renderChatLog was "to early".
-	CONFIG.Item.entityClass.chatListeners = function (html) {
+	// Since all this was moved to the ready hook i have to write my own listeners for stuff
+	const chatListeners = function(){
+		const html = $(document.getElementById('chat-log'));
     html.on('click', '.card-buttons button', onChatCardAction.bind(this));
 		html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
 		
@@ -717,6 +672,7 @@ export default async function modifyRolling() {
 		html.on('click', '.mess-button-to-hit', rollHit);
 		html.on('click', '.mess-button-dmg', rollDmg);
 	}
+	chatListeners.bind(CONFIG.Item.entityClass)();
 
 	Hooks.on('preCreateChatMessage', async (data) => {
 		const div = document.createElement('div');
@@ -730,7 +686,6 @@ export default async function modifyRolling() {
 
 	});
 
-	Hooks.on('renderItemSheet', itemHook)
 
 	Hooks.on('renderActorSheet', actorSheetHook)
 

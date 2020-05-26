@@ -1,6 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["item-sort-btns"],{"./src/scripts/actor-item-sort-btn.js":
-/*!********************************************!*\
-  !*** ./src/scripts/actor-item-sort-btn.js ***!
-  \********************************************/
-/*! exports provided: default */function(t,e,n){"use strict";async function s(t,e,n){if(!n.actor._id)return;e.querySelectorAll(".filter-list").forEach(t=>{const e=t.closest(".tab").dataset.tab,s=document.createElement("a");s.innerHTML='<i class="fas fa-sort"></i>',s.classList.add("mess-sort-btn"),s.title=`Sort ${e} alphabetically.`,s.style.flex=0,s.style.margin="0 5px 0 0",s.addEventListener("click",t=>async function(t,e){const n=await fromUuid("Actor."+e);let s=t.map(t=>t.items||t.spells).flat();s.sort((function(t,e){return t.name<e.name?-1:t.name>e.name?1:0}));let r=[s.shift()],a=[];for(;s.length>0;r.push(s.shift()))a=SortingHelpers.performIntegerSort(s[0],{target:r[r.length-1],siblings:duplicate(r),sortBefore:!1});const i=a.map(t=>{let e=t.update;return e._id=t.target._id,e});n.updateEmbeddedEntity("OwnedItem",i)}(n[e],n.actor._id)),t.prepend(s)})}async function r(){Hooks.on("renderActorSheet",(t,e,n)=>{s(0,e[0],n)})}n.r(e),n.d(e,"default",(function(){return r}))}}]);
-//# sourceMappingURL=item-sort-btns.1907.js.map

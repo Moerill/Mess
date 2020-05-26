@@ -48,6 +48,7 @@ Go to the [GitHub's issue board](https://github.com/Moerill/Mess/issues) and che
 ### Scaling and animated template textures
 ![video templates](img/animated_templates.gif)  
 Tired of FVTTs tiling for template textures? Then this feature is perfect for you! When this feature is enabled template textures are scaled up and rotated  to match the template. This also allows for the usage of video files as template textures! Nice! (For all textures the same rules as for all FVTT image and video files do apply)
+This also automatically activates [Automatic Ability template texture](#ability-template-textures) when you're using the DnD5e system.
 
 ### Momentum based preview snapping
 ![preview snapping](img/preview_snapping.gif)
@@ -62,7 +63,7 @@ To make dragging around more beautiful! Letting the placeable always snap, makes
 
 ## DnD5e specific
 ### Rolling and targeting change
-This is a big one and encompasses a variety of features. But since these features are intertwined to some extent you can only dis-/enable all of them together! (GM sets these for all users)
+This is a big one and encompasses a variety of features.
 
 #### Custom attack and damage roll chat cards
 ![Attacking](img/attacking.gif)  
@@ -75,13 +76,14 @@ The flavor text (in the example ``The cat swipes at Badger lazily with a clawed 
 
 #### Autoroll and Advantage toggle
 ![Roll toggles](img/roll-toggles.png)  
-This feature also adds options to toggle between *(dis-)advantage* and *normal* rolls. This will get applied at the time you click on the *to hit* button, not beforehand! (At the moment this is not applied to skill/ability checks or saving throws, but this will come soon™).  
+The roll change also adds options to toggle between *(dis-)advantage* and *normal* rolls, by clicking on the D20 above the chats roll mode selector. Right click will cycle through in the opposite direction. This will get applied at the time you click on the *to hit* button, not beforehand!  
 This also adds a selection to choose if *to hit* or *damage* rolls should be rolled automatically on *attack card* creation.
 
-#### Ability template textures
+### Ability template textures
 ![Auto Template](img/auto_template.gif)
 Want to be cool and really show a fireball each time you cast it, instead of the blank template for targeting?  
-This feature lets you specify textures for your templates automatically created by using a feature or spell. It adds to the item sheet a field to select an image or video file as texture. If no file is specified the module will automatically try to select a file depending on the settings set or blank if none found.
+This feature lets you specify textures for your templates automatically created by using a feature or spell. It adds to the item sheet a field to select an image or video file as texture. If no file is specified the module will automatically try to select a file depending on the settings set or blank if none found.  
+**Important** This feature gets automatically activated when you activate [Scaling and animated template textures](#scaling-and-animated-template-textures) and are using the DnD5e system.
 
 #### Auto targeting with ability templates
 This awesome template gets created when you cast a spell, but you still have to manually specify the tokens as targets? Uff! But i'm here to help: This feature automatically targets the tokens inside of your placed template.  

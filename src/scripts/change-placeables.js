@@ -48,7 +48,7 @@ function onDragLeftMove(event) {
 	}
 }
 
-export default function changePlaceables() {
+export function changePlaceables() {
 	PlaceableObject.prototype._onDragLeftMove = onDragLeftMove;
 	// Change got bigger than expected, so.. complete swap it is
 }

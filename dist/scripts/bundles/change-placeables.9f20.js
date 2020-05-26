@@ -1,6 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["change-placeables"],{"./src/scripts/change-placeables.js":
-/*!******************************************!*\
-  !*** ./src/scripts/change-placeables.js ***!
-  \******************************************/
-/*! exports provided: default */function(a,t,n){"use strict";function e(a){const{clones:t,destination:n,origin:e,originalEvent:o}=a.data;canvas._onDragCanvasPan(o);const i=n.x-e.x,s=n.y-e.y;let r=!1;if(a.data.previous){const t=30,e=.8,o=a.data.previous,i=a.data.momentum||0,s=a.data.v||{x:0,y:0},c={x:n.x-o.x,y:n.y-o.y},d={x:c.x-s.x,y:c.y-s.y};a.data.momentum=d.x*d.x+d.y*d.y+i*e,r=!a.shiftKey&&a.data.momentum<t}a.data.previous=n;for(let a of t||[]){let t={x:a._original.data.x+i,y:a._original.data.y+s};r&&(t=canvas.grid.getSnappedPosition(t.x,t.y,this.layer.options.gridPrecision)),a.data.x=t.x,a.data.y=t.y,a.refresh()}}function o(){PlaceableObject.prototype._onDragLeftMove=e}n.r(t),n.d(t,"default",(function(){return o}))}}]);
-//# sourceMappingURL=change-placeables.9f20.js.map

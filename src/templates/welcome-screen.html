@@ -1,0 +1,41 @@
+<style>
+.welcome-screen a[href] {
+    color: #4a52ca;
+}
+.welcome-screen .window-content > * {
+	flex: 0;
+}
+</style>
+
+<h1>Thank you for using MESS!</h1>
+<p>Make sure to read the <a href="https://github.com/Moerill/mess#mess---moerills-enhancing-super-suite">README</a>, to learn about this modules features, since there are quite a few and they are not all connected.</p>
+        <h2>Bugs? Issues?</h2>
+        <p>Read and follow <a href="https://github.com/Moerill/mess#bug-reporting">these instructions</a>.
+        <h2>Suggestions? Feature Requests? Feedback?</h2>
+				<p>Currently planned features (and bugs) are on the <a href="https://github.com/Moerill/mess/issues">GitHubs Issue Board</a>. Please check the issues if your suggestion does already exist. If it does, give it a thumbsup, else create an issue for it and label it as suggestion.</p>
+				<p>The issue board linked above can also be used to keep track of current development.</p>
+
+				<p style="font-weight: bold; text-align: right;">Best regards, <br>Moerill</p>
+				<h2></h2>
+				<p style="display: flex; flex-flow: row nowrap; align-items: center; justify-content: flex-start;"><input type="checkbox" class='show-again' id="welcome-screen-show-again"/> <label for="welcome-screen-show-again">Don't show this screen again until next update.</label></p>
+				<p style="text-align: right">Want to support development? <a href="https://github.com/Moerill/token-mold#support-the-development">Click here</a></p>
+				<h2></h2>
+<h1>Changelog v0.4.0</h1>
+<ul>
+	<li>
+		<b style="font-weight: bold;">Important:</b> Automatic template textures for DnD 5e are now independent of the rolling mode! They will get activated when you activate the scaling and video textures for templates!
+	</li>
+	<li>(Hopefully) fixed the module sometimes not properly loading, by removing race conditions created due to dynamic script loading.</li>
+	<li>Improved the roll controls above the chat window-content
+		<ul>
+			<li>Changed the advantage toggle to now using dice to display the current roll mode</li>
+			<li>Added a situational modifier field, which gets applied to all D20 based rolls. (attack rolls, saving throws, skill and ability checks</li>
+		</ul>
+	</li>
+	<li>
+		Restructured a whole lot of the code, so its a little bit less of a mess... (Even though this is the modules name! :P )
+	</li>
+	<li>
+		Removed the default 5e context menu for applying damage, since this resulted in unwanted and confusing behaviour. I will revisit this for the next patch and add <em>some</em> option to apply damage using the rolls. I'm just not sure currently as to how i want to tackle this. Feel free to add ideas to the <a href="https://github.com/Moerill/Mess/issues/9">issue</a>.
+	</li>
+</ul>

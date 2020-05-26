@@ -8,7 +8,8 @@ export class MessSettings extends FormApplication {
 			scope: "user",
 			config: isDnD,
 			default: isDnD,
-			type: Boolean
+			type: Boolean,
+			onChange: () => location.reload()
 		})
 	
 		game.settings.register('mess', 'better-draggable', {
@@ -16,7 +17,8 @@ export class MessSettings extends FormApplication {
 			scope: "user",
 			config: false,// Change if implemented
 			default: isDnD,
-			type: Boolean
+			type: Boolean,
+			onChange: () => location.reload()
 		})
 	
 		game.settings.register('mess', 'prepared-spell-tracker', {
@@ -25,7 +27,8 @@ export class MessSettings extends FormApplication {
 			scope: "user",
 			config: isDnD,
 			default: isDnD,
-			type: Boolean
+			type: Boolean,
+			onChange: () => location.reload()
 		})
 	
 		game.settings.register('mess', 'add-scrolling', {
@@ -34,7 +37,8 @@ export class MessSettings extends FormApplication {
 			scope: "user",
 			config: isDnD,
 			default: isDnD,
-			type: Boolean
+			type: Boolean,
+			onChange: () => location.reload()
 		});
 	
 		game.settings.register('mess', 'modify-rolling', {
@@ -43,7 +47,8 @@ export class MessSettings extends FormApplication {
 			scope: "world",
 			config: isDnD,
 			default: isDnD,
-			type: Boolean
+			type: Boolean,
+			onChange: () => location.reload()
 		});
 	
 		game.settings.register('mess', 'modify-templates', {
@@ -52,7 +57,8 @@ export class MessSettings extends FormApplication {
 			scope: "world",
 			config: true,
 			default: true,
-			type: Boolean
+			type: Boolean,
+			onChange: () => location.reload()
 		});
 		
 		game.settings.register('mess', 'change-placeables', {
@@ -61,7 +67,8 @@ export class MessSettings extends FormApplication {
 			scope: "world",
 			config: true,
 			default: true,
-			type: Boolean
+			type: Boolean,
+			onChange: () => location.reload()
 		});	
 		if (isDnD)
 			game.settings.registerMenu('mess', 'templateTexture', {
@@ -99,7 +106,7 @@ export class MessSettings extends FormApplication {
 	getData() {
 		let data = super.getData();
 		data.dmgTypes = CONFIG.DND5E.damageTypes;
-		data.templateTypes = CONFIG.templateTypes;
+		data.templateTypes = CONFIG.MeasuredTemplate.types;
 		return data;
 	}
 

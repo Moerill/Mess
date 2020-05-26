@@ -1,6 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["prepared-spell-tracker"],{"./src/scripts/prepared-spell-tracker.js":
-/*!***********************************************!*\
-  !*** ./src/scripts/prepared-spell-tracker.js ***!
-  \***********************************************/
-/*! exports provided: default */function(e,t,r){"use strict";async function n(){Hooks.on("renderActorSheet",(async function(e,t,r){const n=await fromUuid("Actor."+r.actor._id),s=t[0].querySelector(".spell-dc");if(!s)return;let a=document.createElement("div");a.classList.add("spell-slots"),a.style.flex="1",a.style.border="none";const l=a.appendChild(document.createElement("span"));l.innerText="prepared spells: "+r.preparedSpells,l.classList.add("spell-max");const p=a.appendChild(document.createElement("span"));p.innerText=" / ",p.classList.add("sep");const c=a.appendChild(document.createElement("input"));c.type="text",c.value=n.getFlag("mess","maxPreparedSpells")||0,c.addEventListener("change",(async function(e){e.preventDefault(),e.stopPropagation();const t=Number(e.currentTarget.value);return isNaN(t)?(e.currentTarget.value=n.getFlag("mess","maxPreparedSpells")||0,!1):(n.setFlag("mess","maxPreparedSpells",t),!1)})),s.parentNode.insertBefore(a,s)}))}r.r(t),r.d(t,"default",(function(){return n}))}}]);
-//# sourceMappingURL=prepared-spell-tracker.dee3.js.map

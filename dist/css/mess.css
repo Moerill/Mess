@@ -18,6 +18,7 @@
   height: 1.8em;
   flex: 1 100%;
   display: flex;
+  margin: 0.2em 0 0.15em 0;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
@@ -38,7 +39,7 @@
   justify-content: center;
   flex-flow: row nowrap;
   align-items: center;
-  opacity: 0.8;
+  opacity: 1;
 }
 #chat-controls .mess-roll-control .mess-adv-selector a i {
   font-size: 1.2em;
@@ -59,17 +60,15 @@
   position: relative;
   left: -0.1em;
   font-size: 1em;
-  filter: brightness(0.6);
+  filter: brightness(0.5);
   transform: rotate(30deg);
   z-index: 0;
-  color: var(--color-bad);
 }
 #chat-controls .mess-roll-control .mess-adv-selector .mess-dis-btn i:nth-child(1) {
   font-size: 1em;
-  filter: brightness(0.6);
+  filter: brightness(0.5);
   transform: rotate(45deg);
   z-index: 0;
-  color: var(--color-good);
   position: relative;
   left: 0.1em;
 }
@@ -126,6 +125,7 @@
 }
 #chat-log .mess-attack-card .mess-dice-result span {
   font-weight: bold;
+  font-size: 1.4em;
 }
 #chat-log .mess-attack-card .mess-dice-result .crit {
   color: var(--color-success);
@@ -202,8 +202,8 @@
   text-shadow: 0 0 10px red;
   cursor: pointer;
 }
-.dnd5e.actor .ability-mod:hover,
-.dnd5e.actor .ability-save:hover {
+.dark-mode .dnd5e.actor .ability-mod:hover,
+.dark-mode .dnd5e.actor .ability-save:hover {
   color: #3F88E6;
   text-shadow: 0 0 10px #3F88E6;
 }

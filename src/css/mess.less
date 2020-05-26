@@ -22,15 +22,13 @@
 	--font-sub-color: #33322e;
 }
 
-
-
-
 #chat-controls {
 
 	.mess-roll-control {
 		height: 1.8em;
 		flex: 1 100%;
 		display: flex;
+		margin: 0.2em 0 0.15em 0;
 		flex-flow: row nowrap;
 		justify-content: space-between;
 		div {
@@ -50,7 +48,7 @@
 				justify-content: center;
 				flex-flow: row nowrap;
 				align-items: center;
-				opacity: 0.8;
+				opacity: 1;
 				i {
 					font-size: 1.2em;
 					transform: rotate(-25deg);
@@ -73,20 +71,20 @@
 					position: relative;
 					left: -0.1em;
 					font-size: 1.0em;
-					filter: brightness(0.6);
+					filter: brightness(0.5);
 					transform: rotate(30deg);
 					z-index: 0;
-					color: var(--color-bad);
+					// color: var(--color-bad);
 				}
 			}
 
 			.mess-dis-btn {
 				i:nth-child(1) {
 					font-size: 1.0em;
-					filter: brightness(0.6);
+					filter: brightness(0.5);
 					transform: rotate(45deg);
 					z-index: 0;
-					color: var(--color-good);
+					// color: var(--color-good);
 					position: relative;
 					left: 0.1em;
 				}
@@ -155,6 +153,7 @@
 			height: auto;
 			span {
 				font-weight: bold;
+				font-size:1.4em;
 			}
 
 			.crit {
@@ -250,7 +249,7 @@
 }
 
 
-.dnd5e.actor {
+.dark-mode .dnd5e.actor {
 	.ability-mod, .ability-save {
 		&:hover {
 			color: #3F88E6;

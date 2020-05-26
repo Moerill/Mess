@@ -1,4 +1,4 @@
-export default function changeTemplateFill() {
+export function changeTemplateFill() {
 
   // #MonkeyPatchingFTW
   // better than stealing the code, replacing one line and then release it under a/the wrong license..
@@ -60,4 +60,104 @@ export default function changeTemplateFill() {
   Hooks.on('renderMeasuredTemplateConfig', (app, html, data) => {
     html[0].querySelector('.file-picker').dataset.type = 'imagevideo'
   });
+}
+
+export async function dndTemplateSettings() {
+  if (game.system.id !== 'dnd5e') return;
+
+  Hooks.on('renderItemSheet', itemHook);
+  
+  const importedJS = (await import(/* webpackIgnore: true */ '/systems/dnd5e/module/pixi/ability-template.js'))
+	const AbilityTemplate = importedJS.default || importedJS.AbilityTemplate;
+
+	
+	const _originalFromItem = AbilityTemplate.fromItem;
+	AbilityTemplate.fromItem = function(item) {
+		const template = _originalFromItem.bind(this)(item);
+		
+		// generate a texture based on the items dmg type, ...
+		// Add settings to define custom templates for stuff.
+		let path = item.getFlag('mess', 'templateTexture');
+		if (!path && item.hasDamage) {
+			const settings = game.settings.get('mess', 'templateTexture') || {};
+			path = settings[item.data.data.damage.parts[0][1]] || {};
+			path = path[template.data.t];
+		}
+		if (path)
+			loadTexture(path).then(tex => {
+				template.texture = tex;
+				template.data.texture = path;
+				template.refresh();
+			})
+		template.item = item;
+		return template;
+	}
+
+	//  rather ugly, maybe find a better way at some point :shrug:
+	const origPrevListeners = AbilityTemplate.prototype.activatePreviewListeners.toString();
+	const newFun = origPrevListeners.replace(/this\.refresh\(\)\;/, 
+				// get targets
+					`this.refresh();
+					this.getTargets(this);
+				`);
+
+	AbilityTemplate.prototype.getTargets = getTargets;
+	AbilityTemplate.prototype.isTokenInside = isTokenInside;
+
+	AbilityTemplate.prototype.activatePreviewListeners = Function(`"use strict"; return ( function ${newFun} )`)();
+}
+
+
+function isTokenInside(token) {
+	const grid = canvas.scene.data.grid,
+				templatePos = {x: this.data.x, y: this.data.y};
+	// Check for center of  each square the token uses.
+	// e.g. for large tokens all 4 squares
+	const startX = token.width >= 1 ? 0.5 : token.width / 2;
+	const startY = token.height >= 1 ? 0.5 : token.height / 2;
+	for (let x = startX; x < token.width; x++) {
+		for (let y = startY; y < token.height; y++) {
+			const currGrid = {
+				x: token.x + x * grid - templatePos.x,
+				y: token.y + y * grid - templatePos.y
+			};
+			const contains = this.shape.contains(currGrid.x, currGrid.y);
+			if (contains) return true;
+		}
+	}
+	return false;
+}
+
+function getTargets() {
+	const tokens = canvas.scene.getEmbeddedCollection('Token');
+	let targets = [];
+	
+	for (const token of tokens)
+		if (this.isTokenInside(token)) { targets.push(token._id); }
+	game.user.updateTokenTargets(targets);
+}
+
+async function itemHook(app, html) {
+	const div = document.createElement('div');
+	div.classList.add('form-group');
+	div.appendChild(document.createElement('label')).innerText = 'Template Texture';
+	const formField = div.appendChild(document.createElement('div'));
+	formField.classList.add('form-fields');
+	const inp = formField.appendChild(document.createElement('input'));
+	inp.dataset.dtype = 'String';
+	inp.type = 'text';
+	inp.name = 'flags.mess.templateTexture';
+	inp.value = app.object.getFlag('mess', 'templateTexture') || "";
+
+	formField.insertAdjacentHTML('beforeend', `
+		<button type="button" class="file-picker" data-type="imagevideo" data-target="flags.mess.templateTexture" title="Browse Files" tabindex="-1">
+			<i class="fas fa-file-import fa-fw"></i>
+		</button>
+	`);
+	const button = formField.querySelector('button');
+	button.style.flex = '0';
+  app._activateFilePicker(button);
+  const target = html[0].querySelector('[name="data.target.units"]');
+  if (target)
+	  target.closest('.form-group').after(div);
 }
