@@ -1,3 +1,8 @@
+# v0.5.1
+<ul>
+	<li>Fixed error when trying to throw damage for actors with "Damage Bonus" defined in "Special Traits".</li>
+</ul>
+
 # v0.5
 	* Fixed module.json not having updated compatibleCoreVersion
 	* Accidently jumped from 0.4 to 0.5 ....

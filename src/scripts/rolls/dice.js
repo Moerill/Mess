@@ -243,7 +243,7 @@ export async function getDmgData({actor, item, spellLevel = null}) {
 	
 	const actorBonus = actorData.bonuses[itemData.actionType] || {};
 	if (actorBonus.damage && parseInt(actorBonus.damage ) !== 0) {
-		parts[0][0] += "+@dmg";
+		rollData.parts[0][0] += "+@dmg";
 		rollData["dmg"] = actorBonus.damage;
 	}
 
