@@ -21,6 +21,7 @@ function registerSettings() {
 }
 
 async function chatLogHook(app, html, data) {
+	html[0].classList.add('mess');
 	const div = document.createElement('div');
 	div.classList.add('mess-roll-control');
 

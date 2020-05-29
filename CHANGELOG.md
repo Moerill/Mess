@@ -1,3 +1,9 @@
+# v0.5.2
+<ul>
+	<li>Fixed attack buttons being hidden even with alternative rolling disabled.</li>
+	<li>Fixed clicking on an item name in an item chat card not toggling the description.</li>
+</ul>
+
 # v0.5.1
 <ul>
 	<li>Fixed error when trying to throw damage for actors with "Damage Bonus" defined in "Special Traits".</li>

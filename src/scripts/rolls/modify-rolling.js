@@ -246,7 +246,7 @@ async function actorSheetHook(app, html, data) {
 function chatListeners() {
 	const html = $(document.getElementById('chat-log'));
 	html.on('click', '.card-buttons button', onChatCardAction.bind(this));
-	html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
+	// html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
 	
 	// lets just use this for even more listeners
 	html.on('mouseenter', '.mess-chat-target', onMouseEnterTarget);
