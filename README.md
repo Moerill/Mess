@@ -26,7 +26,7 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 		- [Prepared spell tracker](#prepared-spell-tracker)
 
 
-# Important!
+# Important Information!
 ## FVTT Version compatibility
 My focus is the FVTTs stable branch. I will neither promise nor prioritise updates for FVTTs beta or alpha branches! Feel free to report a bug so i know whats coming, but don't expect a fix before a stable FVTT update.
 
@@ -49,6 +49,22 @@ Go to the [GitHub's issue board](https://github.com/Moerill/Mess/issues) and che
 
 **I will only take a quick glance at half hearted bug reports or Discord mentions! Don't expect me to react there!**
 
+## Atribution
+Thanks to @NickEast for his ![foundry project creator](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project) which i'm using in a modified version for my building and publishing workflow.
+
+The templates used in the videos are from [Pierluigi Riminis Perfect Spell Pack 2 animated](https://marketplace.roll20.net/browse/set/3954/perfect-spells-pack-2-animated).
+
+## Licensing
+Mess is licensed under the [LGPL v3](https://github.com/Moerill/Mess/blob/master/LICENSE).
+
+This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development](https://foundryvtt.com/article/license/).
+
+## Support the development
+Want to help me develop? Send a merge request on this gitlab or contact me on Discord (Moerill#7205).  
+Want to support me in another way? 
+Leave me some nice comments (e.g. on Discord), recommend this module to others and/or leave a donation over at my [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FYZ294SP2JBGS&source=url).
+
+# Features
 
 ## Universal
 ### Scaling and animated template textures
@@ -108,18 +124,3 @@ Keeping order is an ordeal! This feature adds a button that sorts all items of t
 #### Prepared Spell Tracker
 ![pepared-spell-tracker-example](img/prepared-spell-tracker.png)  
 Always forget how many spells you're allowed to prepare? Fret not, this feature adds a field to the actor sheet to allow you to specify the maximum number of allowed prepared spells.
-
-## Atribution
-Thanks to @NickEast for his ![foundry project creator](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project) which i'm using in a modified version for my building and publishing workflow.
-
-The templates used in the videos are from [Pierluigi Riminis Perfect Spell Pack 2 animated](https://marketplace.roll20.net/browse/set/3954/perfect-spells-pack-2-animated).
-
-## Licensing
-Mess is licensed under the [LGPL v3](https://github.com/Moerill/Mess/blob/master/LICENSE).
-
-This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development](https://foundryvtt.com/article/license/).
-
-## Support the development
-Want to help me develop? Send a merge request on this gitlab or contact me on Discord (Moerill#7205).  
-Want to support me in another way? 
-Leave me some nice comments (e.g. on Discord), recommend this module to others and/or leave a donation over at my [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FYZ294SP2JBGS&source=url).
