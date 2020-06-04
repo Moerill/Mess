@@ -26,13 +26,17 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 		- [Prepared spell tracker](#prepared-spell-tracker)
 
 
+# Important!
+## FVTT Version compatibility
+My focus is the FVTTs stable branch. I will neither promise nor prioritise updates for FVTTs beta or alpha branches! Feel free to report a bug so i know whats coming, but don't expect a fix before a stable FVTT update.
+
 ## Module compatiblity
 This module is not designed to be compatible with most other modules, so incompatibilities may arise if some features are enabled. And i do not really care about compatibility with other modules for this Mess. (Also there are to many to keep track of now. Some parts of this mess are deep or very specific changes, that are to much work to make work with everything.)  
 So be warned and carefully test the features without other modules enabled before submitting a bug report here!  
 
 ## Bug Reporting
 Go to the [GitHub's issue board](https://github.com/Moerill/Mess/issues) and check if the Bug is already reported. If not first test with all other modules disabled! If the bug persists create a new issue, with at least the following information:
-1. Token Mold version
+1. Module version
 2. FVTT version
 3. Browser and OS used. Or if the app itself is used.
 4. Bug description
@@ -41,7 +45,9 @@ Go to the [GitHub's issue board](https://github.com/Moerill/Mess/issues) and che
 	- Console errors? (F12 or F11 in most browsers)
 5. Workflow to recreate the bug
 6. Helpful videos or screenshots if possible
-7. Either activate notifications, stay active or post your discord handle so i can get back to you for further questions
+7. Either activate notifications, stay active or post your discord handle so i can get back to you for further questions  
+
+**I will only take a quick glance at half hearted bug reports or Discord mentions! Don't expect me to react there!**
 
 
 ## Universal
