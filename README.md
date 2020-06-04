@@ -1,5 +1,5 @@
 # Mess - Moerills enhancing super-suit(e)
-<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/moerill/mess?style=flat-square"> <img alt="GitHub" src="https://img.shields.io/github/license/moerill/mess?style=flat-square"> <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/moerill/mess/latest/total?style=flat-square">  
+<img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/moerill/mess?style=flat-square"> <img alt="GitHub" src="https://img.shields.io/github/license/moerill/mess?style=flat-square"> <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/moerill/mess/latest/total?style=flat-square">  [![PayPal](https://img.shields.io/badge/Donate-PayPal-blue?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FYZ294SP2JBGS&source=url)  
 
 This module is a mess!  
 Just kidding! This module does not serve a more specific purpose, like most of my other modules, but is more of a growing collection of stuff, that:
