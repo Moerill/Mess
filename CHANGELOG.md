@@ -1,3 +1,6 @@
+# v0.6.1
+* Forgot to update module.json to show compatibility with newest FVTT version....
+
 # v0.6.0
 <ul>
 	<li>New Feature: You can now specify your items chat flavor using rollable Tables!
