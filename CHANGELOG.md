@@ -1,3 +1,17 @@
+# v0.6.0
+<ul>
+	<li>New Feature: You can now specify your items chat flavor using rollable Tables!
+		<ul>
+			<li>Use the same syntax as you'd use everywhere else: @RollTable[id] or @RollTable[name]</li>
+			<li>Automatically replaces the above tag using the result.</li>
+			<li>Also supports the [target.name] command. (Reminder: if you use [target.name] inside of a chat flavor text, it will be replaced by the targets name.</li>
+		</ul>
+	</li>
+	<li>
+		Fixed Jack of all trades and Remarkable athlete.
+	</li>
+</ul>
+
 # v0.5.2
 <ul>
 	<li>Fixed attack buttons being hidden even with alternative rolling disabled.</li>

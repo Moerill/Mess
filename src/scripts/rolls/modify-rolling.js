@@ -31,6 +31,30 @@ async function preCreateChatMessageHook(data) {
 		renderAttack({currentTarget: btn});
 }
 
+
+// TODO: for compendium rolltables
+function getFlavor(chatFlavor, target) {
+	const rollTableRegExp = /@RollTable\[([^\]])+\](?:\{([^\}]+)\})?/g;
+	let rollTables = Array.from(chatFlavor.matchAll(rollTableRegExp));
+	if (rollTables) {
+		const collection = game.tables;
+		for (let tableData of rollTables) {
+			let table;
+			const id = tableData[0].match(/\[[a-zA-Z0-9]{16}\]/);
+			if (id) {
+				table = collection.get(id[0].slice(1, -1));
+			} else {
+				const name = tableData[0].match(/\[([^\]])+\]/)[0].slice(1, -1);
+				table = collection.entities.find(e => e.data.name === name);
+			}
+			let result = table.roll();
+			chatFlavor = chatFlavor.replace(tableData[0], result.results.map(e => e.text).join(","));
+		}
+	}
+	return chatFlavor.replace(/\[target\.name\]/g, target.data.name)
+}
+
+
 /**
  * Renders an attack chat card
  * @param {Click Event} ev pointing towards the card that is supposed to initiate the event.
@@ -88,7 +112,7 @@ async function renderAttack(ev) {
 		const attackTemplateData = {
 									...attackData, 
 									target: target.data,
-									flavor: item.data.data.chatFlavor.replace(/\[target\.name\]/g, target.data.name),
+									flavor: getFlavor(item.data.data.chatFlavor, target),
 									allowed
 								};
 		let html = await renderTemplate(template, attackTemplateData);
@@ -163,14 +187,15 @@ async function actorSheetHook(app, html, data) {
     const data = {mod: abl.mod};
     const feats = app.object.data.flags.dnd5e || {};
 
-    // Add feat-related proficiency bonuses
+		// Add feat-related proficiency bonuses
+		const actorData = getProperty(app.object, "data.data")
     if ( feats.remarkableAthlete && DND5E.characterFlags.remarkableAthlete.abilities.includes(abilityId) ) {
-      parts.push("@proficiency");
-      data.proficiency = Math.ceil(0.5 * this.data.data.attributes.prof);
+      parts.push("@remarkable-athlete");
+      data["remarkable-athlete"] = Math.ceil(0.5 * actorData.attributes.prof);
     }
     else if ( feats.jackOfAllTrades ) {
-      parts.push("@proficiency");
-      data.proficiency = Math.floor(0.5 * this.data.data.attributes.prof);
+      parts.push("@jack-of-all-trades");
+      data["jack-of-all-trades"] = Math.floor(0.5 * actorData.attributes.prof);
     }
 
     // Add global actor bonus
@@ -231,7 +256,7 @@ async function actorSheetHook(app, html, data) {
     }
 
     // Reliable Talent applies to any skill check we have full or better proficiency in
-    const reliableTalent = (skl.value >= 1 && app.object.getFlag("dnd5e", "reliableTalent"));
+		data.reliableTalent = (skl.value >= 1 && app.object.getFlag("dnd5e", "reliableTalent"));
 		data.parts =  parts;
 		data.title = game.i18n.format("DND5E.SkillPromptTitle", {skill: CONFIG.DND5E.skills[skillId]});
 
