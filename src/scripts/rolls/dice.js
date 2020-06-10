@@ -196,11 +196,18 @@ export async function rollToHit(ev) {
 		span.classList.add('crit');
 		card.querySelector('.mess-chat-dmg .mess-chat-roll-type').innerHTML += ' - Crit!'
 		card.querySelectorAll('.mess-button-dmg').forEach((e, idx) => {
-			const formula = e.dataset.formula;
-			const r = new Roll(formula);
-			r.alter(0, 2);
-			e.innerHTML = `<i class="fas fa-dice-d20"></i> ${r.formula}`
-			e.dataset.formula = r.formula;
+			const rgx = new RegExp(Die.rgx.die, "g");
+			const formula = e.dataset.formula.replace(rgx, (match, nd, d, mods) => {
+				if (game.settings.get('mess', 'max-critical'))
+						mods = " + " + nd * d + (mods || "");
+				else {
+						nd = nd * 2;
+						mods = mods || "";
+				}
+				return nd + "d" + d + mods;
+			});
+			e.innerHTML = `<i class="fas fa-dice-d20"></i> ${formula}`;
+			e.dataset.formula = formula;
 		});
 	}
 	if (d20 <= fumble)

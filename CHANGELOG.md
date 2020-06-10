@@ -1,3 +1,6 @@
+# v0.7.0
+* (5e): Added settings option to support for "maximum crits": Changes behaviour of critical damage rolls to maximize the damage of the extra dice for criticals! Thanks to @bsleys for adding this feature!
+
 # v0.6.1
 * Forgot to update module.json to show compatibility with newest FVTT version....
 

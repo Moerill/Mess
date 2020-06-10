@@ -87,6 +87,16 @@ export class MessSettings extends FormApplication {
 			default: true,
 			type: Object
 		});	
+
+		game.settings.register('mess', 'max-critical', {
+			name: "Activate maximum critical rolls.",
+			hint: "Changes behaviour of critical damage rolls to maximize the damage of the extra dice for criticals!",
+			scope: "world",
+			config: isDnD,
+			default: false,
+			type: Boolean,
+			onChange: () => location.reload()
+		});
 	}
 
 	static get defaultOptions() {

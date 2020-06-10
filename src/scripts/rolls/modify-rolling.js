@@ -9,11 +9,15 @@ export default function() {
  * Initializes all the hoohks!
  */
 function setupHooks() {
+	CONFIG.Item.entityClass.chatListeners  = chatListeners.bind(CONFIG.Item.entityClass);
+
 	Hooks.on('preCreateChatMessage', preCreateChatMessageHook);
 	Hooks.on('renderActorSheet', actorSheetHook);
 
 	// Bind my own chatListeners to the item class and execute them.
-	Hooks.on('ready', chatListeners.bind(CONFIG.Item.entityClass));
+	// Hooks.on('ready', chatListeners.bind(CONFIG.Item.entityClass));
+
+
 }
 
 /**
@@ -268,8 +272,9 @@ async function actorSheetHook(app, html, data) {
 /**
  * My own chat listeners
  */
-function chatListeners() {
-	const html = $(document.getElementById('chat-log'));
+function chatListeners(html) {
+	if (!html)
+		html = $(document.getElementById('chat-log'));
 	html.on('click', '.card-buttons button', onChatCardAction.bind(this));
 	// html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
 	
@@ -323,7 +328,7 @@ async function onDblClickTarget(ev) {
 	if (!token || !token.visible) return false;
 	
 	const pos = token.center;
-	canvas.animatePan({x: pos.x, y: pos.y})
+	canvas.animatePan({x: pos.x, y: pos.y});
 }
 
 async function getTargetToken(ev) {
