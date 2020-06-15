@@ -1,9 +1,12 @@
 {
 	"MESS": {
-		"target": "Ziel",
-		"cardTargetTooltip": "Doppelklick um die Kamera auf das Token zu zentrieren, falls momentan die korrekte Szene betrachtet wird.",
-		"toHit": "Treffer",
-		"damage": "Schaden",
+		"attackCard": {
+			"target": "Ziel",
+			"cardTargetTooltip": "Doppelklick um die Kamera auf das Token zu zentrieren, falls momentan die korrekte Szene betrachtet wird.",
+			"chatCardResourceError": "There were not enough resources left for this attack!",
+			"toHit": "Treffer",
+			"damage": "Schaden"
+		},
 		"rollConfig": {
 			"Advantage": "W20 mit Vorteil würfeln.",
 			"Normal": "Nur mit einem W20 würfeln.",
@@ -12,6 +15,79 @@
 			"ModifierPlaceholder": "Modifikator",
 			"Hit": "Treffer",
 			"Dmg": "Schaden"
+		},
+		"actorSheet": {
+			"preparedSpellTracker": "vorbereitete Zauber"
+		},
+		"itemSheet": {
+			"templateTexture": "Template Textur",
+			"bonusDmg": "Als Bonusschaden zu Schadenswürfen hinzufügen?"
+		},
+		"FVTTSettings": {
+			"button": "Ordnung in diese Sauerei bringen!",
+			"description": "Mess Einstellungen."
+		},
+		"settings": {
+			"tabs": {
+				"info": "Info",
+				"templates": "Templates",
+				"dnd5e": "DnD5e",
+				"misc": "Misc."
+			},
+			"DnD": {
+				"specifics": "DnD5e spezifische Optionen."
+			},
+			"templates": {
+				"alternateTexturesLabel": "Aktiviert alternatives Darstellen der Template Texturen.",
+				"autotargetting": {
+					"label": "Aktiviert automatisches markieren von Zielen, die in einem Template sind, wenn man dieses bewegt."
+				},
+				"drawTemplateBorders": {
+					"label": "Keine Template Ränder oder Highlights, für Templates mit Texturfüllung, darstellen.",
+					"hint": "Wenn dies aktiviert ist wird  für Templates mit Textur weder Rand noch das markieren der Gitterkästchen, die das Template einnimmt, dargestellt. Wenn man über das Template mit der Maus markiert, werden diese vorübergehend doch dargestellt."
+				},
+				"DnD": {
+					"textureInfo": {
+						"header": "Standard Template Texturen",
+						"1": "Erlaubt standard Texturen für Templates zu definieren. Diese werden gewählt, wenn ein Zaubertemplate erstellt wird und für dieses keine spezifische Textur definiert wurde.",
+						"2": "Zur Bestimmung der Textur wird der erste Schadenstyp gewählt."
+					}
+				}
+			},
+			"dnd5e": {
+				"numericalScrolling": {
+					"label": "Numerisches scrollen.",
+					"hint": "Erlaubt in numerischen Feldern auf dem Charakterblatt mit dem Mausrad zu scrollen um diese zu modifizieren."
+				},
+				"itemSort": {
+					"label": "Gegenstände sortieren.",
+					"hint": "Fügt eine Schaltfläche zu dem Charakterblatt hinzu, welche alle Gegenstände/Zauber/... alphabetisch sortiert."
+				},
+				"preparedSpellTracker": {
+					"label": "Vorbereitete Zauber Anzeige.",
+					"hint": "Fügt eine Anzeige zum Zauberbuch Tab hinzu um die maximale Anzahl vorbereiteter Zauber zu tracken. Die maximale Zahl wird nicht automatisch berechnet, Die Anzeige ist primär zur Erinnerung da."
+				},
+				"rolling": {
+					"header": "Alternatives würfelnd und anvisieren",
+					"activate": "Aktivieren.",
+					"hint": "Alle folgenden Einstellungen funktionieren nur, wenn \"Aktivieren\" ausgewählt wurde.",
+					"maxCrit": {
+						"label": "Maximiere kritische Treffer.",
+						"hint": "Ändert das Verhalten kritischer Schadenswürfe, indem der Wurf des  kritischen Extrawürfel maximiert wird!"
+					}
+				}
+			},
+			"misc": {
+				"placeables":{
+					"label": "Placeables Änderungen aktivieren.",
+					"hint": "Ändert das Verhalten von Placeables, wie Tokens und Tiles, wenn sie bewegt werden. Die Placeables folgen der Maus flüssig bis die Maus für ein genaueres positionieren langsamer wird. Wenn ein gewisser Schwellenwert erreicht wird, wird die Vorschau an der Position positioniert, an der sie landen würden, wenn sie jetzt erstellet werden."
+				}
+			}
+		},
+		"reloadReminder": {
+			"text": "Damit die meisten Änderungen Wirkung zeigen, lade die Seite bitte für dich und alle verbundenen Klienten neu.",
+			"yes": "Ok, bitte für mich neuladen.",
+			"no": "Ich lade später selber neu."
 		}
 	}
 }

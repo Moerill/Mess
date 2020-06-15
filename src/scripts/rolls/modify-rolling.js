@@ -3,6 +3,34 @@ import {rollD20, getToHitData, rollToHit, getDmgData, rollDmg} from './dice.js';
 
 export default function() {
 	setupHooks();
+	game.mess.toggleItemBonusDamage = toggleItemBonusDamage;
+}
+
+/**
+ * Heavily based on: https://gitlab.com/foundrynet/dnd5e/-/blob/master/module/macros.js#L42
+ * original author: Atropos
+ * source repository: https://gitlab.com/foundrynet/dnd5e
+ * license: GPLv3
+ * @param {*} itemName 
+ */
+function toggleItemBonusDamage(itemName) {
+	const speaker = ChatMessage.getSpeaker();
+  let actor;
+	if ( speaker.token ) 
+		actor = game.actors.tokens[speaker.token];
+	if ( !actor ) 
+		actor = game.actors.get(speaker.actor);
+  // Get matching items
+  const items = actor ? actor.items.filter(i => i.name === itemName) : [];
+  if ( items.length > 1 ) {
+    ui.notifications.warn(`Your controlled Actor ${actor.name} has more than one Item with name ${itemName}. The first matched item will be chosen.`);
+  } else if ( items.length === 0 ) {
+    return ui.notifications.warn(`Your controlled Actor does not have an item named ${itemName}`);
+  }
+  const item = items[0];
+
+	// toggle bonus dmg
+	item.setFlag('mess', 'isBonusDamage', !item.getFlag('mess', 'isBonusDamage'));
 }
 
 /**
@@ -17,7 +45,21 @@ function setupHooks() {
 	// Bind my own chatListeners to the item class and execute them.
 	// Hooks.on('ready', chatListeners.bind(CONFIG.Item.entityClass));
 
+	Hooks.on('renderItemSheet', (app, html, data) => {
+		let div = document.createElement('div');
+		div.classList.add('form-group');
+		div.appendChild(document.createElement('label')).innerText = game.i18n.localize('MESS.itemSheet.bonusDmg');
+		let formField = div.appendChild(document.createElement('div'));
+		formField.classList.add('form-fields');
+		let inp = formField.appendChild(document.createElement('input'));
+		inp.type = 'checkbox';
+		inp.name = 'flags.mess.isBonusDamage';
+		inp.checked = app.object.getFlag('mess', 'isBonusDamage');
 
+		const target = html[0].querySelector('[name="data.formula"]');
+		if (target)
+			target.closest('.form-group').after(div);
+	})
 }
 
 /**

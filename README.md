@@ -14,12 +14,15 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 - [System independent](#universal)
 	* [Template Changes](#template-changes)
 		- [Scaling and animated template textures](#scaling-and-animated-template-textures)
+		- [Hiding template border and grid highlight](#hide-grid-highlight-and-border-for-textured-templates)
+		- [Auto targetting on template movement](#auto-targetting-on-template-move)
 	* [Miscellaneous](#miscellaneous)
 		- [Momentum based preview snapping](#momentum-based-preview-snapping)
 - [DnD5e specific](#dnd5e-specific)
 	* [More streamlined rolling and targeting](#rolling-and-targeting-change)
 		- [Custom chat cards](#custom-attack-and-damage-roll-chat-cards)
 		- [Autoroll and advantage toggles](#autoroll-and-advantage-toggle)
+		- [Use items to add bonus damage to other items](#use-items-to-add-bonus-damage-to-other-items)
 		- [Automatic Ability template texture](#ability-template-textures)
 		- [Automatic template targeting](#auto-targeting-with-ability-templates)
 	* [Actor sheet changes](#actor-sheet-changes)
@@ -52,7 +55,13 @@ Go to the [GitHub's issue board](https://github.com/Moerill/Mess/issues) and che
 **I will only take a quick glance at half hearted bug reports or Discord mentions! Don't expect me to react there!**
 
 ## Atribution
+Thanks to @bsleys for his continued support on helping to enhance this module with features!
+
+Thanks to @BrotherSharp for the japanese translation!
+
 Thanks to @NickEast for his ![foundry project creator](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project) which i'm using in a modified version for my building and publishing workflow.
+
+This module would not be possible without the great work from Atropos on FoundryVTT and the [DnD5e System](https://gitlab.com/foundrynet/dnd5e) for FoundryVTT! Part of the code (especially the code for the rolls) is heavily based on the DnD5es code, which is licensed under GNU GPLv3.
 
 The templates used in the videos are from [Pierluigi Riminis Perfect Spell Pack 2 animated](https://marketplace.roll20.net/browse/set/3954/perfect-spells-pack-2-animated).
 
@@ -107,12 +116,18 @@ Each time you use an ability the default chat card gets created as well as an *a
 ![attack card example](img/attack-card-example.png)  
 Hovering over the target in the card does highlight it on the map (if visible) and double clicking it pans it into view.  
 If a crit is rolled the dmg formulas are automatically adjusted to respect it by using the double amount of dice.  
-The flavor text (in the example ``The cat swipes at Badger lazily with a clawed paw.``) is the chat flavor text specified for the item. If you want to display the targets name in it, use ``[target.name]`` inside the flavor text.
+#### Custom flavor text
+The flavor text (in the example ``The cat swipes at Badger lazily with a clawed paw.``) is the chat flavor text specified for the item. If you want to display the targets name in it, use ``[target.name]`` inside the flavor text.  
+*Rollable Tables as Flavor*: You can also specify to modify the flavor (partially) by adding a rollable table. You can do so similarly as you specify other entities inside e.g. journals, by using ``@JournalEntry[name]`` or ``@JournalEntry[id]`` inside the chat flavor text. The module will automatically roll the table and replace the reference inside the flavor text. ``[target.name]`` will get replaced afterwards, so you can even use that inside your rollable tables.
 
 ### Autoroll and Advantage toggle
 ![Roll toggles](img/roll-toggles.png)  
 The roll change also adds options to toggle between *(dis-)advantage* and *normal* rolls, by clicking on the D20 above the chats roll mode selector. Right click will cycle through in the opposite direction. This will get applied at the time you click on the *to hit* button, not beforehand!  
 This also adds a selection to choose if *to hit* or *damage* rolls should be rolled automatically on *attack card* creation.
+
+### Use items to add bonus damage to other items
+Adds a new field to actor owned items to specify the first damage field as bonus damage for other damage rolls. Activating this will automatically add the damage to the list of damage rolls for each attack card off an item that is not bonus damage itself.  
+There is an easy script macro command to toggle this for an item: ``game.mess.toggleItemBonusDamage('Item Name')``
 
 ## Ability template textures
 ![Auto Template](img/auto_template.gif)

@@ -1,3 +1,47 @@
+# v0.8.0
+<ul>
+	<li>New Settings Menu!
+		<ul>
+			<li>Less mess inside FVTTs settings menu. Only one button is left!</li>
+			<li>More structure.</li>
+			<li>More fine grained control over most features provided by this module.</li>
+		</ul>
+	</li>
+	<li>(Almost) Full localization support for Japanese and German!
+		<ul>
+			<li>Almost all menus, buttons, etc. are now localized.</li>
+			<li>Special thanks to @BrotherSharp for providing the japanese translation!</li>
+			<li>Want to help localizing to other languages? contact me on GitHub!</li>
+		</ul>
+	</li>
+	<li>
+		Dislike template borders or grid highlights "besmear" your beautiful textures? I've got you covered, with a new option to hide borders and grid highlights for textured templates.
+		<ul>
+			<li>Only textured templates are affected.</li>
+			<li>If you hover over a templates control in the template layer the border and highlight will get shown</li>
+		</ul>
+	</li>
+	<li>Option for automatic targetting for *all* templates
+		<ul>
+			<li>Drag a template around and it will automatically target all tokens that are inside.</li>
+			<li>Ability templates autotargetting are now dependend on this new setting-</li>
+		</ul>
+	</li>
+	<li>
+		Use items to add bonus damage, like sneak attack, to other items!
+		<ul>
+			<li>Special thanks to @bsleys for providing the code!</li>
+			<li>Check the new checkbox on an item, to mark it as *bonus damage*.</li>
+			<li>Marked items are automatically added as damage roll to all damage rolls coming from that actor.</li>
+			<li>Use the script macro ``game.mess.toggleItemBonusDamage('Item Name')`` to toggle an items effect.</li>
+		</ul>
+	</li>
+	<li>Full  D&D5e Dark Mode and Tidy5e Support!</li>
+	<li>Fix item chat cards not being expandable with Mess activated.</li>
+	<li>Fixed cone template texture scaling being a bit off.</li>
+	<li>Fixed crit formulas breaking for dice pools or more complex roll formulas. Thanks to @bsleys for fixing this!</li>
+</ul>
+
 # v0.7.0
 * (5e): Added settings option to support for "maximum crits": Changes behaviour of critical damage rolls to maximize the damage of the extra dice for criticals! Thanks to @bsleys for adding this feature!
 

@@ -5,7 +5,7 @@ export class MessSettings extends FormApplication {
 		game.settings.register('mess', 'actor-item-sort', {
 			name: "Activate item sort button.",
 			hint: "Adds a button to actor sheets for sorting all items of that category alphabetically.",
-			scope: "user",
+			scope: "world",
 			config: false,
 			default: isDnD,
 			type: Boolean
@@ -13,7 +13,7 @@ export class MessSettings extends FormApplication {
 	
 		game.settings.register('mess', 'better-draggable', {
 			name: "Activate better drag'n'drop workflow.",
-			scope: "user",
+			scope: "world",
 			config: false,// Change if implemented
 			default: isDnD,
 			type: Boolean
@@ -22,7 +22,7 @@ export class MessSettings extends FormApplication {
 		game.settings.register('mess', 'prepared-spell-tracker', {
 			name: "Activate prepared spell tracker",
 			hint: "Adds a tracker to the spellbook tab, providing a way to track the allowed maximum of prepared spells.",
-			scope: "user",
+			scope: "world",
 			config: false,
 			default: isDnD,
 			type: Boolean
@@ -31,7 +31,7 @@ export class MessSettings extends FormApplication {
 		game.settings.register('mess', 'add-scrolling', {
 			name: "Activating numerical field scrolling.",
 			hint: "Lets you in-/decrease numerical fields in the Actor sheet using the mouse wheel when focused.",
-			scope: "user",
+			scope: "world",
 			config: false,
 			default: isDnD,
 			type: Boolean

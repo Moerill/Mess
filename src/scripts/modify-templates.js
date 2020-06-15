@@ -191,7 +191,6 @@ async function itemHook(app, html) {
 	button.style.flex = '0';
   app._activateFilePicker(button);
 	const target = html[0].querySelector('[name="data.target.units"]');
-	console.log(target);
   if (target)
 		target.closest('.form-group').after(div);
 }

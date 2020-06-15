@@ -32,7 +32,7 @@ export default async function addPreparedSpellTracker() {
 			actor.setFlag('mess', 'maxPreparedSpells', val);
 			return false;
 		});
-		console.log(app.constructor.name);
+		
 		if (app.constructor.name === 'Tidy5eSheet') {
 			const el = html[0].querySelector('.spellcasting-ability');
 			el.appendChild(tracker, el);

@@ -20,10 +20,11 @@
 			"preparedSpellTracker": "prepared spells"
 		},
 		"itemSheet": {
-			"templateTexture": "Template Texture"
+			"templateTexture": "Template Texture",
+			"bonusDmg": "Add bonus damage to damage rolls?"
 		},
 		"FVTTSettings": {
-			"button": "make a mess!",
+			"button": "bring some order into this mess!",
 			"description": "Mess settings menu."
 		},
 		"settings": {
@@ -37,7 +38,7 @@
 				"specifics": "DnD5e specific options."
 			},
 			"templates": {
-				"alternateTexturesLabel": "Enable alternatative template texture rendering.",
+				"alternateTexturesLabel": "Enable alternative template texture rendering.",
 				"autotargetting": {
 					"label": "Enables automatic targetting of tokens when a template is moved around."
 				},

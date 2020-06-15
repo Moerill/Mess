@@ -1,3 +1,10 @@
+/**
+ * All the functions provided here are heavily based on Foundrys DnD5e system, authored by Atropos.
+ * Original repository: https://gitlab.com/foundrynet/dnd5e
+ * Original Author: Atropos
+ * License: GNU GPLv3
+ */
+
 function getD20Modifier() {
 	return document.getElementById('mess-roll-mod').value;
 }
@@ -231,6 +238,25 @@ export async function getDmgData({actor, item, spellLevel = null}) {
 	rollData.parts = duplicate(itemData.damage.parts);
 	if (itemData.damage.versatile) 
 		rollData.parts.splice(1, 0, [itemData.damage.versatile, "versatile"]);
+
+	// Only apply for items that are not bonus dmg themself
+	if (!item.getFlag('mess', 'isBonusDamage'))
+		for (let itm of actor.items){
+			// skip self
+			if (itm.id === item.id) continue;
+
+			let bnsDmgParts = [];
+			if (itm.getFlag('mess', 'isBonusDamage')){
+				if (itm.hasDamage){
+					const itmData = itm.data.data;
+					bnsDmgParts.push(itmData.damage.parts[0][0]);
+					var lbl = itm.name;
+					if (itmData.damage.parts[0][1].length > 0) lbl += ` - ${game.i18n.localize('DND5E.Damage' + CONFIG.DND5E.damageTypes[itmData.damage.parts[0][1]])}`;
+					bnsDmgParts.push(lbl);
+				}
+			}
+			if (bnsDmgParts.length > 0) rollData.parts.push(bnsDmgParts);
+		}
 	
 	if (item.data.type === 'spell') {
 		if (itemData.scaling.mode === 'cantrip') {

@@ -44,6 +44,7 @@ Hooks.on('ready', async function() {
 });
 
 Hooks.on('init', function() {
+	game.mess = {};
 	CONFIG.debug.mess = false;
 	MessSettings.init();
 
@@ -54,19 +55,3 @@ Hooks.on('init', function() {
 	if (game.settings.get('mess', 'change-placeables'))
 		changePlaceables();
 });
-
-
-
-
-/** Think of something here to move that into modify rolling
- * MAYBE i finally have to give up on the thought of dynamic loading of everything....
- * maybe create initial file for everything, and then dynamically load content there
- * 
- */
-// Hooks.on('setup', () => {
-// 	if (game.settings.get('mess', 'modify-rolling'))
-// 		Hooks.on('getChatLogEntryContext', (html, options) => {
-// 			options.forEach(e => e.condition = false)
-// 			return [];
-// 		})
-// })
