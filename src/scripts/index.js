@@ -1,6 +1,6 @@
 import { rolling } from './rolls';
 import { MessSettings } from './settings.js';
-import {dndTemplateSettings, changeTemplateFill } from './modify-templates.js';
+import {dndTemplateSettings, changeTemplates } from './modify-templates.js';
 import { changePlaceables } from './change-placeables.js';
 import itemSortBtn from './actor-item-sort-btn.js';
 import preparedSpellTracker from './prepared-spell-tracker.js';
@@ -49,10 +49,8 @@ Hooks.on('init', function() {
 
 	rolling();
 
-	if (game.settings.get('mess', 'modify-templates')) {
-		dndTemplateSettings();
-		changeTemplateFill();
-	}
+	dndTemplateSettings();
+	changeTemplates();
 	if (game.settings.get('mess', 'change-placeables'))
 		changePlaceables();
 });

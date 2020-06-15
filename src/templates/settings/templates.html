@@ -1,0 +1,36 @@
+<div class='form-checkbox-group'>
+	<input type='checkbox' data-dtype='boolean' name='modify-templates' id='mess-modify-templates'{{checked settings.modify-templates}}/><label for='mess-modify-templates'>{{localize 'MESS.settings.templates.alternateTexturesLabel'}}</label> 
+		<a class='mess-info' href='https://github.com/Moerill/mess#scaling-and-animated-template-textures'></a>
+</div>
+<div class='form-checkbox-group'>
+	<input type='checkbox' data-dtype='boolean' name='templateAutoTargeting' id='mess-template-autotargeting'{{checked settings.templateAutoTargeting}}/><label for='mess-template-autotargeting'>{{localize 'MESS.settings.templates.autotargetting.label'}}</label> 
+		<a class='mess-info' href='https://github.com/Moerill/mess#scaling-and-animated-template-textures'></a>
+</div>
+<div class='form-checkbox-group'>
+	<input type='checkbox' data-dtype='boolean' name='templateDrawBordersOnlyOnHighlight' id='mess-draw-template-borders'{{checked settings.templateDrawBordersOnlyOnHighlight}}/><label for='mess-draw-template-borders'>{{localize 'MESS.settings.templates.drawTemplateBorders.label'}}</label> 
+		<a class='mess-info' href='https://github.com/Moerill/mess#scaling-and-animated-template-textures'></a>
+		<span class='mess-hint'>{{localize 'MESS.settings.templates.drawTemplateBorders.hint'}}</span>
+</div>
+{{#if isDnD}}
+	<h1>{{localize 'MESS.settings.DnD.specifics'}}</h1>
+	<h2>{{localize 'MESS.settings.templates.DnD.textureInfo.header'}}<a class='mess-info' href='https://github.com/Moerill/mess#ability-template-textures'></a></h2>
+	<p>{{localize 'MESS.settings.templates.DnD.textureInfo.1'}}</p>
+	<p>{{localize 'MESS.settings.templates.DnD.textureInfo.2'}}</p>
+
+	<div class='mess-template-chooser'>
+		{{#each dmgTypes as |dmgType dmgKey|}}
+			<h3>{{dmgType}}</h3>
+			{{#each @root.templateTypes as |template key| }}
+				<div class="form-group">
+					<label for="texture">{{template}}</label>
+					<div class="form-fields">
+								<button type="button" class="file-picker" data-type="imagevideo" data-target="templateTexture.{{dmgKey}}.{{key}}" title="Browse Files" tabindex="-1">
+									<i class="fas fa-file-import fa-fw"></i>
+							</button>
+							<input class="imagevideo" type="text" name="templateTexture.{{dmgKey}}.{{key}}" placeholder="path/image.png" value="{{lookup (lookup @root.settings.templateTexture dmgKey) key }}"/>
+					</div>
+				</div>
+			{{/each}}
+		{{/each}}
+	</div>
+{{/if}}

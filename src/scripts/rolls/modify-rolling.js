@@ -276,7 +276,7 @@ function chatListeners(html) {
 	if (!html)
 		html = $(document.getElementById('chat-log'));
 	html.on('click', '.card-buttons button', onChatCardAction.bind(this));
-	// html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
+	html.on('click', '.item-name', this._onChatCardToggleContent.bind(this));
 	
 	// lets just use this for even more listeners
 	html.on('mouseenter', '.mess-chat-target', onMouseEnterTarget);
@@ -289,6 +289,7 @@ function chatListeners(html) {
 
 // Only overwrite stuff for attack buttons
 async function onChatCardAction (ev) {
+	ev.preventDefault(); ev.stopPropagation();
 	if (ev.currentTarget.dataset.action === 'attack')
 		return renderAttack(ev);
 	if (ev.currentTarget.dataset.action === 'damage')

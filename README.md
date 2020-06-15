@@ -12,8 +12,10 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 
 ## Current Feature List
 - [System independent](#universal)
-	* [Scaling and animated template textures](#scaling-and-animated-template-textures)
-	* [Momentum based preview snapping](#momentum-based-preview-snapping)
+	* [Template Changes](#template-changes)
+		- [Scaling and animated template textures](#scaling-and-animated-template-textures)
+	* [Miscellaneous](#miscellaneous)
+		- [Momentum based preview snapping](#momentum-based-preview-snapping)
 - [DnD5e specific](#dnd5e-specific)
 	* [More streamlined rolling and targeting](#rolling-and-targeting-change)
 		- [Custom chat cards](#custom-attack-and-damage-roll-chat-cards)
@@ -64,13 +66,23 @@ Want to help me develop? Send a merge request on this gitlab or contact me on Di
 Want to support me in another way? 
 Leave me some nice comments (e.g. on Discord), recommend this module to others and/or leave a donation over at my [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FYZ294SP2JBGS&source=url).
 
-# Features
+# Universal Features
 
-## Universal
+## Template Changes
 ### Scaling and animated template textures
 ![video templates](img/animated_templates.gif)  
 Tired of FVTTs tiling for template textures? Then this feature is perfect for you! When this feature is enabled template textures are scaled up and rotated  to match the template. This also allows for the usage of video files as template textures! Nice! (For all textures the same rules as for all FVTT image and video files do apply)
 This also automatically activates [Automatic Ability template texture](#ability-template-textures) when you're using the DnD5e system.
+
+### Hide grid highlight and border for textured templates
+![hide highlight](img/highlight_on_hover.gif)  
+When the template borders and grid highlights stand in the way of a fully immersive experience, use this feature to just hide them! This only hides borders and highlights for all _textured_ templates. If you want to make sure which grid squares are covered by the templates, just hover over it and the highlight and border will get displayed!
+
+### Auto targetting on template move
+Using this feature you automatically target each token inside a template you move around!  
+Activating this feature also activates [Automatic template targeting for DnD5e](#auto-targeting-with-ability-templates).
+
+## Miscellaneous
 
 ### Momentum based preview snapping
 ![preview snapping](img/preview_snapping.gif)
@@ -83,11 +95,12 @@ Let me explain: As long as you drag the placeable quickly around, the preview wo
 To make dragging around more beautiful! Letting the placeable always snap, makes it kinda jumpy when dragging around, resulting in a less smooth and visually less appealing experience. Using the past momentum of the mouse, the algorithm notices when you slow down to precisely place a placeable, snapping it at the position it will really end up.  
 *Imporant*: This feature still needs a bit fine tuning, adjusting the parameters, ... Feedback for this is valuable! You can provide feedback [here](https://github.com/Moerill/Mess/issues/1)
 
-## DnD5e specific
-### Rolling and targeting change
+
+# DnD5e specific features
+## Rolling and targeting change
 This is a big one and encompasses a variety of features.
 
-#### Custom attack and damage roll chat cards
+### Custom attack and damage roll chat cards
 ![Attacking](img/attacking.gif)  
 Default DnD5e does need way to many clicks, just to do a single attack. There do exist other approaches to handle this, like BetterRolls, but i am not a fan of those. This feature streamlines the process of attacking or using an item/feature/spell (from now on summarized together as ability).  
 Each time you use an ability the default chat card gets created as well as an *attack card* for each target you selected (or just one if no target is selected or the ability is an AoE skill.). Example card:  
@@ -96,31 +109,31 @@ Hovering over the target in the card does highlight it on the map (if visible) a
 If a crit is rolled the dmg formulas are automatically adjusted to respect it by using the double amount of dice.  
 The flavor text (in the example ``The cat swipes at Badger lazily with a clawed paw.``) is the chat flavor text specified for the item. If you want to display the targets name in it, use ``[target.name]`` inside the flavor text.
 
-#### Autoroll and Advantage toggle
+### Autoroll and Advantage toggle
 ![Roll toggles](img/roll-toggles.png)  
 The roll change also adds options to toggle between *(dis-)advantage* and *normal* rolls, by clicking on the D20 above the chats roll mode selector. Right click will cycle through in the opposite direction. This will get applied at the time you click on the *to hit* button, not beforehand!  
 This also adds a selection to choose if *to hit* or *damage* rolls should be rolled automatically on *attack card* creation.
 
-### Ability template textures
+## Ability template textures
 ![Auto Template](img/auto_template.gif)
 Want to be cool and really show a fireball each time you cast it, instead of the blank template for targeting?  
 This feature lets you specify textures for your templates automatically created by using a feature or spell. It adds to the item sheet a field to select an image or video file as texture. If no file is specified the module will automatically try to select a file depending on the settings set or blank if none found.  
 **Important** This feature gets automatically activated when you activate [Scaling and animated template textures](#scaling-and-animated-template-textures) and are using the DnD5e system.
 
-#### Auto targeting with ability templates
+### Auto targeting with ability templates
 This awesome template gets created when you cast a spell, but you still have to manually specify the tokens as targets? Uff! But i'm here to help: This feature automatically targets the tokens inside of your placed template.  
 This doesn't do anything with the targets though, since, to my knowledge, RAW you roll only one dmg die for all AoE skills. So it only rolls *once* for AoE abilities, without a target, as seen in the GIF, in the previous section.
 
-### Actor Sheet Changes
+## Actor Sheet Changes
 A collection of small actor sheet enhancements, mainly aimed at the default DnD 5e Actor sheet. Each of them can be dis-/enabled independently. These settings are also client side, so each user can decide for him-/herself if (s)he wants to use it.
 
-#### Numerical scroller
+### Numerical scroller
 To lazy to use the keyboard to just reduce the hitpoints by just *1*? I got you covered! When enabling this feature you can click on a numerical field and use the mousewheel to de-/increase the value of the field!
 
-#### Alphabetical item sort
+### Alphabetical item sort
 ![sort button](img/sort-btn.png)  
 Keeping order is an ordeal! This feature adds a button that sorts all items of the current category alphabetically, so you don't have to!
 
-#### Prepared Spell Tracker
+### Prepared Spell Tracker
 ![pepared-spell-tracker-example](img/prepared-spell-tracker.png)  
 Always forget how many spells you're allowed to prepare? Fret not, this feature adds a field to the actor sheet to allow you to specify the maximum number of allowed prepared spells.

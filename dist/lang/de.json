@@ -1,13 +1,17 @@
 {
-	"MESS.target": "Ziel",
-	"MESS.cardTargetTooltip": "Doppelklick um die Kamera auf das Token zu zentrieren, falls momentan die korrekte Szene betrachtet wird.",
-	"MESS.toHit": "Treffer",
-	"MESS.damage": "Schaden",
-	"MESS.rollConfigAdvantage": "W20 mit Vorteil würfeln.",
-	"MESS.rollConfigNormal": "Nur mit einem W20 würfeln.",
-	"MESS.rollConfigDisadvantage": "Mit Nachteil würfeln. :(",
-	"MESS.rollConfigModifierTitle": "Situationsbedingter Modifikator für W20 basierte Würfe.",
-	"MESS.rollConfigModifierPlaceholder": "Modifikator",
-	"MESS.rollConfigHit": "Treffer",
-	"MESS.rollConfigDmg": "Schaden"
+	"MESS": {
+		"target": "Ziel",
+		"cardTargetTooltip": "Doppelklick um die Kamera auf das Token zu zentrieren, falls momentan die korrekte Szene betrachtet wird.",
+		"toHit": "Treffer",
+		"damage": "Schaden",
+		"rollConfig": {
+			"Advantage": "W20 mit Vorteil würfeln.",
+			"Normal": "Nur mit einem W20 würfeln.",
+			"Disadvantage": "Mit Nachteil würfeln. :(",
+			"ModifierTitle": "Situationsbedingter Modifikator für W20 basierte Würfe.",
+			"ModifierPlaceholder": "Modifikator",
+			"Hit": "Treffer",
+			"Dmg": "Schaden"
+		}
+	}
 }

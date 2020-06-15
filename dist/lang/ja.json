@@ -1,13 +1,17 @@
 {
-	"MESS.target": "対象",
-	"MESS.cardTargetTooltip": "ダブルクリックで現在のコマに注目します。",
-	"MESS.toHit": "ヒット",
-	"MESS.damage": "ダメージ",
-	"MESS.rollConfigAdvantage": "有利でロールする",
-	"MESS.rollConfigNormal": "通常ロール(d20を1個）をする",
-	"MESS.rollConfigDisadvantage": "不利でロールする(´・ω・`)",
-	"MESS.rollConfigModifierTitle": "d20用の状況修正値",
-	"MESS.rollConfigModifierPlaceholder": "修正値",
-	"MESS.rollConfigHit": "ヒット",
-	"MESS.rollConfigDmg": "ダメージ"
+	"MESS": {
+		"target": "対象",
+		"cardTargetTooltip": "ダブルクリックで現在のコマに注目します。",
+		"toHit": "ヒット",
+		"damage": "ダメージ",
+		"rollConfig": {
+			"Advantage": "有利でロールする",
+			"Normal": "通常ロール(d20を1個）をする",
+			"Disadvantage": "不利でロールする(´・ω・`)",
+			"ModifierTitle": "d20用の状況修正値",
+			"ModifierPlaceholder": "修正値",
+			"Hit": "ヒット",
+			"Dmg": "ダメージ"
+		}
+	}
 }

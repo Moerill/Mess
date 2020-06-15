@@ -207,3 +207,105 @@
   color: #3F88E6;
   text-shadow: 0 0 10px #3F88E6;
 }
+.mess.settings {
+  --border-color: #666;
+  --div-border-color: #6666;
+  --div-bg-color: rgba(0, 0, 0, 0.05);
+  --highlight-color: red;
+  --hint-color: #444;
+  max-height: 650px;
+}
+.mess.settings .window-content {
+  padding: 0;
+}
+.mess.settings nav {
+  background: var(--div-bg-color);
+  padding: 6px;
+  margin: 0;
+  margin-bottom: 3px;
+  border-bottom: 1px solid var(--border-color);
+  margin: 0 0 6px 0;
+}
+.mess.settings section {
+  padding: 0.8em;
+}
+.mess.settings a[href] {
+  color: #4a52ca;
+}
+.mess.settings .mess-info {
+  font-weight: 900;
+  font-family: "Font Awesome 5 Free";
+  position: relative;
+  top: -0.4em;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+  margin: 0;
+  padding: 0 0.3rem;
+}
+.mess.settings .mess-info:before {
+  font-size: 0.6rem;
+  content: "\f059";
+  border: none;
+}
+.mess.settings input[type="checkbox"] {
+  opacity: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  flex: 0;
+}
+.mess.settings label[for] {
+  cursor: pointer;
+}
+.mess.settings .form-checkbox-group {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  margin: 3px 0;
+}
+.mess.settings .form-checkbox-group label:hover {
+  text-shadow: 0 0 4px var(--highlight-color);
+}
+.mess.settings .form-checkbox-group label:before {
+  font-weight: 400;
+  font-family: "Font Awesome 5 Free";
+  padding: 0 0.3em;
+  content: "\f0c8";
+}
+.mess.settings .form-checkbox-group input:checked + label:before {
+  font-weight: 900;
+  content: "\f14a";
+}
+.mess.settings .mess-hint {
+  flex: 0 100%;
+  padding: 0 1em 0.3em 0;
+  margin-left: 4ch;
+  font-size: 0.9em;
+  color: var(--hint-color);
+}
+.mess.settings .mess-template-chooser {
+  flex: 1;
+  overflow: scroll;
+  background: var(--div-bg-color);
+  padding: 0.5em 0;
+  border: 2px inset var(--div-border-color);
+  border-radius: 0.5em;
+}
+.mess.settings .mess-template-chooser h3 {
+  border-bottom: 1px solid var(--border-color);
+  padding: 0 0.3em;
+  margin: 0;
+}
+.mess.settings .mess-template-chooser .form-group {
+  padding: 0 1em;
+}
+.dark-mode .mess.settings {
+  --border-color: #aaa;
+  --div-bg-color: rgba(150, 150, 150, 0.05);
+  --highlight-color: #7bb4ff;
+  --hint-color: #797979;
+}

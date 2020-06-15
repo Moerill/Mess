@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const stringify = require('json-stringify-pretty-compact');
 const less = require('gulp-less');
 const git = require('gulp-git');
+const concat = require('gulp-concat');
 
 const argv = require('yargs').argv;
 
@@ -61,7 +62,7 @@ function getManifest() {
  * Build Less
  */
 function buildLess() {
-	return gulp.src('src/css/*.less').pipe(less()).pipe(gulp.dest('dist/css/')).pipe(browserSync.stream());
+	return gulp.src('src/css/*.less').pipe(concat('mess.less')).pipe(less()).pipe(gulp.dest('dist/css/')).pipe(browserSync.stream());
 }
 
 

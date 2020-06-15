@@ -261,7 +261,16 @@ export async function getDmgData({actor, item, spellLevel = null}) {
 			part[1] = game.i18n.localize('DND5E.Damage' + CONFIG.DND5E.damageTypes[part[1]]);
 		else if (part[1] === 'versatile')
 			part[1] = game.i18n.localize('DND5E.Versatile');
-		part.push(roll.formula);
+
+		//evalute damage formula's for example "ceil(@classes.rogue.levels/2))d6" -> "4d6"
+		let terms = roll._evalParentheticalTerms(roll.formula).map(t => {
+			if ( t instanceof Roll ) {
+				t.roll();
+				return t.total;
+			}
+			return t;
+		});
+		part.push(terms.join(''));
 	}
 
 	return rollData;

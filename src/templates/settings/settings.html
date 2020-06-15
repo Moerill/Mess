@@ -1,0 +1,35 @@
+<form class="{{classes}}" autocomplete="off">
+	<nav class="sheet-tabs tabs">
+		<a class='item' data-tab='Info'>{{localize 'MESS.settings.tabs.info'}}</a>
+		<a class='item' data-tab='Template'>{{localize 'MESS.settings.tabs.templates'}}</a>
+		{{#if isDnD}}
+		<a class='item' data-tab='dnd5e'>{{localize 'MESS.settings.tabs.dnd5e'}}</a>
+		{{/if}}
+		<a class='item' data-tab='Misc'>{{localize 'MESS.settings.tabs.misc'}}</class>
+	</nav>	
+
+	<section class='tab' data-tab='Info'>
+		<p>Make sure to read the <a href="https://github.com/Moerill/mess#mess---moerills-enhancing-super-suite">README</a>, for important informations and to learn about this modules features, since there are quite a few and they are not all connected.</p>
+		<h2>Bugs? Issues?</h2>
+			<p>Read and follow <a href="https://github.com/Moerill/mess#bug-reporting">these instructions</a>.
+		<h2>Suggestions? Feature Requests? Feedback?</h2>
+		<p>Don't ask me on Discord. Use the <a href="https://github.com/Moerill/mess/issues">GitHubs Issue Board</a> for questions, suggestions, bugs, helping other peoples questions getting answered, ... .</p>
+		<p>Before you post anything, check the issues board first if your issue, question, etc. has been posted already. If yes, comment on the existing post and/or give it a thumbsup!</p>
+		<p>Currently planned features (and bugs) are on the <a href="https://github.com/Moerill/mess/issues">GitHubs Issue Board</a>. </p>
+	
+		<p style="font-weight: bold; text-align: right;">Best regards, <br>Moerill</p>
+		<h2></h2>
+		<p style="text-align: right">Want to support development? <a href="https://github.com/Moerill/token-mold#support-the-development">Click here</a></p>
+	</section>
+	<section class='tab' data-tab='Template'>
+		{{> modules/mess/templates/settings/templates.html}}
+	</section>
+	{{#if isDnD}}
+	<section class='tab' data-tab='dnd5e'>
+		{{> modules/mess/templates/settings/dnd5e.html}}
+	</section>
+	{{/if}}
+	<section class='tab' data-tab='Misc'>
+		{{> modules/mess/templates/settings/misc.html}}
+	</section>
+</form>

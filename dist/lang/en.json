@@ -1,14 +1,92 @@
 {
-	"MESS.target": "Target",
-	"MESS.cardTargetTooltip": "Double click to pan to token, if its scene is currently viewed.",
-	"MESS.chatCardResourceError": "There were not enough resources left for this attack!",
-	"MESS.toHit": "To Hit",
-	"MESS.damage": "Damage",
-	"MESS.rollConfigAdvantage": "Roll with Advantage!",
-	"MESS.rollConfigNormal": "Roll with just 1d20!",
-	"MESS.rollConfigDisadvantage": "Roll with Disdvantage! :(",
-	"MESS.rollConfigModifierTitle": "Situational modifier für d20 based rolls.",
-	"MESS.rollConfigModifierPlaceholder": "modifier",
-	"MESS.rollConfigHit": "Hit",
-	"MESS.rollConfigDmg": "Dmg"
+	"MESS": {
+		"attackCard": {
+			"target": "Target",
+			"cardTargetTooltip": "Double click to pan to token, if its scene is currently viewed.",
+			"chatCardResourceError": "There were not enough resources left for this attack!",
+			"toHit": "To Hit",
+			"damage": "Damage"
+		},
+		"rollConfig": {
+			"Advantage": "Roll with Advantage!",
+			"Normal": "Roll with just 1d20!",
+			"Disadvantage": "Roll with Disdvantage! :(",
+			"ModifierTitle": "Situational modifier für d20 based rolls.",
+			"ModifierPlaceholder": "modifier",
+			"Hit": "Hit",
+			"Dmg": "Dmg"
+		},
+		"actorSheet": {
+			"preparedSpellTracker": "prepared spells"
+		},
+		"itemSheet": {
+			"templateTexture": "Template Texture"
+		},
+		"FVTTSettings": {
+			"button": "make a mess!",
+			"description": "Mess settings menu."
+		},
+		"settings": {
+			"tabs": {
+				"info": "Info",
+				"templates": "Templates",
+				"dnd5e": "DnD5e",
+				"misc": "Misc."
+			},
+			"DnD": {
+				"specifics": "DnD5e specific options."
+			},
+			"templates": {
+				"alternateTexturesLabel": "Enable alternatative template texture rendering.",
+				"autotargetting": {
+					"label": "Enables automatic targetting of tokens when a template is moved around."
+				},
+				"drawTemplateBorders": {
+					"label": "Neither draw template borders nor highlight grid for textured templates.",
+					"hint": "Activating this removes borders and grid highlight of textured templates only. If you hover over the templates control, the highlight and the borders will be shown."
+				},
+				"DnD": {
+					"textureInfo": {
+						"header": "Default template textures",
+						"1": "Allows you to specify default textures chosen for spell templates, if none is set for the item.",
+						"2": "The damage type of the first damage field of the item is chosen."
+					}
+				}
+			},
+			"dnd5e": {
+				"numericalScrolling": {
+					"label": "Numerical Scrolling.",
+					"hint": "Allows to scroll inside of numerical input fields to modify them."
+				},
+				"itemSort": {
+					"label": "Sort Items Button.",
+					"hint": "Adds a button  to automatically sort items in increasing alphabetical order."
+				},
+				"preparedSpellTracker": {
+					"label": "Prepared Spell Tracker.",
+					"hint": "Adds a tracker to the spellbook tab. This tracker allows for easier tracking of the maximum number of allowed spells. This does not get calculated automatically,  it is more of a reminder as to how many you're allowed to have."
+				},
+				"rolling": {
+					"header": "Alternative rolling and targetting",
+					"activate": "Activate.",
+					"hint": "All following settings do only work if Activate is selected.",
+					"maxCrit": {
+						"label": "Use maximum crits.",
+						"hint": "Changes behaviour of critical damage rolls to maximize the damage of the extra dice!"
+					}
+				}
+			},
+			"misc": {
+				"placeables":{
+					"label": "Activate placeables changes.",
+					"hint": "Changes the way placeable previews are displayed, when dragged around. They will follow your mouse smoothly. Only when you start slowing down to place them precisely, they will be shown at the exact place (e.g. snapped to grid) where they will end up after creation."
+				}
+			}
+		},
+		"reloadReminder": {
+			"text": "Please refresh the page for you and all clients for most changes to take effect.",
+			"yes": "Ok, reload for me.",
+			"no": "No, i'll refresh manually."
+		}
+	}
 }
