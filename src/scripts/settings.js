@@ -173,10 +173,13 @@ export class MessSettings extends FormApplication {
 	}
 
 	getData() {
+		const isDnD = game.system.id === 'dnd5e';
 		let data = super.getData();
-		data.dmgTypes = CONFIG.DND5E.damageTypes;
-		data.templateTypes = CONFIG.MeasuredTemplate.types;
-		data.isDnD = game.system.id === 'dnd5e';
+		if (isDnD) {
+			data.dmgTypes = CONFIG.DND5E.damageTypes;
+			data.templateTypes = CONFIG.MeasuredTemplate.types;
+		}
+		data.isDnD = isDnD;
 		data.settings = this.getSettingsData();
 		return data;
 	}
