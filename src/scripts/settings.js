@@ -63,15 +63,13 @@ export class MessSettings extends FormApplication {
 			default: true,
 			type: Boolean
 		});	
-		if (isDnD)
-			game.settings.registerMenu('mess', 'templateTexture', {
-				name: game.i18n.localize('MESS.FVTTSettings.description'),
-				label: game.i18n.localize('MESS.FVTTSettings.button'),
-				// hint: "!",
-				icon: "fas fa-mug-hot",
-				type: MessSettings,
-				restricted: true
-			});
+		game.settings.registerMenu('mess', 'templateTexture', {
+			name: game.i18n.localize('MESS.FVTTSettings.description'),
+			label: game.i18n.localize('MESS.FVTTSettings.button'),
+			icon: "fas fa-mug-hot",
+			type: MessSettings,
+			restricted: true
+		});
 
 		game.settings.register('mess', 'templateTexture', {
 			name: "Activate placeables changes.",

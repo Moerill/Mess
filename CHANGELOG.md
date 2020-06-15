@@ -1,3 +1,7 @@
+# v0.8.1
+* Fix settings menu not showing for non DnD Systems.
+* Undid a change making video textures not work anymore.
+
 # v0.8.0
 <ul>
 	<li>New Settings Menu!

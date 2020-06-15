@@ -50,6 +50,13 @@ export function changeTemplates() {
 					matrix: mat,
 					alpha: 0.8
 				});
+				// move into draw or so
+				const source = getProperty(this.texture, "baseTexture.resource.source")
+				if ( source && (source.tagName === "VIDEO") ) {
+					source.loop = true;
+					source.muted = true;
+					game.video.play(source);
+				}
 		}`);
 
 		Hooks.on('renderMeasuredTemplateConfig', (app, html, data) => {
