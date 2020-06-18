@@ -18,6 +18,7 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 		- [Auto targetting on template movement](#auto-targetting-on-template-move)
 	* [Miscellaneous](#miscellaneous)
 		- [Momentum based preview snapping](#momentum-based-preview-snapping)
+		- [Drag and Drop animations for sorting lists](#drag-and-drop-animations-for-sorting-lists)
 - [DnD5e specific](#dnd5e-specific)
 	* [More streamlined rolling and targeting](#rolling-and-targeting-change)
 		- [Custom chat cards](#custom-attack-and-damage-roll-chat-cards)
@@ -104,6 +105,15 @@ Let me explain: As long as you drag the placeable quickly around, the preview wo
 To make dragging around more beautiful! Letting the placeable always snap, makes it kinda jumpy when dragging around, resulting in a less smooth and visually less appealing experience. Using the past momentum of the mouse, the algorithm notices when you slow down to precisely place a placeable, snapping it at the position it will really end up.  
 *Imporant*: This feature still needs a bit fine tuning, adjusting the parameters, ... Feedback for this is valuable! You can provide feedback [here](https://github.com/Moerill/Mess/issues/1)
 
+### Drag and Drop animations for sorting lists
+![Dragging](img/drag-preview.gif)  
+Adds animations for Drag and Drop animations to make them more appealing to the eye and more obvious where stuff will end up when dropped.  
+#### Some important information and known issues for this feature
+1) Its supposed to work with all sidebar directories, that support a drag and drop workflow to sort.
+2) Many actor sheets are supported out of the box. Tested with:
+	* DnD5e default and tidy5e sheets
+	* Pf2e character sheet
+3) sorting to the end of a list/folder is kinda difficult at the moment. For sidebar directories dragging onto the folder itself puts it at the end. (Trying to fix this just introduced quite a few more issues and was not worth the effort. Also to my knowledge its the same for base FVTT dragging)
 
 # DnD5e specific features
 ## Rolling and targeting change

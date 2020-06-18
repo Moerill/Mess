@@ -18,6 +18,14 @@ export class MessSettings extends FormApplication {
 			default: isDnD,
 			type: Boolean
 		})
+
+		game.settings.register('mess', 'better-draggable-lists', {
+			name: "Activate better drag'n'drop workflow for lists.",
+			scope: "world",
+			config: false,
+			default: true,
+			type: Boolean
+		})
 	
 		game.settings.register('mess', 'prepared-spell-tracker', {
 			name: "Activate prepared spell tracker",
@@ -157,7 +165,8 @@ export class MessSettings extends FormApplication {
 			'change-placeables': game.settings.get('mess', 'change-placeables'),
 			'templateTexture': game.settings.get('mess', 'templateTexture'),
 			'templateAutoTargeting': game.settings.get('mess', 'templateAutoTargeting'),
-			'templateDrawBordersOnlyOnHighlight': game.settings.get('mess', 'templateDrawBordersOnlyOnHighlight')
+			'templateDrawBordersOnlyOnHighlight': game.settings.get('mess', 'templateDrawBordersOnlyOnHighlight'),
+			'better-draggable-lists': game.settings.get('mess', 'better-draggable-lists')
 		};
 		if (isDnD) {
 			data['templateTexture'] = game.settings.get('mess', 'templateTexture');

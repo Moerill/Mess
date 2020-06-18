@@ -1,3 +1,6 @@
+# v0.9
+* NEW FEATURE: Smooth drag animations in the sidebar directories and on most actor sheets!
+
 # v0.8.2
 * Fix settings menu not working for non DnD Systems.
 

@@ -6,6 +6,9 @@ import itemSortBtn from './actor-item-sort-btn.js';
 import preparedSpellTracker from './prepared-spell-tracker.js';
 import addScrolling from './add-scrolling.js';
 
+import {initDraggableLists} from './draggable-lists';
+import {initChatPopUp} from './chat-popup';
+
 Hooks.on('ready', async function() {
 	if (game.settings.get('mess', 'actor-item-sort'))
 		itemSortBtn();
@@ -18,6 +21,8 @@ Hooks.on('ready', async function() {
 		const actor = (await fromUuid('Actor.xV3LUAg05Pz5MFTS'));
 		actor.sheet.render(true);
 	}
+
+	// initChatPopUp();
 
 	if (!game.user.isGM)
 	return;
@@ -54,4 +59,6 @@ Hooks.on('init', function() {
 	changeTemplates();
 	if (game.settings.get('mess', 'change-placeables'))
 		changePlaceables();
+	if (game.settings.get('mess', 'better-draggable-lists'))
+		initDraggableLists();
 });

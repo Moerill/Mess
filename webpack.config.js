@@ -19,6 +19,7 @@ module.exports = {
     minimize: true
   },
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new webpack.IgnorePlugin(/scripts\/greensock/)
   ]
 };

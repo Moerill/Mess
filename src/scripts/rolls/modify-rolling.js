@@ -29,8 +29,10 @@ function toggleItemBonusDamage(itemName) {
   }
   const item = items[0];
 
+	const newState = !item.getFlag('mess', 'isBonusDamage');
 	// toggle bonus dmg
-	item.setFlag('mess', 'isBonusDamage', !item.getFlag('mess', 'isBonusDamage'));
+	item.setFlag('mess', 'isBonusDamage', newState);
+	return newState;
 }
 
 /**

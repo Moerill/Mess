@@ -81,6 +81,10 @@
 				"placeables":{
 					"label": "Activate placeables changes.",
 					"hint": "Changes the way placeable previews are displayed, when dragged around. They will follow your mouse smoothly. Only when you start slowing down to place them precisely, they will be shown at the exact place (e.g. snapped to grid) where they will end up after creation."
+				},
+				"draggableLists": {
+					"label": "Activate nicer drag animations for the sidebar (and itemlists for many actor sheets).",
+					"hint": "Adds animations to the drag and drop workflow for better visual feedback of what is happening and to properly see where an object will end up when dropped."
 				}
 			}
 		},
