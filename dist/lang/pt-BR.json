@@ -5,7 +5,23 @@
 			"cardTargetTooltip": "Clique duas vezes para deslocar para o token, se a cena estiver exibida atualmente.",
 			"chatCardResourceError": "Não havia recursos suficientes para este ataque!",
 			"toHit": "Para Acertar",
-			"damage": "Dano"
+			"damage": "Dano",
+			"contextMenu": {
+				"dmg": "Damage",
+				"healing": "Healing",
+				"full": "Full",
+				"half": "Half",
+				"double": "Double",
+				"error": "You must select at least one token to apply the damage to!",
+				"applyTarget": "Apply to target",
+				"applySelected": "Apply to selected"
+			},
+			"applyDamage": {
+				"sceneNotFound": "Scene for Target not found!",
+				"targetNotFound": "Target token not found!",
+				"targetNotOwner": "You are not allowed to modify target tokens HP!"
+			},
+			"showToPlayers": "Toggle whether rolled dice results are shown to players. "
 		},
 		"rollConfig": {
 			"Advantage": "Role com Vantagem!",
@@ -74,6 +90,10 @@
 					"maxCrit": {
 						"label": "Usar Criticos Máximos",
 						"hint": "Altera o comportamento dos testes de dano crítico para maximizar o dano dos dados extras!"
+					},
+					"mode": {
+					"activate": "Sempre exiba cartões de ataque GM para todos os usuários, independentemente do modo de rolagem.",
+					"hint": "Isso sempre exibirá a carta de ataque com algumas informações básicas, como o atacante e o alvo para todos os jogadores. O MJ pode decidir manualmente mostrar os resultados obtidos sob demanda, clicando no botão de olho ao lado dos títulos das seções no cartão."
 					}
 				}
 			},

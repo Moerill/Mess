@@ -38,6 +38,7 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 			- [Custom flavor text](#custom-flavor-text)
 			- [reactive context menu for applying dmg](#reactive-context-menu-for-applying-dmg)
 		- [Autoroll and Advantage toggle](#autoroll-and-advantage-toggle)
+		- [*Dice So Nice* Support](#dice-so-nice-support)
 		- [Use items to add bonus damage to other items](#use-items-to-add-bonus-damage-to-other-items)
 	- [Ability template textures](#ability-template-textures)
 		- [Auto targeting with ability templates](#auto-targeting-with-ability-templates)
@@ -170,6 +171,19 @@ Alternatively you can right click on the *Damage* header to automatically apply 
 ![Roll toggles](img/roll-toggles.png)  
 The roll change also adds options to toggle between *(dis-)advantage* and *normal* rolls, by clicking on the D20 above the chats roll mode selector. Right click will cycle through in the opposite direction. This will get applied at the time you click on the *to hit* button, not beforehand!  
 This also adds a selection to choose if *to hit* or *damage* rolls should be rolled automatically on *attack card* creation.
+
+### *Dice So Nice* Support
+![Mess So Nice](img/mess-so-nice.gif | width=720)  
+Automatically rolls *Dice So Nice* dice, when rolling.   
+When autorolling it will always:
+1) roll to Hit
+2) all damage die together
+3) Display Attack card
+4) Repeat for next target
+   
+Of course it will also roll *Dice So Nice* dice for single rolls. Just click on the button and it will roll the dice. For each single die rolled it disables all other buttons on this attack card until the roll is completed and then updates the card.  
+
+*Important*: The dice will respect the current selected roll mode and not how the card was send!
 
 ### Use items to add bonus damage to other items
 Adds a new field to actor owned items to specify the first damage field as bonus damage for other damage rolls. Activating this will automatically add the damage to the list of damage rolls for each attack card off an item that is not bonus damage itself.  

@@ -68,7 +68,15 @@ export async function rollD20(data) {
 	let rollMode = game.settings.get("core", "rollMode");
 	if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
 	if ( rollMode === "blindroll" ) chatData["blind"] = true;
-	
+	const dsn = game.mess.diceSoNice; 
+	if (dsn) {
+		let whispers = null;
+		let blind = false;
+		if ( ["gmroll", "blindroll"].includes(rollMode) ) whispers = ChatMessage.getWhisperIDs("GM");
+		if ( rollMode === "blindroll" ) blind = true;
+		
+		await game.dice3d.showForRoll(r, game.user, true, whispers, blind);
+	}
 	ChatMessage.create(chatData);
 }
 
@@ -149,6 +157,7 @@ export async function rollToHit(ev) {
 	const messageId = card.closest(".message").dataset.messageId;
 	// Check if user owns chat message, else return
 	if (messageId) {
+		ev.stopPropagation(); ev.preventDefault();
 		const message = game.messages.get(messageId);
 		if (!(message.owner || message.isAuthor)) {
 			ui.notifications.error('You do not own the permissions to make that roll!');
@@ -258,11 +267,13 @@ export async function rollToHit(ev) {
 	if (d20 <= fumble)
 		span.classList.add('fumble');
 
-	ev.currentTarget.parentNode.replaceChild(div, ev.currentTarget);
 	if (messageId) {
-		const message = game.messages.get(messageId);
-		message.update({content: card.parentNode.innerHTML});
+		updateMessage(messageId, r, card, ev.currentTarget, div);
+	} else {
+		ev.currentTarget.parentNode.replaceChild(div, ev.currentTarget);
 	}
+
+	return r;
 }
 
 export async function getDmgData({actor, item, spellLevel = null}) {
@@ -356,6 +367,7 @@ export async function rollDmg(ev) {
 
 	// Check if user owns chat message, else return
 	if (messageId) {
+		ev.stopPropagation(); ev.preventDefault();
 		const message = game.messages.get(messageId);
 		if (!(message.owner || message.isAuthor)) {
 			ui.notifications.error('You do not own the permissions to make that roll!');
@@ -389,7 +401,7 @@ export async function rollDmg(ev) {
 	for (let i = 0; i < terms.length; i++) {
 		const term = terms[i];
 		const num = Number(dataTerms[i].replace(/\s/g, ''));
-		console.log(dataTerms[i], num)
+
 		if (isNaN(num)) continue;
 		customTooltip += `<section class="tooltip-part">
 			<div class="dice">
@@ -404,10 +416,30 @@ export async function rollDmg(ev) {
 	const tooltip = div.childNodes[1];
 	tooltip.classList.add('hidden');
 
-	ev.currentTarget.parentNode.replaceChild(div, ev.currentTarget);
 
 	if (messageId) {
-		const message = game.messages.get(messageId);
-		message.update({content: card.parentNode.innerHTML});
+		updateMessage(messageId, r, card, ev.currentTarget, div);
+	} else {
+		ev.currentTarget.parentNode.replaceChild(div, ev.currentTarget);
 	}
+	return r;
+}
+
+async function updateMessage(messageId, roll, card, target, div) {
+	const message = game.messages.get(messageId);
+	const dsn = game.mess.diceSoNice; 
+	if (dsn) {
+		let rollMode = game.settings.get("core", "rollMode");
+		let whispers = null;
+		let blind = false;
+		if ( ["gmroll", "blindroll"].includes(rollMode) ) whispers = ChatMessage.getWhisperIDs("GM");
+		if ( rollMode === "blindroll" ) blind = true;
+		
+		card.querySelectorAll('button').forEach(e => e.disabled = true);
+		await game.dice3d.showForRoll(roll, game.user, true, whispers, blind);
+	} else {
+		AudioHelper.play({src: CONFIG.sounds.dice}, true);
+	}
+	target.parentNode.replaceChild(div, target);
+	message.update({content: card.parentNode.innerHTML});
 }

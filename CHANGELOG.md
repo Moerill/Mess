@@ -1,3 +1,10 @@
+# v0.11.0
+<ul>
+	<li>*NEW* Dice So Nice support!</li>
+	<li>*NEW* Dice sound now played when rolling dice!</li>
+	<li>Updated portuguese localization. Thanks to GitHub user @rinnocenti!</li>
+</ul>
+
 # v0.10.1
 * Updated compatibleCoreVersion to 0.6.4
 

@@ -10,6 +10,10 @@ export default function() {
 		for (let i = 0; i < this.parts.length; )
 		return oldGetTooltip.call(this);
 	}
+
+	Hooks.once('diceSoNiceReady', (dice3d) => {
+    game.mess.diceSoNice = true;
+	});
 }
 
 /**
@@ -160,7 +164,7 @@ async function renderAttack(ev) {
 	}
 
 	const autoroll = game.settings.get('mess', `${game.userId}.autoroll-selector`);
-
+	const rollMode = game.settings.get("core", "rollMode");
 	for (const target of targets) {
 		const allowed = await item._handleResourceConsumption({isCard: false, isAttack: true});
 		const targetActor = target.actor ? target.actor.data : null;
@@ -171,7 +175,6 @@ async function renderAttack(ev) {
 				title: game.i18n.localize('DND5E.ArmorClass'),
 				value: targetActor.data.attributes.ac.value
 			}
-			console.log(targetActor.data.traits)
 			let di = targetActor.data.traits.di.value.filter(e => e !== "custom").map(e => game.i18n.localize('DND5E.Damage' + e[0].toUpperCase() + e.substring(1)));
 			if (targetActor.data.traits.di.custom)
 				di.push(targetActor.data.traits.di.custom);
@@ -182,7 +185,6 @@ async function renderAttack(ev) {
 			}
 
 			let dr = targetActor.data.traits.dr.value.filter(e => e !== "custom").map(e => game.i18n.localize('DND5E.Damage' + e[0].toUpperCase() + e.substring(1)));
-			console.log(dr);
 			if (targetActor.data.traits.dr.custom) 
 				dr.push(targetActor.data.traits.dr.custom);
 			targetData.dr = {
@@ -212,7 +214,7 @@ async function renderAttack(ev) {
 		
 
 		if (autoroll.hit || autoroll.dmg) 
-			html = await autoRoll(autoroll, html);
+			html = await autoRoll(autoroll, html, rollMode);
 
 
 		let chatData = {
@@ -226,7 +228,6 @@ async function renderAttack(ev) {
 			}
 		};
 		if (!game.user.isGM || !game.settings.get('mess', 'attack-card-always-public')) {
-			const rollMode = game.settings.get("core", "rollMode");
 			if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData.whisper = ChatMessage.getWhisperRecipients("GM");
 			// doesn't work anyway since its no "real" roll....
       // if ( rollMode === "blindroll" ) chatData.blind = true;
@@ -244,21 +245,37 @@ async function renderAttack(ev) {
  * @param {Object} autoroll Defining whether to autoroll hit or dmg
  * @param {String} template Defining the html template where the roll should happen.
  */
-async function autoRoll(autoroll, template) {
+async function autoRoll(autoroll, template, rollMode) {
 	let card = document.createElement('div');
+	const dsn = game.mess.diceSoNice; 
+
+	let whispers = null;
+	let blind = false;
+	if ( ["gmroll", "blindroll"].includes(rollMode) ) whispers = ChatMessage.getWhisperIDs("GM");
+	if ( rollMode === "blindroll" ) blind = true;
+	console.log(whispers, blind);
 	card.classList.add('message');
 	card.insertAdjacentHTML('afterbegin', template);
+	let rolls = [];
 	if (autoroll.hit) {
 		let toHitBtn = card.querySelector('.mess-button-to-hit');
-		if (toHitBtn)
-			await rollToHit({currentTarget: toHitBtn});
+		if (toHitBtn) {
+			let r = await rollToHit({currentTarget: toHitBtn});
+			if (dsn)
+				await game.dice3d.showForRoll(r, game.user, true, whispers, blind);
+		}
 	}
 
 	if (autoroll.dmg) {
 		const btns = Array.from(card.querySelectorAll('.mess-button-dmg'));
-		for (const btn of btns)
-			await rollDmg({currentTarget: btn});
+		for (const btn of btns) {
+			rolls.push(await rollDmg({currentTarget: btn}));
+		}
 	}
+	if (dsn)
+		await game.dice3d.showForRoll(rolls, game.user, true, whispers, blind);
+	else	
+		AudioHelper.play({src: CONFIG.sounds.dice}, true);
 	return card.innerHTML;
 }
 
