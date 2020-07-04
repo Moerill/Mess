@@ -173,7 +173,7 @@ The roll change also adds options to toggle between *(dis-)advantage* and *norma
 This also adds a selection to choose if *to hit* or *damage* rolls should be rolled automatically on *attack card* creation.
 
 ### *Dice So Nice* Support
-![Mess So Nice](img/mess-so-nice.gif | width=720)  
+<img src="img/mess-so-nice.gif" width="1024"/>  
 Automatically rolls *Dice So Nice* dice, when rolling.   
 When autorolling it will always:
 1) roll to Hit
