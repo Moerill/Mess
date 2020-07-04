@@ -1,3 +1,6 @@
+# v0.10.1
+* Updated compatibleCoreVersion to 0.6.4
+
 # v0.10.0
 <ul>
 	<li>Redid the drag animations for a hopefully better experience. <em>Please try this again if you previously had issues. If smth still doesn't work, please provide feedback on github.</em></li>
