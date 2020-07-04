@@ -74,6 +74,10 @@
 					"maxCrit": {
 						"label": "Maximiere kritische Treffer.",
 						"hint": "Ändert das Verhalten kritischer Schadenswürfe, indem der Wurf des  kritischen Extrawürfel maximiert wird!"
+					},
+					"mode": {
+						"activate": "GM Angriffskarte immer allen Spielern zeigen, egal welcher Würfelmodus gewählt wurde.",
+						"hint": "Wenn diese Option aktiviert ist werden Angriffskarten vom GM immer allen Spielern angezeigt, wobei nur grundlegende Informationen wie Angreifer und Ziel angezeigt werden. Der GM kann dann entscheiden gewürfelte Würfe den Spielern zu zeigen indem auf das Augensymbol auf der Angriffskarte geklickt wird. Hierbei werden nur die finalen Würfelergebnisse angezeigt und keine Details, wie geworfene Würfe oder Modifikatoren."
 					}
 				}
 			},

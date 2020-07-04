@@ -5,7 +5,7 @@ const webpack = require('webpack');
 module.exports = {
   name: 'mess',
   entry: {
-    index: './src/scripts/index.js'
+    index: path.resolve(__dirname, 'src/scripts/index.js')
   },
   mode: 'development',
   devtool: 'source-map',

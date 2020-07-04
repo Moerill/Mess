@@ -4,6 +4,12 @@ import {rollD20, getToHitData, rollToHit, getDmgData, rollDmg} from './dice.js';
 export default function() {
 	setupHooks();
 	game.mess.toggleItemBonusDamage = toggleItemBonusDamage;
+
+	const oldGetTooltip = Roll.prototype.getTooltip;
+	Roll.prototype.getTooltip = function() {
+		for (let i = 0; i < this.parts.length; )
+		return oldGetTooltip.call(this);
+	}
 }
 
 /**
@@ -149,17 +155,55 @@ async function renderAttack(ev) {
 		toHit: await getToHitData({actor, item}),
 		dmgs: await getDmgData({actor, item, spellLevel}),
 		sceneId: canvas.scene.id,
-		user: game.user.id
+		user: game.user.id,
+		isGM: game.user.isGM
 	}
 
 	const autoroll = game.settings.get('mess', `${game.userId}.autoroll-selector`);
 
-	let rollMode = game.settings.get("core", "rollMode");
 	for (const target of targets) {
 		const allowed = await item._handleResourceConsumption({isCard: false, isAttack: true});
+		const targetActor = target.actor ? target.actor.data : null;
+		let targetData = {};
+		if (targetActor) {
+			targetData.ac = {
+				label: '<i class="mess-icon ac"></i>',
+				title: game.i18n.localize('DND5E.ArmorClass'),
+				value: targetActor.data.attributes.ac.value
+			}
+			console.log(targetActor.data.traits)
+			let di = targetActor.data.traits.di.value.filter(e => e !== "custom").map(e => game.i18n.localize('DND5E.Damage' + e[0].toUpperCase() + e.substring(1)));
+			if (targetActor.data.traits.di.custom)
+				di.push(targetActor.data.traits.di.custom);
+			targetData.di = {
+				label: '<i class="mess-icon dam-inv"></i>',
+				title: game.i18n.localize('DND5E.DamImm'),
+				value: di.join(", ")
+			}
+
+			let dr = targetActor.data.traits.dr.value.filter(e => e !== "custom").map(e => game.i18n.localize('DND5E.Damage' + e[0].toUpperCase() + e.substring(1)));
+			console.log(dr);
+			if (targetActor.data.traits.dr.custom) 
+				dr.push(targetActor.data.traits.dr.custom);
+			targetData.dr = {
+				label: '<i class="mess-icon dam-res"></i>',
+				title: game.i18n.localize('DND5E.DamRes'),
+				value: dr.join(", ")
+			}
+			let dv = targetActor.data.traits.dv.value.filter(e => e !== "custom").map(e => game.i18n.localize('DND5E.Damage' + e[0].toUpperCase() + e.substring(1)));
+			if (targetActor.data.traits.dv.custom)
+				dv.push(targetActor.data.traits.dv.custom);
+			targetData.dv = {
+				label: '<i class="mess-icon dam-vuln"></i>',
+				title: game.i18n.localize('DND5E.DamVuln'),
+				value: dv.join(", ")
+			}
+			// console.log(targetData)
+		}
 		const attackTemplateData = {
 									...attackData, 
 									target: target.data,
+									targetData: targetData,
 									flavor: getFlavor(item.data.data.chatFlavor, target),
 									allowed
 								};
@@ -181,8 +225,13 @@ async function renderAttack(ev) {
         alias: item.actor.name
 			}
 		};
-		if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
-		if ( rollMode === "blindroll" ) chatData["blind"] = true;
+		if (!game.user.isGM || !game.settings.get('mess', 'attack-card-always-public')) {
+			const rollMode = game.settings.get("core", "rollMode");
+			if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData.whisper = ChatMessage.getWhisperRecipients("GM");
+			// doesn't work anyway since its no "real" roll....
+      // if ( rollMode === "blindroll" ) chatData.blind = true;
+      if ( rollMode === "selfroll" ) chatData.whisper = [game.user.id];
+		}
 	
 		ChatMessage.create(chatData);
 	}
@@ -258,9 +307,10 @@ async function actorSheetHook(app, html, data) {
 		data.title = game.i18n.format("DND5E.AbilityPromptTitle", {ability: label});
 
 		rollD20.bind(app.object)(data);
-		return true;
+		return false;
 	}));
 	const saveMods = html[0].querySelectorAll('.ability-save');
+	$(saveMods).off();
 	saveMods.forEach(e => e.addEventListener('click', function(ev) {
 		ev.stopPropagation();
 		ev.preventDefault();
@@ -285,6 +335,7 @@ async function actorSheetHook(app, html, data) {
 		data.title = game.i18n.format("DND5E.SavePromptTitle", {ability: label});
 		data.parts = parts;
 		rollD20.bind(app.object)(data);
+		return false;
 	}));
 
 	const skills = html[0].querySelectorAll('.skill-name');
@@ -329,6 +380,8 @@ function chatListeners(html) {
 
 	html.on('click', '.mess-button-to-hit', rollToHit);
 	html.on('click', '.mess-button-dmg', rollDmg);
+
+	html.on('click', '.mess-show-btn', onToggleShowPlayers);
 }
 
 // Only overwrite stuff for attack buttons
@@ -386,4 +439,14 @@ async function getTargetToken(ev) {
 	const token = canvas.tokens.placeables.find(e => e.id === tokenId);
 	if (!token) return false;
 	return token;
+}
+
+async function onToggleShowPlayers(ev) {
+	const div = ev.currentTarget.closest('.mess-chat-to-hit, .mess-chat-dmg');
+	div.classList.toggle('mess-show-players');
+
+	const card = ev.currentTarget.closest('.mess-attack-card');
+	const messageId = card.closest(".message").dataset.messageId;
+	const message = game.messages.get(messageId);
+	message.update({content: card.parentNode.innerHTML});
 }

@@ -3,16 +3,22 @@
 }
 .dark-mode .mess-attack-card {
   --border-color: #444;
+  --border-button: #444;
   --font-sub-color: #9c9c9c;
-  --color-success: #18520b;
-  --color-fail: #aa0200;
+  --color-success: #26a30a;
+  --color-fail: #c40502;
+  --font-color: #ccc;
 }
 #chat {
   --highlight-color: red;
 }
 .mess-attack-card {
   --border-color: #FFF;
+  --border-button: #999;
   --font-sub-color: #33322e;
+  --color-success: #26a30a;
+  --color-fail: #c40502;
+  --font-color: #191813;
 }
 #chat-controls .mess-roll-control {
   height: 1.8em;
@@ -100,97 +106,315 @@
   padding: 0 3px;
   margin: 3px;
 }
-.mess #chat-log button[data-action="attack"] ~ button[data-action="damage"],
-.mess #chat-log button[data-action="versatile"] {
+.mess button[data-action="attack"] ~ button[data-action="damage"],
+.mess button[data-action="versatile"] {
   display: none;
 }
-.mess #chat-log .mess-attack-card {
+.mess .mess-attack-card {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   align-items: flex-start;
 }
-.mess #chat-log .mess-attack-card button,
-.mess #chat-log .mess-attack-card .mess-dice-result {
+.mess .mess-attack-card #context-menu {
+  max-width: 150px;
+  width: 150px;
+  min-width: 150px;
+  text-align: left;
+  left: calc(50% - 75px);
+}
+.mess .mess-attack-card #context-menu .mess-context-menu-header {
+  padding: 0.3em;
+  background: #aaa3;
+  cursor: initial;
+}
+.mess .mess-attack-card #context-menu .mess-context-menu-header i {
+  padding: 0 3px 0 0;
+  width: 1.3ch;
+}
+.mess .mess-attack-card #context-menu .context-item {
+  line-height: 1.5em;
+  padding: 0 1.5ch;
+  display: flex;
+  flex-flow: row-reverse nowrap;
+}
+.mess .mess-attack-card #context-menu .context-item span {
+  text-align: right;
+  flex: 1;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+.mess .mess-attack-card #context-menu .context-item label {
+  cursor: pointer;
+  flex: 0;
+  color: #aaa;
+}
+.mess .mess-attack-card .mess-dice-result {
+  height: auto;
+}
+.mess .mess-attack-card .mess-dice-result .mess-roll-container {
+  font-weight: bold;
+  font-size: 1.4em;
+  height: 0.8em;
+}
+.mess .mess-attack-card .mess-dice-result .mess-roll-container .mess-roll-total {
+  font-size: inherit;
+}
+.mess .mess-attack-card .mess-dice-result .crit {
+  color: var(--color-success);
+}
+.mess .mess-attack-card .mess-dice-result .fumble {
+  color: var(--color-fail);
+}
+.mess .mess-attack-card .mess-dice-result #context-menu {
+  min-width: unset;
+}
+.mess .mess-button-to-hit,
+.mess .mess-button-dmg,
+.mess .mess-dice-result {
   cursor: pointer;
   background: rgba(0, 0, 0, 0.1);
-  border: 2px groove var(--border-color);
+  border: 1px solid var(--border-button);
+  box-shadow: 0 0 2px #FFF inset;
   height: 1.5em;
   line-height: 1.2em;
   width: 70%;
   border-radius: 0.3em;
 }
-.mess #chat-log .mess-attack-card .mess-dice-result {
-  height: auto;
+.mess .mess-hit,
+.mess .mess-miss {
+  position: relative;
 }
-.mess #chat-log .mess-attack-card .mess-dice-result span {
-  font-weight: bold;
-  font-size: 1.4em;
+.mess .mess-hit:after,
+.mess .mess-miss:after {
+  background-color: var(--font-color);
+  width: 1.2em;
+  height: 1.2em;
+  position: absolute;
+  right: 0;
+  content: '';
+  display: inline-block;
+  filter: saturate(80%);
 }
-.mess #chat-log .mess-attack-card .mess-dice-result .crit {
-  color: var(--color-success);
-  color: #26a30a;
+.mess .mess-hit.crit:after,
+.mess .mess-miss.crit:after {
+  background-color: var(--color-success);
 }
-.mess #chat-log .mess-attack-card .mess-dice-result .fumble {
-  color: var(--color-fail);
-  color: #c40502;
+.mess .mess-hit.fumble:after,
+.mess .mess-miss.fumble:after {
+  background-color: var(--color-fail);
 }
-.mess #chat-log .mess-attack-card .dice-roll {
+.mess .mess-attack-card .dice-roll {
   background: rgba(0, 0, 0, 0.1);
-  border: 2px groove var(--border-color);
-  height: 1auto;
+  border: 1px solid var(--border-button);
+  box-shadow: 0 0 2px #FFF inset;
+  height: auto;
   line-height: 1.2em;
   width: 70%;
 }
-.mess #chat-log .mess-attack-flavor {
+.mess .mess-hit:after {
+  mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+  bottom: 0px;
+}
+.mess .mess-miss:after {
+  mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+  transform: scale(-1, 1);
+  bottom: -3px;
+}
+.mess .mess-attack-flavor {
   flex: 1 100%;
   border-top: 2px groove var(--border-color);
   border-bottom: 2px groove var(--border-color);
   padding: 0.2em 0;
 }
-.mess #chat-log .mess-chat-error {
+.mess .mess-chat-error {
   flex: 1 100%;
   border-bottom: 2px groove var(--border-color);
   padding: 0.2em 0;
   color: var(--color-fail);
 }
-.mess #chat-log .mess-chat-target {
+.mess .mess-chat-target {
   flex: 40%;
+  max-width: 40%;
   border-right: 2px groove var(--border-color);
+  display: block;
 }
-.mess #chat-log .mess-chat-target span {
+.mess .mess-chat-target .mess-target-name {
   text-overflow: ellipsis;
-  font-size: 0.8em;
+  white-space: nowrap;
 }
-.mess #chat-log .mess-chat-target img {
+.mess .mess-chat-target img {
+  z-index: 1;
   border: none;
   cursor: pointer;
+  height: 75px;
+  display: block;
+  margin: 0 auto;
 }
-.mess #chat-log .mess-chat-target img:hover {
+.mess .mess-chat-target img:hover {
   border: 1px solid var(--highlight-color);
 }
-.mess #chat-log .mess-chat-rolls {
+.mess .mess-chat-target .mess-icon {
+  position: relative;
+  min-width: 1.2em;
+  min-height: 1.2em;
+  display: inline-block;
+}
+.mess .mess-chat-target .mess-icon:before {
+  background-color: var(--font-color);
+  width: 1.8em;
+  height: 1.8em;
+  position: absolute;
+  right: 0;
+  content: '';
+  display: inline-block;
+  filter: saturate(80%);
+}
+.mess .mess-chat-target .mess-icon.ac:before {
+  mask: url(../assets/shoulder-armor.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../assets/shoulder-armor.svg) no-repeat 50% 50%;
+}
+.mess .mess-chat-target .mess-icon.dam-res:before {
+  mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+  left: -0.3em;
+}
+.mess .mess-chat-target .mess-icon.dam-inv:before {
+  mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+  transform: scale(-1, 1);
+  bottom: -0.5em;
+  left: -0.4em;
+}
+.mess .mess-chat-target .mess-icon.dam-vuln:before {
+  mask: url(../assets/broken-shield.svg) no-repeat 50% 50%;
+  -webkit-mask: url(../assets/cracked-shield.svg) no-repeat 50% 50%;
+  left: -0.5em;
+  height: 1.5em;
+}
+.mess .mess-target-overlay {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mess .mess-target-overlay .mess-target-name {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mess .mess-target-overlay .mess-target-overlay-container {
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+.mess .mess-chat-rolls {
   flex: 60%;
   display: block;
 }
-.mess #chat-log .mess-chat-to-hit,
-.mess #chat-log .mess-chat-dmg {
+.mess .mess-chat-to-hit,
+.mess .mess-chat-dmg {
   width: 100%;
   text-align: center;
-  display: flex;
   flex-flow: column;
   align-items: center;
   justify-content: flex-start;
+  display: flex;
 }
-.mess #chat-log .mess-chat-sub-label {
+.mess .mess-chat-sub-label {
   font-size: 0.8em;
   opacity: 0.8;
   color: var(--font-sub-color);
   position: relative;
   top: -0.3em;
 }
-.mess #chat-log .mess-chat-roll-type {
+.mess .mess-chat-roll-type {
   margin: 0.5em 0 0 0;
+  width: 100%;
+}
+.mess-is-gm .mess-gm-info {
+  display: block;
+  border-top: 1px solid #aaa;
+  width: 100%;
+  list-style-type: none;
+}
+.mess-is-gm .mess-gm-info label {
+  font-weight: bold;
+}
+.mess-is-gm .mess-gm-info li:not(:first-child) {
+  padding: 0.1em 0;
+  border-top: 1px dashed #aaa;
+}
+.mess-is-gm .mess-gm-info i {
+  font-size: 0.8em;
+}
+.mess-is-gm .mess-gm-rolls .mess-chat-to-hit,
+.mess-is-gm .mess-gm-rolls .mess-chat-dmg {
+  display: flex;
+}
+.mess-is-gm .mess-gm-rolls .mess-show-btn {
+  display: block;
+}
+.mess-is-gm .mess-gm-rolls .mess-show-players .mess-button-dmg,
+.mess-is-gm .mess-gm-rolls .mess-show-players .mess-button-to-hit {
+  display: block;
+}
+.mess-is-gm .mess-gm-rolls .mess-show-players .mess-button-dmg + label,
+.mess-is-gm .mess-gm-rolls .mess-show-players .mess-button-to-hit + label {
+  display: block;
+}
+.mess-is-gm .mess-gm-rolls .mess-show-players .mess-show-btn {
+  opacity: 1;
+}
+.mess-is-gm .mess-gm-rolls .dice-tooltip {
+  max-width: 100%;
+  overflow: hidden;
+}
+.mess-is-gm .mess-gm-rolls .dice {
+  display: block;
+}
+.mess-gm-rolls .mess-chat-to-hit,
+.mess-gm-rolls .mess-chat-dmg {
+  display: none;
+}
+.mess-gm-rolls .mess-show-players {
+  display: flex;
+}
+.mess-gm-rolls .mess-show-players .mess-dice-result {
+  display: flex;
+}
+.mess-gm-rolls .mess-show-players .mess-button-dmg,
+.mess-gm-rolls .mess-show-players .mess-button-to-hit {
+  display: none;
+}
+.mess-gm-rolls .mess-show-players .mess-button-dmg + label,
+.mess-gm-rolls .mess-show-players .mess-button-to-hit + label {
+  display: none;
+}
+.mess-gm-rolls .dice-tooltip {
+  max-width: 0;
+  overflow: hidden;
+}
+.mess-gm-rolls .dice {
+  display: none;
+}
+.mess-show-btn {
+  opacity: 0.5;
+  height: 0;
+  position: relative;
+  top: -1.25em;
+  align-self: flex-end;
+  display: none;
+}
+.mess-show-btn i:before {
+  content: "\f06e";
+}
+.mess-gm-info {
+  display: none;
 }
 .dnd5e.actor .ability-mod,
 .dnd5e.actor .ability-save {

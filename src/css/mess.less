@@ -5,10 +5,15 @@
 
 	.mess-attack-card {
 		--border-color: #444;
+		--border-button: #444;
 		--font-sub-color: #9c9c9c;
 
-		--color-success: #18520b;
-		--color-fail: #aa0200;
+
+		// --color-success: #18520b;
+		// --color-fail: #aa0200;
+		--color-success: #26a30a;
+		--color-fail: #c40502;
+		--font-color: #ccc; // check
 	}
 }
 
@@ -19,7 +24,11 @@
 
 .mess-attack-card {
 	--border-color: #FFF;
+	--border-button: #999;
 	--font-sub-color: #33322e;
+	--color-success: #26a30a;
+	--color-fail: #c40502;
+	--font-color: #191813;
 }
 
 #chat-controls {
@@ -126,7 +135,7 @@
 	}
 }
 
-.mess #chat-log {
+.mess {
 
 	// Hide useless buttons :D
 	button[data-action="attack"] ~ button[data-action="damage"], button[data-action="versatile"] {
@@ -139,43 +148,123 @@
 		justify-content: space-between;
 		align-items: flex-start;
 
-		button, .mess-dice-result {
-			cursor: pointer;
-			background: rgba(0, 0, 0, 0.1);
-			border: 2px groove var(--border-color);
-			height: 1.5em;
-			line-height: 1.2em;
-			width: 70%;
-			border-radius: 0.3em;
+		#context-menu {
+			max-width: 150px;
+			width: 150px;
+			min-width: 150px;
+			text-align: left;
+			left: calc(50% - 75px);
+			.mess-context-menu-header {
+				padding: 0.3em;
+				background: #aaa3;
+				i {
+					padding: 0 3px 0 0;
+					width: 1.3ch;
+				}
+				cursor: initial;
+			}
+			.context-item {
+				line-height: 1.5em;
+				padding: 0 1.5ch;
+				display: flex;
+				flex-flow: row-reverse nowrap;
+				span {
+					text-align: right;
+					flex: 1;
+					font-size: 1.2em;
+					cursor: pointer;
+				}
+				label {
+					cursor: pointer;
+					flex: 0;
+					color: #aaa;
+				}
+			}
 		}
 		
 		.mess-dice-result {
 			height: auto;
-			span {
+			.mess-roll-container {
 				font-weight: bold;
 				font-size:1.4em;
+				height: 0.8em;
+
+				.mess-roll-total {
+					font-size: inherit;
+				}
 			}
 
 			.crit {
 				color: var(--color-success);
-				color: #26a30a;
+				// color: #26a30a;
 			}
 
 			.fumble {
 				color: var(--color-fail);
-				color: #c40502;
+				// color: #c40502;
+			}
+
+			#context-menu {
+				min-width: unset;
 			}
 		}
 
-		.dice-roll {
-			background: rgba(0, 0, 0, 0.1);
-			border: 2px groove var(--border-color);
-			height: 1auto;
-			line-height: 1.2em;
-			width: 70%;
-		}
 	}
 
+	.mess-button-to-hit, .mess-button-dmg, .mess-dice-result {
+		cursor: pointer;
+		background: rgba(0, 0, 0, 0.1);
+		// border: 2px groove var(--border-color);
+		border: 1px solid var(--border-button);
+		box-shadow: 0 0 2px #FFF inset;
+		height: 1.5em;
+		line-height: 1.2em;
+		width: 70%;
+		border-radius: 0.3em;	
+	}
+
+	.mess-hit, .mess-miss {
+		position: relative;
+		&:after {
+			background-color: var(--font-color);
+			width: 1.2em;
+			height: 1.2em;
+			position: absolute;
+
+			right: 0;
+			content: '';
+			display: inline-block;
+			filter: saturate(80%);
+		}
+		&.crit:after{
+			background-color: var(--color-success);
+		}
+		&.fumble:after {
+			background-color: var(--color-fail);
+		}
+	}
+	
+	.mess-attack-card .dice-roll {
+		background: rgba(0, 0, 0, 0.1);
+		// border: 2px groove var(--border-color);
+
+		border: 1px solid var(--border-button);
+		box-shadow: 0 0 2px #FFF inset;
+		height: auto;
+		line-height: 1.2em;
+		width: 70%;
+	}
+	.mess-hit:after {
+		mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+		-webkit-mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+		bottom: 0px;
+	}
+	.mess-miss:after {
+		mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+		-webkit-mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+		transform: scale(-1,1);
+		bottom: -3px;
+	}
 	.mess-attack-flavor {
 		flex: 1 100%;
 		border-top: 2px groove var(--border-color);
@@ -191,23 +280,102 @@
 	}
 	.mess-chat-target {
 		flex:  40%;
+		max-width: 40%;
 		border-right: 2px groove var(--border-color);
-
+		display: block;
 		
-		span {
+		.mess-target-name {
 			text-overflow: ellipsis;
-			font-size: 0.8em;
+			white-space: nowrap;
+			// font-size: 0.8em;
 		}
 
 		img {
+			z-index: 1;
 			border: none;
 			cursor: pointer;
-
+			height: 75px;
+			display: block;
+			margin: 0 auto;
 			&:hover {
 				border: 1px solid var(--highlight-color);
 			}
 		}
+
+		.mess-icon {
+			position: relative;
+			min-width: 1.2em;
+			min-height: 1.2em;
+			display: inline-block;
+			&:before {
+				background-color: var(--font-color);
+				width: 1.8em;
+				height: 1.8em;
+				position: absolute;
+	
+				right: 0;
+				content: '';
+				display: inline-block;
+				filter: saturate(80%);
+			}
+			
+			&.ac:before {
+				mask: url(../assets/shoulder-armor.svg) no-repeat 50% 50%;
+				-webkit-mask: url(../assets/shoulder-armor.svg) no-repeat 50% 50%;
+			}
+
+			&.dam-res:before {
+				mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+				-webkit-mask: url(../assets/shield-impact.svg) no-repeat 50% 50%;
+				left: -0.3em;
+			}
+
+			&.dam-inv:before {
+				mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+				-webkit-mask: url(../assets/shield-reflect.svg) no-repeat 50% 50%;
+				transform: scale(-1,1);
+				bottom: -0.5em;
+				left: -0.4em;
+			}
+
+			&.dam-vuln:before {
+				mask: url(../assets/broken-shield.svg) no-repeat 50% 50%;
+				-webkit-mask: url(../assets/cracked-shield.svg) no-repeat 50% 50%;
+				left: -0.5em;
+				height: 1.5em;
+			}
+		}
 	}
+
+	.mess-target-overlay {
+		display: flex;
+		flex-flow: column nowrap;
+		align-items: flex-end;
+		// height: 0;
+		// overflow: visible;
+		// color: #ddd;
+
+		overflow: hidden;
+		text-overflow: ellipsis;
+		.mess-target-name {
+			max-width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		.mess-target-overlay-container {
+			// position: relative;
+			// z-index: 2;
+			// background: rgba(31, 31, 31, 0.5);
+			// box-shadow: 0 0 1em inset rgba(0,0,0, 1);
+			// padding: 0.5em;
+			width: fit-content;
+			max-width: 100%;
+			display: flex;
+			flex-flow: column nowrap;
+		}
+	}
+
 	.mess-chat-rolls {
 		flex: 60%;
 		display: block;
@@ -217,10 +385,11 @@
 	.mess-chat-to-hit, .mess-chat-dmg {
 		width: 100%;
 		text-align: center;
-		display: flex;
+
 		flex-flow: column;
 		align-items: center;
 		justify-content: flex-start;
+		display: flex;
 	}
 
 	.mess-chat-sub-label {
@@ -234,7 +403,155 @@
 
 	.mess-chat-roll-type {
 		margin: 0.5em 0 0 0;
+		width: 100%;
 	}
+}
+
+.mess-is-gm {
+	.mess-gm-info {
+		display: block;
+		// margin-top: 0.5em;
+		border-top: 1px solid #aaa;
+		// padding: 0.5em 0 0 0;
+		width: 100%;
+		list-style-type: none;
+		label {
+			font-weight: bold;
+		}
+		li:not(:first-child) {
+			padding: 0.1em 0;
+			border-top: 1px dashed #aaa;
+		}
+		i {
+			font-size: 0.8em;
+		}
+	}
+
+	.mess-gm-rolls {
+		.mess-chat-to-hit, .mess-chat-dmg {
+			display: flex;
+		}
+		.mess-show-btn {
+			display: block;
+		}
+
+		.mess-show-players {
+			.mess-button-dmg, .mess-button-to-hit {
+				display: block;
+				&+label {
+					display: block;
+				}
+			}
+
+			.mess-show-btn {
+				opacity: 1;
+				// i:before {
+				// 	content: "\f070";
+				// }
+			}
+		}
+
+		.dice-tooltip {
+			max-width: 100%;
+			overflow: hidden;
+		}
+		.dice {
+			display: block;
+		}
+	}
+}
+
+.mess-gm-rolls {
+	.mess-chat-to-hit, .mess-chat-dmg {
+		display: none;
+	}
+
+	.mess-show-players {
+		display: flex;
+
+		.mess-dice-result {
+			display: flex;
+		}
+
+		.mess-button-dmg, .mess-button-to-hit {
+			display: none;
+			&+label {
+				display: none;
+			}
+		}
+	}
+
+	.dice-tooltip {
+		max-width: 0;
+		overflow: hidden;
+	}
+	.dice {
+		display: none;
+	}
+}
+
+.mess-show-btn {
+	opacity: 0.5;
+	height: 0;
+	position: relative;
+	top: -1.25em;
+	align-self: flex-end;
+	display: none;
+
+	i:before {
+		content: "\f06e";
+	}
+}
+
+
+// 	.mess-chat-to-hit {
+// 		.mess-gm-dice {
+// 			display: block;
+// 			.mess-roll-total {
+// 				display: inline;
+// 			}
+// 		}
+// 	}
+// 	.mess-gm-dice {
+// 		.dice-tooltip {
+// 			max-width: 100%;
+// 			overflow: hidden;
+// 		}
+// 		.dice {
+// 			display: block;
+// 		}
+
+// 		.mess-hit:after {
+// 			right: -0.5em;
+// 		}
+// 		.mess-miss:after {
+// 			right: -0.65em;
+// 		}
+// 	}
+// }
+
+// .mess-chat-to-hit {
+// 	.mess-gm-dice {
+// 		.mess-roll-total {
+// 			.mess-roll-total {
+// 				display: none;
+// 			}
+// 		}
+// 	}
+// }
+// .mess-gm-dice {
+// 	.dice {
+// 		display: none;
+// 	}
+// 	.dice-tooltip {
+// 		max-width: 0;
+// 	}
+// 	.mess-hit:after, .mess-miss:after {
+// 		right: calc(50% - 0.6em);
+// 	}
+// }
+.mess-gm-info {
+	display: none;
 }
 
 .dnd5e.actor {
@@ -258,6 +575,53 @@
 	}
 }
 
-.mess-popup-div {
-	
-}
+
+// .mess-gm-dice {
+// 	display: none;
+// 	&+label {
+// 		display: none;
+// 	}
+// }
+
+// .mess-show-btn {
+// 	opacity: 0.5;
+// 	height: 0;
+// 	position: relative;
+// 	top: -1.25em;
+// 	align-self: flex-end;
+// }
+
+// .mess-chat-to-hit, .mess-chat-dmg {
+// 	&.mess-show-players {
+// 		display: flex;
+// 	}
+// }
+// .mess-show-players {
+// 	.mess-show-btn {
+// 		display: none;
+// 		opacity: 1;
+// 	}
+
+// 	.mess-dice-result.mess-gm-dice {
+// 		display: block;
+
+// 		&+label {
+// 			display: block;
+// 		}
+// 	}
+// }
+
+// .mess-is-gm {
+// 	.mess-chat-to-hit, .mess-chat-dmg {
+// 		display: flex;
+// 	}
+// 	.mess-show-btn {
+// 		display: inline;
+// 	}
+// 	.mess-button-to-hit, .mess-button-dmg {
+// 		display: block;
+// 		&+label {
+// 			display: block;
+// 		}
+// 	}
+// }

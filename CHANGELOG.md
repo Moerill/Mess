@@ -1,3 +1,20 @@
+# v0.10.0
+<ul>
+	<li>Redid the drag animations for a hopefully better experience. <em>Please try this again if you previously had issues. If smth still doesn't work, please provide feedback on github.</em></li>
+	<li>*NEW* GM only information on attack cards. Added some useful information of the target to chat cards, like ac and damage resistances/immunities/vulnerabilities.
+	</li>
+	<li>*NEW* Extended tooltip information for rolled dice.</li>
+	<li>*NEW* Option to display roll results to players.
+		<ul>
+			<li>Choose whether to always make GM attack cards public or not. Per default the rolls will *not* be shown to players.</li>
+			<li>If the card is publicly rolled you can choose to show the rolled results to your players. They will not be able to see the formula or dice rolled, only the total result.</li>
+			<li>Using this your players can easily apply damage to themself, without getting to much information about the attackers stats.</li>
+		</ul>
+	</li>
+	<li>*NEW* Contextmenu to apply damage to target/tokens</li>
+	<li>Fixed Tidy5eSheet saving throws rolling mess-style as well as displaying the default roll popup. Now only mess-style is chosen.</li>
+</ul>
+
 # v0.9
 * NEW FEATURE: Smooth drag animations in the sidebar directories and on most actor sheets!
 

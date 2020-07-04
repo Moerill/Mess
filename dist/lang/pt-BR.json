@@ -1,0 +1,97 @@
+{
+	"MESS": {
+		"attackCard": {
+			"target": "Alvo",
+			"cardTargetTooltip": "Clique duas vezes para deslocar para o token, se a cena estiver exibida atualmente.",
+			"chatCardResourceError": "Não havia recursos suficientes para este ataque!",
+			"toHit": "Para Acertar",
+			"damage": "Dano"
+		},
+		"rollConfig": {
+			"Advantage": "Role com Vantagem!",
+			"Normal": "Role com apenas 1d20!",
+			"Disadvantage": "Role com Desvantagem!! :(",
+			"ModifierTitle": "Modificador Situacional apra rolagens do d20.",
+			"ModifierPlaceholder": "modificador",
+			"Hit": "Acerto",
+			"Dmg": "Dano"
+		},
+		"actorSheet": {
+			"preparedSpellTracker": "Magia Preparada"
+		},
+		"itemSheet": {
+			"templateTexture": "Modelo de Textura",
+			"bonusDmg": "Adicionar um bonus as rolagens de dano?"
+		},
+		"FVTTSettings": {
+			"button": "traga alguma ordem nessa bagunça!",
+			"description": "Menu de Configurassão do Mess."
+		},
+		"settings": {
+			"tabs": {
+				"info": "Informação",
+				"templates": "Modelo",
+				"dnd5e": "DnD5e",
+				"misc": "Outros"
+			},
+			"DnD": {
+				"specifics": "Opções especificas para DnD5e."
+			},
+			"templates": {
+				"alternateTexturesLabel": "Ative a renderização alternativa da textura do modelo.",
+				"autotargetting": {
+					"label": "Ativa a seleção automática de tokens quando um modelo é movido."
+				},
+				"drawTemplateBorders": {
+					"label": "Não desenhe bordas de modelo nem destaque grade para modelos texturizados.",
+					"hint": "Ativar isso remove somente as bordas e o destaque da grade dos modelos texturizados. Se você passar o mouse sobre o controle de modelos, o destaque e as bordas serão mostrados."
+				},
+				"DnD": {
+					"textureInfo": {
+						"header": "Texturas de modelo padrão",
+						"1": "Permite especificar texturas padrão escolhidas para modelos de magias, se nenhuma estiver definida para o item.",
+						"2": "O tipo de dano do primeiro campo de dano do item é escolhido."
+					}
+				}
+			},
+			"dnd5e": {
+				"numericalScrolling": {
+					"label": "Rolagem Numérica.",
+					"hint": "Permite rolar dentro dos campos de entrada numéricos para modificá-los."
+				},
+				"itemSort": {
+					"label": "Botão Classificar itens.",
+					"hint": "Adiciona um botão para classificar itens automaticamente em ordem alfabética crescente."
+				},
+				"preparedSpellTracker": {
+					"label": "Rastreador de Magias Preparadas.",
+					"hint": "Adiciona um rastreador à guia do livro de feitiços. Esse rastreador permite um rastreamento mais fácil do número máximo de feitiços permitidos. Isso não é calculado automaticamente, é mais um lembrete de quantos você tem permissão para ter."
+				},
+				"rolling": {
+					"header": "Rolagem e Alvos alternativas",
+					"activate": "Ativar.",
+					"hint": "Todas as configurações a seguir funcionam apenas se Ativar estiver selecionado.",
+					"maxCrit": {
+						"label": "Usar Criticos Máximos",
+						"hint": "Altera o comportamento dos testes de dano crítico para maximizar o dano dos dados extras!"
+					}
+				}
+			},
+			"misc": {
+				"placeables":{
+					"label": "Ative as alterações dos objetos.",
+					"hint": "Altera a maneira como as visualizações do objeto são exibidas, quando arrastadas. Eles seguirão o mouse sem problemas. Somente quando você começar a desacelerar para colocá-los com precisão, eles serão mostrados no local exato (por exemplo, encaixados na grade) onde terminarão após a criação."
+				},
+				"draggableLists": {
+					"label": "Ative animações de arrasto mais agradáveis na barra lateral (e listas de itens para muitas fichas de ator).",
+					"hint": "Adiciona animações ao fluxo de trabalho de arrastar e soltar para obter um melhor feedback visual do que está acontecendo e para ver corretamente onde um objeto terminará quando soltar."
+				}
+			}
+		},
+		"reloadReminder": {
+			"text": "Atualize a página para você e todos os clientes para que a maioria das alterações entre em vigor.",
+			"yes": "OK! Atualize por mim.",
+			"no": "Não, Eu atualizarei manualmente depois."
+		}
+	}
+}

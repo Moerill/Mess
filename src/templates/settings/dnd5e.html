@@ -20,6 +20,10 @@
 	<span class='mess-hint'>{{localize 'MESS.settings.dnd5e.rolling.hint'}}</span>
 </div>
 <div class='form-checkbox-group'>
+	<input type='checkbox' data-dtype='boolean' name='attack-card-always-public' id='mess-roll-mode' {{checked settings.attack-card-always-public}}/><label for='mess-roll-mode'>{{localize 'MESS.settings.dnd5e.rolling.mode.activate'}}</label> 
+	<span class='mess-hint'>{{{localize 'MESS.settings.dnd5e.rolling.mode.hint'}}}</span>
+</div>
+<div class='form-checkbox-group'>
 	<input type='checkbox' data-dtype='boolean' name='max-critical' id='mess-max-critical' {{checked settings.max-critical}}/><label for='mess-max-critical'>{{localize 'MESS.settings.dnd5e.rolling.maxCrit.label'}}</label> 
 		{{!-- does not exist atm <a class='mess-info' href='https://github.com/Moerill/mess#prepared-spell-tracker'></a>--}}
 		<span class='mess-hint'>{{localize 'MESS.settings.dnd5e.rolling.maxCrit.hint'}}</span>

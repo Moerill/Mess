@@ -11,25 +11,40 @@ Just kidding! This module does not serve a more specific purpose, like most of m
 Settings allow to granularly dis-/enable features to your liking. *Important*: If you change the settings you need to refresh the page for all connected clients for the changes to take effect! (This may change in a future update, but currently it only works this way. Shouldn't be to bad, since you'd enable most features once and not change them mid session.)
 
 ## Current Feature List
-- [System independent](#universal)
-	* [Template Changes](#template-changes)
+- [Mess - Moerills enhancing super-suit(e)](#mess---moerills-enhancing-super-suite)
+	- [Current Feature List](#current-feature-list)
+- [Important Information!](#important-information)
+	- [FVTT Version compatibility](#fvtt-version-compatibility)
+	- [Module compatiblity](#module-compatiblity)
+	- [Bug Reporting](#bug-reporting)
+	- [Atribution](#atribution)
+	- [Support the development](#support-the-development)
+	- [Licensing](#licensing)
+- [Universal Features](#universal-features)
+	- [Template Changes](#template-changes)
 		- [Scaling and animated template textures](#scaling-and-animated-template-textures)
-		- [Hiding template border and grid highlight](#hide-grid-highlight-and-border-for-textured-templates)
-		- [Auto targetting on template movement](#auto-targetting-on-template-move)
-	* [Miscellaneous](#miscellaneous)
+		- [Hide grid highlight and border for textured templates](#hide-grid-highlight-and-border-for-textured-templates)
+		- [Auto targetting on template move](#auto-targetting-on-template-move)
+	- [Miscellaneous](#miscellaneous)
 		- [Momentum based preview snapping](#momentum-based-preview-snapping)
 		- [Drag and Drop animations for sorting lists](#drag-and-drop-animations-for-sorting-lists)
-- [DnD5e specific](#dnd5e-specific)
-	* [More streamlined rolling and targeting](#rolling-and-targeting-change)
-		- [Custom chat cards](#custom-attack-and-damage-roll-chat-cards)
-		- [Autoroll and advantage toggles](#autoroll-and-advantage-toggle)
+			- [Some important information and known issues for this feature](#some-important-information-and-known-issues-for-this-feature)
+- [DnD5e specific features](#dnd5e-specific-features)
+	- [Rolling and targeting change](#rolling-and-targeting-change)
+		- [Custom attack and damage roll chat cards](#custom-attack-and-damage-roll-chat-cards)
+			- [Extended tooltip](#extended-tooltip)
+			- [GM only information](#gm-only-information)
+			- [Always show GM attack card to players, but rolls only on demand](#always-show-gm-attack-card-to-players-but-rolls-only-on-demand)
+			- [Custom flavor text](#custom-flavor-text)
+			- [reactive context menu for applying dmg](#reactive-context-menu-for-applying-dmg)
+		- [Autoroll and Advantage toggle](#autoroll-and-advantage-toggle)
 		- [Use items to add bonus damage to other items](#use-items-to-add-bonus-damage-to-other-items)
-		- [Automatic Ability template texture](#ability-template-textures)
-		- [Automatic template targeting](#auto-targeting-with-ability-templates)
-	* [Actor sheet changes](#actor-sheet-changes)
+	- [Ability template textures](#ability-template-textures)
+		- [Auto targeting with ability templates](#auto-targeting-with-ability-templates)
+	- [Actor Sheet Changes](#actor-sheet-changes)
 		- [Numerical scroller](#numerical-scroller)
-		- [Sort items alphabetically](#alphabetical-item-sort)
-		- [Prepared spell tracker](#prepared-spell-tracker)
+		- [Alphabetical item sort](#alphabetical-item-sort)
+		- [Prepared Spell Tracker](#prepared-spell-tracker)
 
 
 # Important Information!
@@ -56,25 +71,24 @@ Go to the [GitHub's issue board](https://github.com/Moerill/Mess/issues) and che
 **I will only take a quick glance at half hearted bug reports or Discord mentions! Don't expect me to react there!**
 
 ## Atribution
-Thanks to @bsleys for his continued support on helping to enhance this module with features!
-
-Thanks to @BrotherSharp for the japanese translation!
-
-Thanks to @NickEast for his ![foundry project creator](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project) which i'm using in a modified version for my building and publishing workflow.
+Special thanks to:
+* GitHub User @bsleys for his continued support on helping to enhance this module with features!
+* Discord User @BrotherSharp for the japanese translation!
+* Github User @rinnocento for the portuguese translation!
+* @NickEast for his ![foundry project creator](https://gitlab.com/foundry-projects/foundry-pc/create-foundry-project) which i'm using in a modified version for my building and publishing workflow.
 
 This module would not be possible without the great work from Atropos on FoundryVTT and the [DnD5e System](https://gitlab.com/foundrynet/dnd5e) for FoundryVTT! Part of the code (especially the code for the rolls) is heavily based on the DnD5es code, which is licensed under GNU GPLv3.
 
 The templates used in the videos are from [Pierluigi Riminis Perfect Spell Pack 2 animated](https://marketplace.roll20.net/browse/set/3954/perfect-spells-pack-2-animated).
 
+## Support the development
+I'm doing this project mostly alone (with partial help of some wonderful people mentioned above) in my spare time and for free.  
+If you want to encourage me to keep doing this, i am happy about all kind of tokens of appreciation. (Like some nice words, recommending this project or even a small donation over at my [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FYZ294SP2JBGS&source=url)).  
+
 ## Licensing
 Mess is licensed under the [LGPL v3](https://github.com/Moerill/Mess/blob/master/LICENSE).
 
 This work is licensed under Foundry Virtual Tabletop [EULA - Limited License Agreement for module development](https://foundryvtt.com/article/license/).
-
-## Support the development
-Want to help me develop? Send a merge request on this gitlab or contact me on Discord (Moerill#7205).  
-Want to support me in another way? 
-Leave me some nice comments (e.g. on Discord), recommend this module to others and/or leave a donation over at my [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FYZ294SP2JBGS&source=url).
 
 # Universal Features
 
@@ -110,9 +124,11 @@ To make dragging around more beautiful! Letting the placeable always snap, makes
 Adds animations for Drag and Drop animations to make them more appealing to the eye and more obvious where stuff will end up when dropped.  
 #### Some important information and known issues for this feature
 1) Its supposed to work with all sidebar directories, that support a drag and drop workflow to sort.
+	* Scene directory may look a bit odd (especially for scenes without thumbnails)
 2) Many actor sheets are supported out of the box. Tested with:
 	* DnD5e default and tidy5e sheets
 	* Pf2e character sheet
+  	* The container box may look a bit misleading..
 3) sorting to the end of a list/folder is kinda difficult at the moment. For sidebar directories dragging onto the folder itself puts it at the end. (Trying to fix this just introduced quite a few more issues and was not worth the effort. Also to my knowledge its the same for base FVTT dragging)
 
 # DnD5e specific features
@@ -121,14 +137,34 @@ This is a big one and encompasses a variety of features.
 
 ### Custom attack and damage roll chat cards
 ![Attacking](img/attacking.gif)  
+(While this gif has not all the newest feature in, it does display the main features of the roll cards.)  
 Default DnD5e does need way to many clicks, just to do a single attack. There do exist other approaches to handle this, like BetterRolls, but i am not a fan of those. This feature streamlines the process of attacking or using an item/feature/spell (from now on summarized together as ability).  
 Each time you use an ability the default chat card gets created as well as an *attack card* for each target you selected (or just one if no target is selected or the ability is an AoE skill.). Example card:  
 ![attack card example](img/attack-card-example.png)  
 Hovering over the target in the card does highlight it on the map (if visible) and double clicking it pans it into view.  
 If a crit is rolled the dmg formulas are automatically adjusted to respect it by using the double amount of dice.  
+#### Extended tooltip
+The dice tooltip (clicking on a result) now shows extended information. (Modifiers, proficiency bonus, ...)
+
+#### GM only information
+For all rolls  some extra information about the target will be shown:
+* Armor Class
+* Damage resistances
+* Damage immunities
+* Damage vulnerabilities
+
+#### Always show GM attack card to players, but rolls only on demand
+You can set to always ignore the roll mode set for the GM for attack cards only. This will always display basic information, like the attacker, chat flavor for the attack and the target (if existent). You then can decide to show your rolled attack or damage results to your players by clicking on the eye icon beside the section header. (Only the result will be shown to non GMs. Clicking on the result will not show extra information for players, like rolled dice, modifier, etc.)  
+This has the advantage of easier tracking the flow of battle, targets and damage received for player characters. Also the players then can easily apply the damage received using the context menu to their characters.
+
 #### Custom flavor text
 The flavor text (in the example ``The cat swipes at Badger lazily with a clawed paw.``) is the chat flavor text specified for the item. If you want to display the targets name in it, use ``[target.name]`` inside the flavor text.  
-*Rollable Tables as Flavor*: You can also specify to modify the flavor (partially) by adding a rollable table. You can do so similarly as you specify other entities inside e.g. journals, by using ``@JournalEntry[name]`` or ``@JournalEntry[id]`` inside the chat flavor text. The module will automatically roll the table and replace the reference inside the flavor text. ``[target.name]`` will get replaced afterwards, so you can even use that inside your rollable tables.
+*Rollable Tables as Flavor*: You can also specify to modify the flavor (partially) by adding a rollable table. You can do so similarly as you specify entity links everywhere else in FoundryVTT, by using ``@RollableTable[name]`` or ``@RollableTable[id]`` inside the chat flavor text. The module will automatically roll the table and replace the reference inside the flavor text. ``[target.name]`` will get replaced afterwards, so you can even use that inside your rollable tables.
+
+#### reactive context menu for applying dmg
+![Contextmenu](img/context-menu.png)  
+You can right click on a rolled dmg roll to select whether to apply dmg to the target of the chat card (or all selected tokens if the card has no target).  
+Alternatively you can right click on the *Damage* header to automatically apply the sum of all rolled damage die. (Same rule as above for target) Also if versatile damage was rolled you can choose whether to use the versatile or the non versatile damage as main damage source.
 
 ### Autoroll and Advantage toggle
 ![Roll toggles](img/roll-toggles.png)  

@@ -53,6 +53,16 @@ export class MessSettings extends FormApplication {
 			default: isDnD,
 			type: Boolean
 		});
+
+		game.settings.register('mess', 'attack-card-always-public', {
+			name: "Roll mode for alternative rolling.",
+			hint: "Always roll attack rolls public, with hidden rolls, but visible target.",
+			scope: "world",
+			config: false,
+			default: isDnD,
+			type: Boolean
+		});
+	
 	
 		game.settings.register('mess', 'modify-templates', {
 			name: "Activate modified templates.",
@@ -177,6 +187,7 @@ export class MessSettings extends FormApplication {
 			// data['better-draggable'] = game.settings.get('mess', 'better-draggable');
 			data['prepared-spell-tracker'] = game.settings.get('mess', 'prepared-spell-tracker');
 			data['add-scrolling'] = game.settings.get('mess', 'add-scrolling');
+			data['attack-card-always-public'] = game.settings.get('mess', 'attack-card-always-public');
 		}
 		return data;
 	}

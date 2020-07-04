@@ -8,5 +8,5 @@ export function rolling() {
 		return;
 	rollConrolls();
 	applyDmg();
-	modifyRolling()
+	modifyRolling();
 }

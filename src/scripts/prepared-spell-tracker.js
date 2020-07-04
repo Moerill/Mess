@@ -35,9 +35,12 @@ export default async function addPreparedSpellTracker() {
 		
 		if (app.constructor.name === 'Tidy5eSheet') {
 			const el = html[0].querySelector('.spellcasting-ability');
+			if (!el)
+				return;
 			el.appendChild(tracker, el);
 		} else {
 			const el = html[0].querySelector('.spellbook .inventory-list');
+			if (!el)	return;
 			tracker.style.flex = '0';
 			tracker.style.alignSelf = 'flex-start';
 			tracker.style.margin = '0 8px';

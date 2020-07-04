@@ -22,6 +22,9 @@ function registerSettings() {
 
 async function chatLogHook(app, html, data) {
 	html[0].classList.add('mess');
+	console.log("qwe", game.user, game.user.isGM)
+	if (game.user.isGM)
+		html[0].classList.add('mess-is-gm');
 	const div = document.createElement('div');
 	div.classList.add('mess-roll-control');
 

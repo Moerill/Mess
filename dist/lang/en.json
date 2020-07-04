@@ -5,7 +5,23 @@
 			"cardTargetTooltip": "Double click to pan to token, if its scene is currently viewed.",
 			"chatCardResourceError": "There were not enough resources left for this attack!",
 			"toHit": "To Hit",
-			"damage": "Damage"
+			"damage": "Damage",
+			"contextMenu": {
+				"dmg": "Damage",
+				"healing": "Healing",
+				"full": "Full",
+				"half": "Half",
+				"double": "Double",
+				"error": "You must select at least one token to apply the damage to!",
+				"applyTarget": "Apply to target",
+				"applySelected": "Apply to selected"
+			},
+			"applyDamage": {
+				"sceneNotFound": "Scene for Target not found!",
+				"targetNotFound": "Target token not found!",
+				"targetNotOwner": "You are not allowed to modify target tokens HP!"
+			},
+			"showToPlayers": "Toggle whether rolled dice results are shown to players. "
 		},
 		"rollConfig": {
 			"Advantage": "Roll with Advantage!",
@@ -74,6 +90,10 @@
 					"maxCrit": {
 						"label": "Use maximum crits.",
 						"hint": "Changes behaviour of critical damage rolls to maximize the damage of the extra dice!"
+					},
+					"mode": {
+						"activate": "Always display GM attack cards to all users, regardless of the roll mode.",
+						"hint": "This will always display the attack card with some basic information, like the attacker and the target to all players. The GM then can manually decide to show the rolled results on demand by clicking on the eye button next to the section titles on the card."
 					}
 				}
 			},

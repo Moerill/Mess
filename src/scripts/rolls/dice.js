@@ -1,3 +1,5 @@
+import {getTargetToken, hasTarget} from './util.js';
+
 /**
  * All the functions provided here are heavily based on Foundrys DnD5e system, authored by Atropos.
  * Original repository: https://gitlab.com/foundrynet/dnd5e
@@ -66,7 +68,7 @@ export async function rollD20(data) {
 	let rollMode = game.settings.get("core", "rollMode");
 	if ( ["gmroll", "blindroll"].includes(rollMode) ) chatData["whisper"] = ChatMessage.getWhisperIDs("GM");
 	if ( rollMode === "blindroll" ) chatData["blind"] = true;
-
+	
 	ChatMessage.create(chatData);
 }
 
@@ -150,7 +152,7 @@ export async function rollToHit(ev) {
 		const message = game.messages.get(messageId);
 		if (!(message.owner || message.isAuthor)) {
 			ui.notifications.error('You do not own the permissions to make that roll!');
-			return;
+			return false;
 		}
 	}
 	// Get the Actor from a synthetic Token
@@ -187,18 +189,54 @@ export async function rollToHit(ev) {
 	let r = new Roll(rollData.parts.join('+'), rollData);
 	r.roll();
 	let div = document.createElement('div');
-	div.title = `${rollData.parts[0]}+${rollData.terms} = ${r.formula} = ${r.total}. Click to see rolls.`;
+	// div.title = `${rollData.parts[0]}+${rollData.terms} = ${r.formula} = ${r.total}. Click to see rolls.`;
 	div.classList.add('dice-roll');
 	div.classList.add('mess-dice-result');
+	if (game.user.isGM)
+		div.classList.add('mess-gm-dice');
 	const span = div.appendChild(document.createElement('span'));
-	span.innerText = r.total;
+	span.classList.add('mess-roll-container');
+	span.innerHTML = `<span class='mess-roll-total'>${r.total}</span>`;
+
 	div.insertAdjacentHTML('beforeend', await r.getTooltip());
+	let customTooltip = '';
+	const terms = rollData.terms.split('+'); // only adding + terms here anyway
+	const dataTerms = rollData.formula.split(/(?=[+-])/);
+	for (let i = 0; i < terms.length; i++) {
+		const term = terms[i];
+		const num = Number(dataTerms[i]);
+		if (isNaN(num)) continue;
+		customTooltip += `<section class="tooltip-part">
+			<div class="dice">
+				<p class="part-formula">
+					${term}
+					<span class="part-total">${num >= 0 ? '+'+num : num}</span>
+				</p>
+			</div>
+		</section>`
+	}
+	div.querySelector('.dice-tooltip').insertAdjacentHTML('beforeend', customTooltip);
+
 	const tooltip = div.childNodes[1];
 	tooltip.classList.add('hidden');
 	const crit = rollData.critical || 20;
 	const fumble = rollData.fumble || 1;
 
 	const d20 = r.parts[0].total;
+
+	// if (hasTarget(button)) {
+	// 	// Check if hit
+	// 	const target = getTargetToken(button);
+	// 	const ac = target.actor.data.data.attributes.ac.value;
+	// 	if (ac) {
+	// 		if ((r.total >= ac && d20 > fumble) || d20 >= crit) {
+	// 			span.classList.add('mess-hit');
+	// 		} else {
+	// 			span.classList.add('mess-miss');
+	// 		}
+	// 	}
+	// }
+
 	if (d20 >= crit) {
 		span.classList.add('crit');
 		card.querySelector('.mess-chat-dmg .mess-chat-roll-type').innerHTML += ' - Crit!'
@@ -285,7 +323,7 @@ export async function getDmgData({actor, item, spellLevel = null}) {
 		const dmgType = CONFIG.DND5E.damageTypes[part[1]];
 		if (dmgType)
 			part[1] = game.i18n.localize('DND5E.Damage' + CONFIG.DND5E.damageTypes[part[1]]);
-		else if (part[1] === 'versatile')
+		else if (part[1] === 'versatile') 
 			part[1] = game.i18n.localize('DND5E.Versatile');
 
 		//evalute damage formula's for example "ceil(@classes.rogue.levels/2))d6" -> "4d6"
@@ -307,6 +345,9 @@ export async function getDmgData({actor, item, spellLevel = null}) {
  * @param {Event} ev 
  */
 export async function rollDmg(ev) {
+	const contextMenu = ev.currentTarget.parentNode.querySelector('#context-menu');
+	if (contextMenu)
+		contextMenu.remove();
 	// Extract card data
 	const button = ev.currentTarget;
 	button.disabled = true;
@@ -318,7 +359,7 @@ export async function rollDmg(ev) {
 		const message = game.messages.get(messageId);
 		if (!(message.owner || message.isAuthor)) {
 			ui.notifications.error('You do not own the permissions to make that roll!');
-			return;
+			return false;
 		}
 	}
 	const formula = button.dataset.formula;
@@ -326,12 +367,40 @@ export async function rollDmg(ev) {
 	let r = new Roll(formula);
 	r.roll();
 	let div = document.createElement('div');
-	div.title = `${button.dataset.terms} = ${r.formula} = ${r.total}. Click to see rolls.`;
+	// div.title = `${button.dataset.terms} = ${r.formula} = ${r.total}. Click to see rolls.`;
 	div.classList.add('dice-roll');
-	div.classList.add('mess-dice-result');
+	div.classList.add('mess-dice-result');	
+	if (game.user.isGM)
+		div.classList.add('mess-gm-dice');
+
+	// small helper to detect if versatile dmg was rolled
+	const dmgType = button.nextElementSibling.innerText;
+	if (dmgType === game.i18n.localize('DND5E.Versatile'))
+		div.classList.add('mess-versatile');
+
 	const span = div.appendChild(document.createElement('span'));
-	span.innerText = r.total;
+	span.classList.add('mess-roll-container');
+	span.innerHTML = `<span class='mess-roll-total'>${r.total}</span>`;
 	div.insertAdjacentHTML('beforeend', await r.getTooltip());
+	let customTooltip = '';
+	const terms = button.dataset.terms.split(/(?=[+-])/);
+	const dataTerms = formula.split(/(?=[+-])/).filter(e => e !== '+' && e !== '-'); // filter single + and -
+	// i really sh ould put this into a function............
+	for (let i = 0; i < terms.length; i++) {
+		const term = terms[i];
+		const num = Number(dataTerms[i].replace(/\s/g, ''));
+		console.log(dataTerms[i], num)
+		if (isNaN(num)) continue;
+		customTooltip += `<section class="tooltip-part">
+			<div class="dice">
+				<p class="part-formula">
+					${term}
+					<span class="part-total">${num >= 0 ? '+'+num : num}</span>
+				</p>
+			</div>
+		</section>`
+	}
+	div.querySelector('.dice-tooltip').insertAdjacentHTML('beforeend', customTooltip);
 	const tooltip = div.childNodes[1];
 	tooltip.classList.add('hidden');
 
