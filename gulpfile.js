@@ -85,6 +85,8 @@ async function copyFiles() {
 				await fs.copy(path.join('src', file), path.join('dist', file));
 			}
 		}
+		if (fs.existsSync('LICENSE'))
+			await fs.copy('LICENSE', path.join('dist', 'LICENSE'));
 		browserSync.reload();
 		return Promise.resolve();
 	} catch (err) {

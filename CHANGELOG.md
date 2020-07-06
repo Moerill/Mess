@@ -1,3 +1,9 @@
+# v0.11.2
+<ul>
+	<li>Fix icons images not being included in the packaged release and thus not showing.</li>
+	<li>Added updated Japanese localization. Thanks to @BrotherSharp</li>
+</ul>
+
 # v0.11.0
 <ul>
 	<li>*NEW* Dice So Nice support!</li>
