@@ -1,0 +1,117 @@
+{
+	"MESS": {
+		"attackCard": {
+			"target": "대상",
+			"cardTargetTooltip": "해당 씬이 현재 보여지고 있을 경우 토큰 더블 클릭으로 화면 이동한다.",
+			"chatCardResourceError": "이 공격을 위한 충분한 자원이 남아있지 않습니다!",
+			"toHit": "공격",
+			"damage": "피해",
+			"contextMenu": {
+				"dmg": "피해",
+				"healing": "회복",
+				"full": "보통",
+				"half": "절반",
+				"double": "2배",
+				"error": "피해를 적용할 토큰을 하나 이상 선택해야 합니다!",
+				"applyTarget": "대상에 적용",
+				"applySelected": "선택 대상에 적용"
+			},
+			"applyDamage": {
+				"sceneNotFound": "대상의 씬(Scene)을 찾을 수 없습니다!",
+				"targetNotFound": "대상 토큰을 찾을 수 없습니다!",
+				"targetNotOwner": "대상 토큰의 HP를 수정할 수 없습니다!"
+			},
+			"showToPlayers": "주사위 굴림 결과를 플레이어에게 표시할지 여부를 정한다."
+		},
+		"rollConfig": {
+			"Advantage": "유리한 굴림입니다!",
+			"Normal": "1d20을 굴려주세요!",
+			"Disadvantage": "불리한 굴림입니다! :(",
+            "ModifierTitle": "d20 기반 굴림에 대한 상황별 수정치",
+			"ModifierPlaceholder": "수정치",
+			"Hit": "명중",
+			"Dmg": "피해"
+		},
+		"actorSheet": {
+			"preparedSpellTracker": "준비된 주문들"
+		},
+		"itemSheet": {
+			"templateTexture": "템플릿 텍스처",
+			"bonusDmg": "피해 굴림에 보너스 피해를 추가합니까?"
+		},
+		"FVTTSettings": {
+			"button": "mess에 명령을 내려주세요!",
+			"description": "Mess 설정 메뉴."
+		},
+		"settings": {
+			"tabs": {
+				"info": "정보",
+				"templates": "템플릿",
+				"dnd5e": "DnD5e",
+				"misc": "기타"
+			},
+			"DnD": {
+				"specifics": "DnD5e 고유 옵션."
+			},
+			"templates": {
+				"alternateTexturesLabel": "대체적 템플릿 텍스처 렌더링 사용 설정 활성화.",
+				"autotargetting": {
+					"label": "템플릿 이동 시 자동적으로 대상 설정 활성화"
+				},
+				"drawTemplateBorders": {
+					"label": "템플릿 테두리를 그리거나 텍스처 템플릿의 그리드를 강조 표시하지 않음",
+					"hint": "이 기능을 활성화 하면 텍스처 템플릿의 테두리 및 그리드 강조 표시만 제거된다. 템플릿 제어에 마우스를 가져가면 강조 표시와 테두리가 표시된다."
+				},
+				"DnD": {
+					"textureInfo": {
+						"header": "기본 템플릿 텍스처",
+						"1": "항목에 대해 아무것도 설정되지 않은 경우 주문 템플릿에 대한 기본 텍스처를 선택 지정할 수 있음",
+						"2": "항목의 첫번째 피해 구역의 피해 유형을 선택한다."
+					}
+				}
+			},
+			"dnd5e": {
+				"numericalScrolling": {
+					"label": "수치 스크롤",
+					"hint": "숫자 입력 구역 내부를 스크롤하여 변경할 수 있다."
+				},
+				"itemSort": {
+					"label": "아이템 정렬 버튼",
+					"hint": "아이템을 알파벳 순으로 자동 정렬하는 버튼이 추가된다."
+				},
+				"preparedSpellTracker": {
+					"label": "준비된 주문 추적기",
+					"hint": "주문서(Spellbook) 탭에 추적기를 표시한다. 이 추적기를 사용하면 허용된 최대 주문 수를 더 쉽게 추적할 수 있다. 이 값은 자동으로 계산되지 않으며 몇 개까지 허용되는지를 알려준다."
+				},
+				"rolling": {
+					"header": "대체적 굴림과 대상지정",
+					"activate": "활성화.",
+					"hint": "다음 설정들은 활성화 되었을 경우 작동한다",
+					"maxCrit": {
+						"label": "치명타 최대치 사용",
+                        "hint": "추가 주사위의 피해를 극대화 하기 위해 치명적 피해 굴림을 변경한다."
+					},
+					"mode": {
+						"activate": "굴림 모드에 상관 없이 항상 모든 유저에게 GM 공격 카드를 표시",
+						"hint": "공격 카드에는 항상 공격자 및 모든 플레이어의 대상과 같은 몇 가지 기본 정보가 표시된다. GM은 카드의 제목 옆 눈 버튼을 클릭하여 요청시 수동적으로 굴림 결과를 보이도록 정할 수 있다."
+					}
+				}
+			},
+			"misc": {
+				"placeables":{
+					"label": "변경된 배치 활성화",
+					"hint": "드래그 시 배치 미리보기가 표시되는 방법을 변경한다. 템플릿은 마우스를 부드럽게 따라가며 정확히 배치하기 위해 마우스를 늦췄을 때만 정확한 위치(그리드에 스냅됨)에 표시된다."
+				},
+				"draggableLists": {
+					"label": "사이드바 및 많은 액터 시트의 아이템 목록에 대해 고급 드래그 애니메이션 활성화",
+					"hint": "드래그 작업 과정에 애니메이션을 추가하여 시각적 피드백을 개선하고, 드롭했을 때 개체의 위치를 올바르게 확인한다."
+				}
+			}
+		},
+		"reloadReminder": {
+			"text": "대부분의 변경 사항을 적용하려면 모든 클라이언트의 페이지를 새로고침 해주세요.",
+			"yes": "네, 당장 새로고침하죠.",
+			"no": "나중에 알아서 할게요."
+		}
+	}
+}
