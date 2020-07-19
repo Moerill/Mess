@@ -51,7 +51,9 @@ export async function rollD20(data) {
 		tooltip: await r.getTooltip(),
 		roll: r,
 		crit:  d20 >= 20,
-		fumble: d20 <= 1
+		fumble: d20 <= 1,
+		isGM: game.user.isGM,
+		showRolls: game.settings.get('mess', `${game.userId}.autoshow-selector`)
 	}
 
 	const template = await renderTemplate('modules/mess/templates/roll-card.html', templateData);
@@ -126,22 +128,33 @@ export async function getToHitData({actor, item}) {
 	}
 
 	let roll = new Roll(rollData.parts.join('+'), rollData);
-	rollData.totalModifier = roll._safeEval(roll.formula);
+	
+	roll.roll(); // Simulate a roll to get the data "compiled"
+	console.log(Roll.cleanFormula(rollData.parts.join('+')))
+	rollData.totalModifier = roll._safeEval(Roll.cleanFormula(roll.formula));
 	rollData.totalModifier = rollData.totalModifier >= 0 ? '+' + rollData.totalModifier : rollData.totalModifier;
 	if (rollData["atk"] && !roll._formula.includes('@atk')) {
 		rollData.parts.push("@atk");
 		roll = new Roll(rollData.parts.join('+'), rollData);
-		rollData.totalModifier += `+${rollData["atk"]}`;
+		rollData.totalModifier += `+(${rollData["atk"]})`;
 	}
 
 	const situationalModifier = getD20Modifier();
 	if (situationalModifier) {
 		rollData.parts.push(situationalModifier);
 		roll = new Roll(rollData.parts.join('+'), rollData);
-		rollData.totalModifier += `+${situationalModifier}`;
+		rollData.totalModifier += `+(${situationalModifier})`;
 	}
-	rollData.formula = roll.formula;
-	rollData.terms = roll._formula;
+	// Check if the extra modifiers to have some kind of roll in them.. if no add them to the modifier
+	try {
+		const mod = roll._safeEval(Roll.cleanFormula(rollData.totalModifier));
+		rollData.totalModifier = mod >= 0 ? '+' + mod : mod;
+	} catch(e) {
+	}
+
+	rollData.totalModifier = Roll.cleanFormula(rollData.totalModifier);
+	rollData.formula = Roll.cleanFormula(roll.formula);
+	rollData.terms = Roll.cleanFormula(roll._formula);
 	return rollData;
 }
 
@@ -345,7 +358,7 @@ export async function getDmgData({actor, item, spellLevel = null}) {
 			}
 			return t;
 		});
-		part.push(terms.join(''));
+		part.push(Roll.cleanFormula(terms.join('')));
 	}
 
 	return rollData;

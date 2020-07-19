@@ -1,9 +1,8 @@
 <div class='mess-attack-card chat-card' data-actor-id={{actor.id}}>
-	{{!--<span class='mess-attack-flavor'>{{title}}</span>--}}
-	<div class='mess-chat-rolls'>
-		<div class='mess-chat-to-hit'>
-			<label class='mess-chat-roll-type'>{{title}}</label>
-			<div class="dice-roll mess-dice-result" title='{{roll._formula}}={{roll.formula}}={{roll.total}}'>
+	<div class='mess-chat-rolls {{#if isGM}}mess-gm-rolls{{/if}}'>
+		<div class='mess-chat-to-hit {{#if showRolls}}mess-show-players{{/if}}'>
+			<label class='mess-chat-roll-type'>{{title}}</label> <a class='mess-show-btn' title="{{localize 'MESS.attackCard.showToPlayers'}}"><i class="fas"></i></a>
+			<div class="dice-roll {{#if isGM}}mess-gm-dice{{/if}} mess-dice-result" title='{{roll._formula}}={{roll.formula}}={{roll.total}}'>
 				<span class='mess-dice-total'>{{roll.total}}</span>
 				{{{tooltip}}}
 			</div>

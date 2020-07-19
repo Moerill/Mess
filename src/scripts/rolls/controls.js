@@ -18,11 +18,17 @@ function registerSettings() {
 		type: Object,
 		scope: 'user'
 	});
+
+	game.settings.register('mess', `${game.userId}.autoshow-selector`, {
+		name: 'Mess - Auto Show',
+		default: false,
+		type: Boolean,
+		scope: 'user'
+	});
 }
 
 async function chatLogHook(app, html, data) {
 	html[0].classList.add('mess');
-	console.log("qwe", game.user, game.user.isGM)
 	if (game.user.isGM)
 		html[0].classList.add('mess-is-gm');
 	const div = document.createElement('div');
@@ -34,10 +40,20 @@ async function chatLogHook(app, html, data) {
 		advantage: advSelector === 'advantage',
 		normal: advSelector ===  'normal',
 		disadvantage: advSelector ===  'disadvantage',
+		autoShow: game.settings.get('mess', `${game.userId}.autoshow-selector`),
 		...autoRollSelector
 	}
 
 	div.insertAdjacentHTML('afterbegin', await renderTemplate('modules/mess/templates/roll-control.html', templateData));
+
+	div.querySelector('.mess-show-btn').addEventListener('click', ev => {
+		ev.preventDefault(); ev.stopPropagation();
+
+		const target = ev.currentTarget;
+		const active = target.classList.contains('active');
+		target.classList.toggle('active');
+		game.settings.set('mess', `${game.userId}.autoshow-selector`, !active);
+	});
 
 	div.querySelectorAll('.mess-adv-selector a').forEach(e => {
 		e.addEventListener('click', async function(ev) {
@@ -62,7 +78,7 @@ async function chatLogHook(app, html, data) {
 			game.settings.set('mess', `${game.userId}.adv-selector`, newSelected.name);
 		})
 	});
-	div.querySelectorAll('.mess-autoroll-selector a') .forEach(e => {
+	div.querySelectorAll('.mess-autoroll-selector a').forEach(e => {
 		e.addEventListener('click', async function(ev) {
 			ev.preventDefault();
 			ev.stopPropagation();

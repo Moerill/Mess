@@ -10,7 +10,7 @@
 		<img src="{{target.img}}" title='{{localize 'MESS.attackCard.cardTargetTooltip'}}'>
 		<div class='mess-target-overlay'>
 			<div class='mess-target-overlay-container'>
-				<span class='mess-target-name' title='{{target.name}}'>{{!--localize 'MESS.attackCard.target'}}: <br>--}}{{target.name}}</span>
+				<span class='mess-target-name {{#if displayName}}mess-gm-info{{/if}}' title='{{target.name}}'>{{!--localize 'MESS.attackCard.target'}}: <br>--}}{{target.name}}</span>
 				<ul class='mess-gm-info'>
 					{{#each targetData}}
 					{{#if this.value}}
@@ -24,13 +24,13 @@
 	{{/if}}
 	<div class='mess-chat-rolls {{#if isGM}}mess-gm-rolls{{/if}}'>
 		{{#if toHit}}
-		<div class='mess-chat-to-hit'>
+		<div class='mess-chat-to-hit {{#if showRolls}}mess-show-players{{/if}}'>
 			<label class='mess-chat-roll-type'>{{localize 'MESS.attackCard.toHit'}}</label><a class='mess-show-btn' title="{{localize 'MESS.attackCard.showToPlayers'}}"><i class="fas"></i></a>
 			<button class='mess-button-to-hit {{#if isGM}}mess-gm-dice{{/if}}' title="{{toHit.terms}} = {{toHit.formula}} = {{toHit.totalModifier}}"><i class="fas fa-dice-d20"></i>{{toHit.totalModifier}}</button>
 		</div>
 		{{/if}}
 		{{#if dmgs}}
-		<div class='mess-chat-dmg'>
+		<div class='mess-chat-dmg {{#if showRolls}}mess-show-players{{/if}}'>
 			<label class='mess-chat-roll-type'>{{localize 'MESS.attackCard.damage'}}</label><a class='mess-show-btn' title="{{localize 'MESS.attackCard.showToPlayers'}}"><i class="fas"></i></a>
 			{{#each dmgs.parts}}
 				<button class='mess-button-dmg' title="{{this.[0]}} = {{this.[2]}}" data-terms="{{this.[0]}}" data-formula="{{this.[2]}}" data-dmg-type="{{this.[1]}}"><i class="fas fa-dice"></i> {{this.[2]}}</button>

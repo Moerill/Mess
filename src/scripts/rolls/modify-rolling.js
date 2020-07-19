@@ -14,6 +14,29 @@ export default function() {
 	Hooks.once('diceSoNiceReady', (dice3d) => {
     game.mess.diceSoNice = true;
 	});
+
+	CONFIG.Actor.entityClass.prototype.rollAbilitySave = function (abilityId) {
+		const label = CONFIG.DND5E.abilities[abilityId];
+		const abl = this.data.data.abilities[abilityId];
+		const parts = ["@mod"];
+		const data = {mod: abl.mod};
+	
+		// Include proficiency bonus
+		if ( abl.prof > 0 ) {
+			parts.push("@prof");
+			data.prof = abl.prof;
+		}
+	
+		// Include a global actor ability save bonus
+		const actorBonus = getProperty(this.data.data.bonuses, "abilities.save");
+		if ( !!actorBonus ) {
+			parts.push("@saveBonus");
+			data.saveBonus = actorBonus;
+		}
+		data.title = game.i18n.format("DND5E.SavePromptTitle", {ability: label});
+		data.parts = parts;
+		rollD20.bind(this)(data);
+	};
 }
 
 /**
@@ -160,7 +183,8 @@ async function renderAttack(ev) {
 		dmgs: await getDmgData({actor, item, spellLevel}),
 		sceneId: canvas.scene.id,
 		user: game.user.id,
-		isGM: game.user.isGM
+		isGM: game.user.isGM,
+		showRolls: game.settings.get('mess', `${game.userId}.autoshow-selector`)
 	}
 
 	const autoroll = game.settings.get('mess', `${game.userId}.autoroll-selector`);
@@ -168,6 +192,7 @@ async function renderAttack(ev) {
 	for (const target of targets) {
 		const allowed = await item._handleResourceConsumption({isCard: false, isAttack: true});
 		const targetActor = target.actor ? target.actor.data : null;
+
 		let targetData = {};
 		if (targetActor) {
 			targetData.ac = {
@@ -202,12 +227,15 @@ async function renderAttack(ev) {
 			}
 			// console.log(targetData)
 		}
+		const displayName = target.data.displayName === CONST.TOKEN_DISPLAY_MODES.ALWAYS
+												|| target.data.displayName === CONST.TOKEN_DISPLAY_MODES.HOVER;
 		const attackTemplateData = {
 									...attackData, 
 									target: target.data,
 									targetData: targetData,
 									flavor: getFlavor(item.data.data.chatFlavor, target),
-									allowed
+									allowed,
+									displayName
 								};
 		let html = await renderTemplate(template, attackTemplateData);
 
@@ -253,7 +281,7 @@ async function autoRoll(autoroll, template, rollMode) {
 	let blind = false;
 	if ( ["gmroll", "blindroll"].includes(rollMode) ) whispers = ChatMessage.getWhisperIDs("GM");
 	if ( rollMode === "blindroll" ) blind = true;
-	console.log(whispers, blind);
+
 	card.classList.add('message');
 	card.insertAdjacentHTML('afterbegin', template);
 	let rolls = [];
@@ -332,26 +360,7 @@ async function actorSheetHook(app, html, data) {
 		ev.stopPropagation();
 		ev.preventDefault();
 		const abilityId = ev.currentTarget.closest('.ability').dataset.ability;
-		const label = CONFIG.DND5E.abilities[abilityId];
-    const abl = app.object.data.data.abilities[abilityId];
-    const parts = ["@mod"];
-    const data = {mod: abl.mod};
-
-    // Include proficiency bonus
-    if ( abl.prof > 0 ) {
-      parts.push("@prof");
-      data.prof = abl.prof;
-    }
-
-    // Include a global actor ability save bonus
-    const actorBonus = getProperty(app.object.data.data.bonuses, "abilities.save");
-    if ( !!actorBonus ) {
-      parts.push("@saveBonus");
-      data.saveBonus = actorBonus;
-    }
-		data.title = game.i18n.format("DND5E.SavePromptTitle", {ability: label});
-		data.parts = parts;
-		rollD20.bind(app.object)(data);
+		app.object.rollAbilitySave(abilityId);
 		return false;
 	}));
 

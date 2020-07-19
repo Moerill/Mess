@@ -5,6 +5,9 @@
 	<span>+</span>
 	<input type='text' placeholder='{{localize "MESS.rollConfig.ModifierPlaceholder"}}' id='mess-roll-mod' title="{{localize 'MESS.rollConfig.ModifierTitle'}}" />
 </div>
+<div class='mess-show-toggle'>
+	<a class='mess-show-btn {{#if autoShow}}active{{/if}}' title="{{localize 'MESS.attackCard.showToPlayers'}}"><i class="fas"></i></a>
+</div>
 <div class='mess-autoroll-selector'>
 	<a class='{{#if hit}}mess-selected{{/if}}' name='hit'>{{localize 'MESS.rollConfig.Hit'}}</a>
 	<a class='{{#if dmg}}mess-selected{{/if}}' name='dmg'>{{localize 'MESS.rollConfig.Dmg'}}</a>

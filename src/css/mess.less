@@ -50,7 +50,8 @@
 		.mess-adv-selector {
 			--color-good: rgb(53, 233, 53);
 			--color-bad: red;
-			flex: 0 50%;
+			// flex: 0 50%;
+			max-width: 50%;
 			a {
 				display: none;
 				min-width: 30px;
@@ -133,6 +134,38 @@
 			margin: 3px;
 		}
 	}
+}
+
+.mess-is-gm {
+	#chat-controls {
+		.mess-autoroll-selector {
+			// flex: 0 40%;
+		}
+
+		.mess-show-btn {
+			padding: 0;
+			margin: 0;
+		}
+	}
+
+	.mess-show-toggle {
+		// flex: 0 10%;
+		// position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		.mess-show-btn {
+			&.active {
+				opacity: 1;
+			}
+			display: block;
+			
+			top: -1.85em;
+		}
+	}
+}
+.mess-show-toggle {
+	display: none;
 }
 
 .mess {
@@ -459,6 +492,10 @@
 			display: block;
 		}
 	}
+}
+
+.whisper .mess-gm-rolls .mess-show-btn {
+	display: none;
 }
 
 .mess-gm-rolls {

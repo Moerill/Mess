@@ -37,7 +37,7 @@
 #chat-controls .mess-roll-control .mess-adv-selector {
   --color-good: #35e935;
   --color-bad: red;
-  flex: 0 50%;
+  max-width: 50%;
 }
 #chat-controls .mess-roll-control .mess-adv-selector a {
   display: none;
@@ -105,6 +105,25 @@
 #chat-controls .mess-roll-control a {
   padding: 0 3px;
   margin: 3px;
+}
+.mess-is-gm #chat-controls .mess-show-btn {
+  padding: 0;
+  margin: 0;
+}
+.mess-is-gm .mess-show-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mess-is-gm .mess-show-toggle .mess-show-btn {
+  display: block;
+  top: -1.85em;
+}
+.mess-is-gm .mess-show-toggle .mess-show-btn.active {
+  opacity: 1;
+}
+.mess-show-toggle {
+  display: none;
 }
 .mess button[data-action="attack"] ~ button[data-action="damage"],
 .mess button[data-action="versatile"] {
@@ -376,6 +395,9 @@
 }
 .mess-is-gm .mess-gm-rolls .dice {
   display: block;
+}
+.whisper .mess-gm-rolls .mess-show-btn {
+  display: none;
 }
 .mess-gm-rolls .mess-chat-to-hit,
 .mess-gm-rolls .mess-chat-dmg {
