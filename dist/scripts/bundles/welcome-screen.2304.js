@@ -1,6 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["welcome-screen"],{"./module-dev/mess/src/scripts/welcome-screen.js":
-/*!*******************************************************!*\
-  !*** ./module-dev/mess/src/scripts/welcome-screen.js ***!
-  \*******************************************************/
-/*! exports provided: default */function(e,s,t){"use strict";function n(){const e=game.modules.get("mess"),s=e.id,t=e.data.title,n=e.data.version;game.settings.register(t,"version",{name:t+" Version",default:"0.0.0",type:String,scope:"world"});const i=game.settings.get(t,"version");if(isNewerVersion(n,i)){class e extends Application{static get defaultOptions(){const e=super.defaultOptions;return e.template=`modules/${s}/templates/welcome-screen.html`,e.resizable=!0,e.width=450,e.height=600,e.classes=["welcome-screen"],e.title=t+" - Welcome Screen",e}activateListeners(e){super.activateListeners(e),e.find(".show-again").on("change",e=>{let s="0.0.0";e.currentTarget.checked&&(s=n),game.settings.set(t,"version",s)})}}(new e).render(!0)}}t.r(s),t.d(s,"default",(function(){return n}))}}]);
-//# sourceMappingURL=welcome-screen.2304.js.map
