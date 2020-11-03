@@ -132,6 +132,7 @@ export async function getToHitData({ actor, item }) {
 		rollData['atk'] = [itemData.attackBonus, actorBonus.attack].filterJoin(
 			' + '
 		);
+		
 		if (!isNaN(Number(rollData['atk']))) {
 			parts.push('@atk');
 		}
@@ -140,16 +141,17 @@ export async function getToHitData({ actor, item }) {
 	let roll = new Roll(rollData.parts.join('+'), rollData);
 
 	roll.roll(); // Simulate a roll to get the data "compiled"
+	
 	rollData.totalModifier = roll._safeEval(Roll.cleanFormula(roll.terms));
 	rollData.totalModifier =
 		rollData.totalModifier >= 0
 			? '+' + rollData.totalModifier
 			: rollData.totalModifier;
-	if (rollData['atk'] && !roll._formula.includes('@atk')) {
-		rollData.parts.push('@atk');
-		roll = new Roll(rollData.parts.join('+'), rollData);
-		rollData.totalModifier += `+(${rollData['atk']})`;
-	}
+	// if (rollData['atk'] && !roll._formula.includes('@atk')) {
+	// 	rollData.parts.push('@atk');
+	// 	roll = new Roll(rollData.parts.join('+'), rollData);
+	// 	rollData.totalModifier += `+(${rollData['atk']})`;
+	// }
 
 	const situationalModifier = getD20Modifier();
 	if (situationalModifier) {
@@ -204,6 +206,8 @@ export async function rollToHit(ev) {
 	}
 
 	let rollData = await getToHitData({ actor, item });
+	
+
 	let adv = getAdvantageSettings();
 	// Determine the d20 roll and modifiers
 	let nd = 1;

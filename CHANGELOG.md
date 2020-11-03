@@ -1,3 +1,7 @@
+# v0.12.1
+
+* Fix attackbonus getting applied twice for to hit rolls
+
 # v0.12.0
 
 * Fix FVTT 0.7.5 incompatibility for rolls
