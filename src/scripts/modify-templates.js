@@ -1,13 +1,14 @@
 export function changeTemplates() {
+	// #MonkeyPatchingFTW
+	// better than stealing the code, replacing one line and then release it under a/the wrong license..
+	// Disadvantage: could need more fixing on updates. At least i didn#t make it line based like Kakaroto.. :P
 
-  // #MonkeyPatchingFTW
-  // better than stealing the code, replacing one line and then release it under a/the wrong license..
-  // Disadvantage: could need more fixing on updates. At least i didn#t make it line based like Kakaroto.. :P
-  
 	let newFun = MeasuredTemplate.prototype.refresh.toString();
 
 	if (game.settings.get('mess', 'modify-templates')) {
-		newFun = newFun.replace(/this\.template\.beginTextureFill\(\{[\s\S]*\}\)\;/, `
+		newFun = newFun.replace(
+			/this\.template\.beginTextureFill\(\{[\s\S]*\}\)\;/,
+			`
 			{
 				let mat = PIXI.Matrix.IDENTITY;
 				// rectangle
@@ -57,16 +58,22 @@ export function changeTemplates() {
 					source.muted = true;
 					game.video.play(source);
 				}
-		}`);
+		}`
+		);
 
 		Hooks.on('renderMeasuredTemplateConfig', (app, html, data) => {
-			html[0].querySelector('.file-picker').dataset.type = 'imagevideo'
+			html[0].querySelector('.file-picker').dataset.type = 'imagevideo';
 		});
 	}
-	
-	if (game.settings.get('mess', 'templateAutoTargeting')) {
-		newFun = newFun.replace(/this\.\_borderThickness/, "this.texture && !this._hover ? 0 : this._borderThickness");
-		newFun = newFun.replace(/return\sthis\;/, `
+
+	if (game.settings.get('mess', 'templateDrawBordersOnlyOnHighlight')) {
+		newFun = newFun.replace(
+			/this\.\_borderThickness/,
+			'this.texture && !this._hover ? 0 : this._borderThickness'
+		);
+		newFun = newFun.replace(
+			/return\sthis\;/,
+			`
 			const grid = canvas.grid;
 			// only show grid highlights on hover
 			if (this.texture) {
@@ -74,43 +81,45 @@ export function changeTemplates() {
 				if (hl)
 					hl.renderable = this._hover;
 			}
-			return this;`);
+			return this;`
+		);
 	}
 
-	MeasuredTemplate.prototype.refresh = Function(`"use strict"; return ( function ${newFun} )`)();
+	MeasuredTemplate.prototype.refresh = Function(
+		`"use strict"; return ( function ${newFun} )`
+	)();
 
-	
 	if (game.settings.get('mess', 'templateAutoTargeting')) {
 		MeasuredTemplate.prototype.getTargets = getTargets;
 		MeasuredTemplate.prototype.isTokenInside = isTokenInside;
 
 		const oldFun = MeasuredTemplate.prototype._onDragLeftMove;
-		MeasuredTemplate.prototype._onDragLeftMove = function(ev) {
+		MeasuredTemplate.prototype._onDragLeftMove = function (ev) {
 			const ret = oldFun.bind(this)(ev);
 
-			for (let c of ev.data.clones)
-				this.getTargets(c);
+			for (let c of ev.data.clones) this.getTargets(c);
 
 			return ret;
-		}
+		};
 	}
 }
 
 export async function dndTemplateSettings() {
-  if (game.system.id !== 'dnd5e') return;
+	if (game.system.id !== 'dnd5e') return;
 
-	const importedJS = (await import(/* webpackIgnore: true */ '/systems/dnd5e/module/pixi/ability-template.js'))
+	const importedJS = await import(
+		/* webpackIgnore: true */ '/systems/dnd5e/module/pixi/ability-template.js'
+	);
 	const AbilityTemplate = importedJS.default || importedJS.AbilityTemplate;
 
 	// Auto texture creation from item
 	if (game.settings.get('mess', 'modify-templates')) {
 		Hooks.on('renderItemSheet', itemHook);
-		
-		
+
 		const _originalFromItem = AbilityTemplate.fromItem;
-		AbilityTemplate.fromItem = function(item) {
+		AbilityTemplate.fromItem = function (item) {
 			const template = _originalFromItem.bind(this)(item);
-			
+
 			// generate a texture based on the items dmg type, ...
 			// Add settings to define custom templates for stuff.
 			let path = item.getFlag('mess', 'templateTexture');
@@ -120,37 +129,39 @@ export async function dndTemplateSettings() {
 				path = path[template.data.t];
 			}
 			if (path)
-				loadTexture(path).then(tex => {
+				loadTexture(path).then((tex) => {
 					template.texture = tex;
 					template.data.texture = path;
 					template.refresh();
-				})
+				});
 			template.item = item;
 			return template;
-		}
+		};
 	}
-
 
 	if (game.settings.get('mess', 'templateAutoTargeting')) {
 		//  rather ugly, maybe find a better way at some point :shrug:
 		const origPrevListeners = AbilityTemplate.prototype.activatePreviewListeners.toString();
-		const newFun = origPrevListeners.replace(/this\.refresh\(\)\;/, 
-					// get targets
-						`this.refresh();
+		const newFun = origPrevListeners.replace(
+			/this\.refresh\(\)\;/,
+			// get targets
+			`this.refresh();
 						this.getTargets(this);
-					`);
+					`
+		);
 
 		AbilityTemplate.prototype.getTargets = getTargets;
 		AbilityTemplate.prototype.isTokenInside = isTokenInside;
 
-		AbilityTemplate.prototype.activatePreviewListeners = Function(`"use strict"; return ( function ${newFun} )`)();
+		AbilityTemplate.prototype.activatePreviewListeners = Function(
+			`"use strict"; return ( function ${newFun} )`
+		)();
 	}
 }
 
-
 function isTokenInside(token) {
 	const grid = canvas.scene.data.grid,
-				templatePos = {x: this.data.x, y: this.data.y};
+		templatePos = { x: this.data.x, y: this.data.y };
 	// Check for center of  each square the token uses.
 	// e.g. for large tokens all 4 squares
 	const startX = token.width >= 1 ? 0.5 : token.width / 2;
@@ -159,7 +170,7 @@ function isTokenInside(token) {
 		for (let y = startY; y < token.height; y++) {
 			const currGrid = {
 				x: token.x + x * grid - templatePos.x,
-				y: token.y + y * grid - templatePos.y
+				y: token.y + y * grid - templatePos.y,
 			};
 			const contains = this.shape.contains(currGrid.x, currGrid.y);
 			if (contains) return true;
@@ -171,33 +182,39 @@ function isTokenInside(token) {
 function getTargets(template) {
 	const tokens = canvas.scene.getEmbeddedCollection('Token');
 	let targets = [];
-	
+
 	for (const token of tokens)
-		if (template.isTokenInside(token)) { targets.push(token._id); }
+		if (template.isTokenInside(token)) {
+			targets.push(token._id);
+		}
 	game.user.updateTokenTargets(targets);
 }
 
 async function itemHook(app, html) {
 	const div = document.createElement('div');
 	div.classList.add('form-group');
-	div.appendChild(document.createElement('label')).innerText = game.i18n.localize('MESS.itemSheet.templateTexture');
+	div.appendChild(
+		document.createElement('label')
+	).innerText = game.i18n.localize('MESS.itemSheet.templateTexture');
 	const formField = div.appendChild(document.createElement('div'));
 	formField.classList.add('form-fields');
 	const inp = formField.appendChild(document.createElement('input'));
 	inp.dataset.dtype = 'String';
 	inp.type = 'text';
 	inp.name = 'flags.mess.templateTexture';
-	inp.value = app.object.getFlag('mess', 'templateTexture') || "";
+	inp.value = app.object.getFlag('mess', 'templateTexture') || '';
 
-	formField.insertAdjacentHTML('beforeend', `
+	formField.insertAdjacentHTML(
+		'beforeend',
+		`
 		<button type="button" class="file-picker" data-type="imagevideo" data-target="flags.mess.templateTexture" title="Browse Files" tabindex="-1">
 			<i class="fas fa-file-import fa-fw"></i>
 		</button>
-	`);
+	`
+	);
 	const button = formField.querySelector('button');
 	button.style.flex = '0';
-  app._activateFilePicker(button);
+	app._activateFilePicker(button);
 	const target = html[0].querySelector('[name="data.target.units"]');
-  if (target)
-		target.closest('.form-group').after(div);
+	if (target) target.closest('.form-group').after(div);
 }

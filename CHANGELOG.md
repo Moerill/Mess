@@ -1,3 +1,9 @@
+# v0.12.0
+
+* Fix FVTT 0.7.5 incompatibility for rolls
+* Fix template border never being shown
+- nicer drag animations for  the sidebar are disabled for the time being, until i'm able to fix it.
+
 # v0.11.2
 <ul>
 	<li>Fix icons images not being included in the packaged release and thus not showing.</li>

@@ -1,3 +1,5 @@
+//import { TweenLite } from '/scripts/greensock/esm/all.js';
+
 export class DraggableList {
 	constructor(container, selector, options = {}) {
 		this.container = container;
@@ -6,7 +8,7 @@ export class DraggableList {
 
 		this._init();
 	}
-	
+
 	get defaultOptions() {
 		return {
 			offset: 21, // in px
@@ -16,37 +18,38 @@ export class DraggableList {
 			onDragStart: null,
 			onDragEnd: null,
 			onDrop: null,
-			
-		}
+		};
 	}
 
 	async _init() {
 		// this._items = Array.from(this.container.childNodes).filter(e => e.matches && e.matches(this.selector));
 		this._items = Array.from(this.container.querySelectorAll(this.selector));
-		this.container.addEventListener('dragleave', ev => {
+		this.container.addEventListener('dragleave', (ev) => {
 			const rect = this.container.getBoundingClientRect();
 			const boundary = 5;
 			//  Reset offsets, when first target was inside a child container.
 			const insideChild = ev.insideChild;
-			if (!insideChild 
-					&& ev.clientY < rect.y + rect.height - boundary
-					&& ev.clientY > rect.y + boundary
-					&& ev.clientX > rect.x + boundary 
-					&& ev.clientX < rect.x -  boundary + rect.width) {
-						ev.insideChild = true;
-						return;
-					}
+			if (
+				!insideChild &&
+				ev.clientY < rect.y + rect.height - boundary &&
+				ev.clientY > rect.y + boundary &&
+				ev.clientX > rect.x + boundary &&
+				ev.clientX < rect.x - boundary + rect.width
+			) {
+				ev.insideChild = true;
+				return;
+			}
 
 			this._resetOffsets();
 		});
 
-  /**  Possibly modifying the drop target.
-	 * Why?
-	 * Due to the method used, the target gets moved out of the way and it will automatically drop onto the container element.
-	 * Most drop functions in fvtt just append to the end though, when dropping onto the container.
-	 * => We search for the first offset element and define that one as target. Since default for sorting is "insertBefore", and most implementations i've found build upon FVTT default/dnd5e systems default, this is a rather save implementation to find the real target.
-	 */
-		this.container.addEventListener('drop', ev => {
+		/**  Possibly modifying the drop target.
+		 * Why?
+		 * Due to the method used, the target gets moved out of the way and it will automatically drop onto the container element.
+		 * Most drop functions in fvtt just append to the end though, when dropping onto the container.
+		 * => We search for the first offset element and define that one as target. Since default for sorting is "insertBefore", and most implementations i've found build upon FVTT default/dnd5e systems default, this is a rather save implementation to find the real target.
+		 */
+		this.container.addEventListener('drop', (ev) => {
 			// const insideChild = ev.insideChild;
 			// if (this._over) {
 			// 	Object.defineProperty(ev, 'target', {writable: false, value: this._over})
@@ -54,14 +57,14 @@ export class DraggableList {
 			// 	// ev.insideChild = true;
 			// }
 		});
-		this._items.forEach((e, idx) => this._initItem(e, idx))
+		this._items.forEach((e, idx) => this._initItem(e, idx));
 	}
 
 	async _initItem(el, idx) {
-		el.style.position = "relative";
-		el.addEventListener('dragenter', ev => this._onDragEnterItem(ev, idx));
-		el.addEventListener('dragleave', ev => this._onDragLeaveItem(ev, idx));
-		el.addEventListener('dragend', ev => {
+		el.style.position = 'relative';
+		el.addEventListener('dragenter', (ev) => this._onDragEnterItem(ev, idx));
+		el.addEventListener('dragleave', (ev) => this._onDragLeaveItem(ev, idx));
+		el.addEventListener('dragend', (ev) => {
 			// safety net if for some reasons the rerender is to slow or fails...
 			// const srcElement = ev.currentTarget;
 			// srcElement.style.opacity = null;
@@ -73,14 +76,14 @@ export class DraggableList {
 		// 	this._dragged = ev.currentTarget;
 		// 	// if (ev.currentTarget.matches(this.dir))
 		// 	// 	this._draggingDir = true;
-		// 	// else 
+		// 	// else
 		// 	// 	this._draggingDir = false;
 		// 	// TweenLite.to(ev.currentTarget, this.options.time, {opacity: 0, height: 0});
 		// })
 	}
 
 	_onDragEnterItem(ev, idx) {
-		console.time('dragEnter')
+		console.time('dragEnter');
 		ev.stopPropagation();
 
 		// // save the current target
@@ -88,13 +91,13 @@ export class DraggableList {
 		const offset = this.options.offset;
 		this._resetOffsets();
 		let target = ev.currentTarget;
-		console.log(ev.currentTarget)
+		console.log(ev.currentTarget);
 		// if inside a container, just make sure that its not jumping around. (Sometimes its ignoring the real target...)
 		if (target.matches(this.options.dir)) {
 			const items = Array.from(target.querySelectorAll(this.selector));
 			const headerRect = target.getBoundingClientRect();
 			if (ev.clientY > headerRect.top && ev.clientY < headerRect.bottom) {
-				TweenLite.to(items, time, {paddingTop: 0});
+				TweenLite.to(items, time, { paddingTop: 0 });
 				this._over = target;
 				return;
 			}
@@ -109,7 +112,7 @@ export class DraggableList {
 
 		this._over = target;
 		console.log(target, offset);
-		TweenLite.to(target, time, {paddingTop: offset});
+		TweenLite.to(target, time, { paddingTop: offset });
 		// let resetList = [];
 		// let offsetList = [];
 		// let prev = item.previousElementSibling;
@@ -130,7 +133,7 @@ export class DraggableList {
 		// }
 
 		// // // if (ev.currentTarget.matches(this.options.dir)) {
-			
+
 		// // // 	idx = idx + 1;
 		// // // }
 		// // // for (let i = idx; i < this._items.length; i++) {
@@ -141,10 +144,9 @@ export class DraggableList {
 		// // const offsetList = this._items.slice(idx);
 		// TweenLite.to(offsetList, time, {top: offset});
 
-		console.timeEnd('dragEnter')
+		console.timeEnd('dragEnter');
 		return false;
 	}
-
 
 	_onDragLeaveItem(ev, idx) {
 		// console.time('dragLeave')
@@ -159,6 +161,6 @@ export class DraggableList {
 	// We now work with padding, cause.. reasons..
 	_resetOffsets(time = this.options.time) {
 		// TweenLite.to(this._items, time, {top: 0});
-		TweenLite.to(this._items, time, {paddingTop: 0});
+		TweenLite.to(this._items, time, { paddingTop: 0 });
 	}
 }
