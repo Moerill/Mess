@@ -133,9 +133,9 @@ export async function getToHitData({ actor, item }) {
 			' + '
 		);
 		
-		if (!isNaN(Number(rollData['atk']))) {
+		// if (!isNaN(Number(rollData['atk']))) {
 			parts.push('@atk');
-		}
+		// }
 	}
 
 	let roll = new Roll(rollData.parts.join('+'), rollData);
