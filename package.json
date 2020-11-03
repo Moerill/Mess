@@ -20,5 +20,8 @@
 		"webpack": "^4.44.2",
 		"yargs": "^15.4.1"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"gulp-concat": "^2.6.1",
+		"json-stringify-pretty-compact": "^2.0.0"
+	}
 }

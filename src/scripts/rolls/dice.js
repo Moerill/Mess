@@ -348,7 +348,8 @@ export async function getDmgData({ actor, item, spellLevel = null }) {
 				actor.data.type === 'character'
 					? actorData.details.level
 					: actorData.details.spellLevel;
-			item._scaleCantripDamage(newDmgPart, lvl, itemData.scaling.formula);
+			item._scaleCantripDamage(newDmgPart, itemData.scaling.formula, lvl);
+
 			rollData.parts[0][0] = newDmgPart[0];
 		} else if (
 			spellLevel &&
