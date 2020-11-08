@@ -1,3 +1,9 @@
+# v0.12.2
+
+- Some rolling bugfixes
+  - crits work now again
+  - tooltips are now working again
+
 # v0.12.1
 
 * Fix attackbonus getting applied twice for to hit rolls

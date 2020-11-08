@@ -56,10 +56,7 @@ export async function rollD20(data) {
 		showRolls: game.settings.get('mess', `${game.userId}.autoshow-selector`),
 	};
 
-	const template = await renderTemplate(
-		'modules/mess/templates/roll-card.html',
-		templateData
-	);
+	const template = await renderTemplate('modules/mess/templates/roll-card.html', templateData);
 
 	let chatData = {
 		user: game.user._id,
@@ -71,15 +68,13 @@ export async function rollD20(data) {
 		},
 	};
 	let rollMode = game.settings.get('core', 'rollMode');
-	if (['gmroll', 'blindroll'].includes(rollMode))
-		chatData['whisper'] = ChatMessage.getWhisperIDs('GM');
+	if (['gmroll', 'blindroll'].includes(rollMode)) chatData['whisper'] = ChatMessage.getWhisperIDs('GM');
 	if (rollMode === 'blindroll') chatData['blind'] = true;
 	const dsn = game.mess.diceSoNice;
 	if (dsn) {
 		let whispers = null;
 		let blind = false;
-		if (['gmroll', 'blindroll'].includes(rollMode))
-			whispers = ChatMessage.getWhisperIDs('GM');
+		if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperIDs('GM');
 		if (rollMode === 'blindroll') blind = true;
 
 		await game.dice3d.showForRoll(r, game.user, true, whispers, blind);
@@ -114,10 +109,7 @@ export async function getToHitData({ actor, item }) {
 
 	// Elven Accuracy
 	if (['weapon', 'spell'].includes(item.data.type)) {
-		if (
-			flags.elvenAccuracy &&
-			['dex', 'int', 'wis', 'cha'].includes(item.abilityMod)
-		) {
+		if (flags.elvenAccuracy && ['dex', 'int', 'wis', 'cha'].includes(item.abilityMod)) {
 			rollData.elvenAccuracy = true;
 		}
 	}
@@ -129,24 +121,19 @@ export async function getToHitData({ actor, item }) {
 	const actorBonus = actorData.bonuses[itemData.actionType] || {};
 	if (itemData.attackBonus || actorBonus.attack) {
 		// parts.push("@atk");
-		rollData['atk'] = [itemData.attackBonus, actorBonus.attack].filterJoin(
-			' + '
-		);
-		
+		rollData['atk'] = [itemData.attackBonus, actorBonus.attack].filterJoin(' + ');
+
 		// if (!isNaN(Number(rollData['atk']))) {
-			parts.push('@atk');
+		parts.push('@atk');
 		// }
 	}
 
 	let roll = new Roll(rollData.parts.join('+'), rollData);
 
 	roll.roll(); // Simulate a roll to get the data "compiled"
-	
+
 	rollData.totalModifier = roll._safeEval(Roll.cleanFormula(roll.terms));
-	rollData.totalModifier =
-		rollData.totalModifier >= 0
-			? '+' + rollData.totalModifier
-			: rollData.totalModifier;
+	rollData.totalModifier = rollData.totalModifier >= 0 ? '+' + rollData.totalModifier : rollData.totalModifier;
 	// if (rollData['atk'] && !roll._formula.includes('@atk')) {
 	// 	rollData.parts.push('@atk');
 	// 	roll = new Roll(rollData.parts.join('+'), rollData);
@@ -166,7 +153,7 @@ export async function getToHitData({ actor, item }) {
 	} catch (e) {}
 
 	rollData.totalModifier = rollData.totalModifier;
-	rollData.formula = roll.formula;
+	rollData.formula = rollData.parts.join('+');
 	rollData.terms = Roll.cleanFormula(roll.terms);
 	return rollData;
 }
@@ -187,9 +174,7 @@ export async function rollToHit(ev) {
 		ev.preventDefault();
 		const message = game.messages.get(messageId);
 		if (!(message.owner || message.isAuthor)) {
-			ui.notifications.error(
-				'You do not own the permissions to make that roll!'
-			);
+			ui.notifications.error('You do not own the permissions to make that roll!');
 			return false;
 		}
 	}
@@ -200,13 +185,10 @@ export async function rollToHit(ev) {
 	// Get the Item
 	const item = actor.getOwnedItem(card.dataset.itemId);
 	if (!item) {
-		return ui.notifications.error(
-			`The requested item ${card.dataset.itemId} no longer exists on Actor ${actor.name}`
-		);
+		return ui.notifications.error(`The requested item ${card.dataset.itemId} no longer exists on Actor ${actor.name}`);
 	}
 
 	let rollData = await getToHitData({ actor, item });
-	
 
 	let adv = getAdvantageSettings();
 	// Determine the d20 roll and modifiers
@@ -241,24 +223,23 @@ export async function rollToHit(ev) {
 
 	div.insertAdjacentHTML('beforeend', await r.getTooltip());
 	let customTooltip = '';
-	const terms = rollData.terms.split('+'); // only adding + terms here anyway
+	const terms = rollData.terms.split(/(?=[+-])/); // only adding + terms here anyway
 	const dataTerms = rollData.formula.split(/(?=[+-])/);
+	console.log(rollData);
+	console.log(terms, dataTerms);
 	for (let i = 0; i < terms.length; i++) {
 		const term = terms[i];
-		const num = Number(dataTerms[i]);
-		if (isNaN(num)) continue;
-		customTooltip += `<section class="tooltip-part">
+		const num = dataTerms[i];
+		customTooltip += `
 			<div class="dice">
-				<p class="part-formula">
-					${term}
-					<span class="part-total">${num >= 0 ? '+' + num : num}</span>
-				</p>
+				<header class="part-header flexrow">
+          <span class='part-formula'>${num}</span>
+					<span class="part-total">${term}</span>
+				</header>
 			</div>
-		</section>`;
+		`;
 	}
-	div
-		.querySelector('.dice-tooltip')
-		.insertAdjacentHTML('beforeend', customTooltip);
+	div.querySelector('.dice-tooltip').insertAdjacentHTML('beforeend', customTooltip);
 
 	const tooltip = div.childNodes[1];
 	tooltip.classList.add('hidden');
@@ -279,22 +260,23 @@ export async function rollToHit(ev) {
 	// 		}
 	// 	}
 	// }
+	// console.log(crit);
 
 	if (d20 >= crit) {
 		span.classList.add('crit');
-		card.querySelector('.mess-chat-dmg .mess-chat-roll-type').innerHTML +=
-			' - Crit!';
+		card.querySelector('.mess-chat-dmg .mess-chat-roll-type').innerHTML += ' - Crit!';
 		card.querySelectorAll('.mess-button-dmg').forEach((e, idx) => {
-			const rgx = new RegExp(Die.rgx.die, 'g');
-			const formula = e.dataset.formula.replace(rgx, (match, nd, d, mods) => {
-				if (game.settings.get('mess', 'max-critical'))
-					mods = ' + ' + nd * d + (mods || '');
-				else {
-					nd = nd * 2;
-					mods = mods || '';
-				}
-				return nd + 'd' + d + mods;
-			});
+			// const rgx = new RegExp(Die.rgx.die, 'g');
+			const formula = new Roll(e.dataset.formula).alter(2).formula;
+			// const formula = e.dataset.formula.replace(rgx, (match, nd, d, mods) => {
+			// 	if (game.settings.get('mess', 'max-critical'))
+			// 		mods = ' + ' + nd * d + (mods || '');
+			// 	else {
+			// 		nd = nd * 2;
+			// 		mods = mods || '';
+			// 	}
+			// 	return nd + 'd' + d + mods;
+			// });
 			e.innerHTML = `<i class="fas fa-dice-d20"></i> ${formula}`;
 			e.dataset.formula = formula;
 		});
@@ -319,8 +301,7 @@ export async function getDmgData({ actor, item, spellLevel = null }) {
 	if (spellLevel) rollData.item.level = spellLevel;
 
 	rollData.parts = duplicate(itemData.damage.parts);
-	if (itemData.damage.versatile)
-		rollData.parts.splice(1, 0, [itemData.damage.versatile, 'versatile']);
+	if (itemData.damage.versatile) rollData.parts.splice(1, 0, [itemData.damage.versatile, 'versatile']);
 
 	// Only apply for items that are not bonus dmg themself
 	if (!item.getFlag('mess', 'isBonusDamage'))
@@ -335,10 +316,7 @@ export async function getDmgData({ actor, item, spellLevel = null }) {
 					bnsDmgParts.push(itmData.damage.parts[0][0]);
 					var lbl = itm.name;
 					if (itmData.damage.parts[0][1].length > 0)
-						lbl += ` - ${game.i18n.localize(
-							'DND5E.Damage' +
-								CONFIG.DND5E.damageTypes[itmData.damage.parts[0][1]]
-						)}`;
+						lbl += ` - ${game.i18n.localize('DND5E.Damage' + CONFIG.DND5E.damageTypes[itmData.damage.parts[0][1]])}`;
 					bnsDmgParts.push(lbl);
 				}
 			}
@@ -348,25 +326,13 @@ export async function getDmgData({ actor, item, spellLevel = null }) {
 	if (item.data.type === 'spell') {
 		if (itemData.scaling.mode === 'cantrip') {
 			let newDmgPart = [rollData.parts[0][0]];
-			const lvl =
-				actor.data.type === 'character'
-					? actorData.details.level
-					: actorData.details.spellLevel;
+			const lvl = actor.data.type === 'character' ? actorData.details.level : actorData.details.spellLevel;
 			item._scaleCantripDamage(newDmgPart, itemData.scaling.formula, lvl);
 
 			rollData.parts[0][0] = newDmgPart[0];
-		} else if (
-			spellLevel &&
-			itemData.scaling.mode === 'level' &&
-			itemData.scaling.formula
-		) {
+		} else if (spellLevel && itemData.scaling.mode === 'level' && itemData.scaling.formula) {
 			let newDmgPart = [];
-			item._scaleSpellDamage(
-				newDmgPart,
-				itemData.level,
-				spellLevel,
-				itemData.scaling.formula
-			);
+			item._scaleSpellDamage(newDmgPart, itemData.level, spellLevel, itemData.scaling.formula);
 			if (newDmgPart.length > 0) {
 				newDmgPart.push('upcast dice');
 				rollData.parts.push(newDmgPart);
@@ -383,12 +349,8 @@ export async function getDmgData({ actor, item, spellLevel = null }) {
 	for (let part of rollData.parts) {
 		let roll = new Roll(part[0], rollData);
 		const dmgType = CONFIG.DND5E.damageTypes[part[1]];
-		if (dmgType)
-			part[1] = game.i18n.localize(
-				'DND5E.Damage' + CONFIG.DND5E.damageTypes[part[1]]
-			);
-		else if (part[1] === 'versatile')
-			part[1] = game.i18n.localize('DND5E.Versatile');
+		if (dmgType) part[1] = game.i18n.localize('DND5E.Damage' + CONFIG.DND5E.damageTypes[part[1]]);
+		else if (part[1] === 'versatile') part[1] = game.i18n.localize('DND5E.Versatile');
 
 		//evalute damage formula's for example "ceil(@classes.rogue.levels/2))d6" -> "4d6"
 		let terms = roll.terms.map((t, i, terms) => {
@@ -412,9 +374,7 @@ export async function getDmgData({ actor, item, spellLevel = null }) {
  * @param {Event} ev
  */
 export async function rollDmg(ev) {
-	const contextMenu = ev.currentTarget.parentNode.querySelector(
-		'#context-menu'
-	);
+	const contextMenu = ev.currentTarget.parentNode.querySelector('#context-menu');
 	if (contextMenu) contextMenu.remove();
 	// Extract card data
 	const button = ev.currentTarget;
@@ -428,9 +388,7 @@ export async function rollDmg(ev) {
 		ev.preventDefault();
 		const message = game.messages.get(messageId);
 		if (!(message.owner || message.isAuthor)) {
-			ui.notifications.error(
-				'You do not own the permissions to make that roll!'
-			);
+			ui.notifications.error('You do not own the permissions to make that roll!');
 			return false;
 		}
 	}
@@ -446,8 +404,7 @@ export async function rollDmg(ev) {
 
 	// small helper to detect if versatile dmg was rolled
 	const dmgType = button.nextElementSibling.innerText;
-	if (dmgType === game.i18n.localize('DND5E.Versatile'))
-		div.classList.add('mess-versatile');
+	if (dmgType === game.i18n.localize('DND5E.Versatile')) div.classList.add('mess-versatile');
 
 	const span = div.appendChild(document.createElement('span'));
 	span.classList.add('mess-roll-container');
@@ -455,27 +412,38 @@ export async function rollDmg(ev) {
 	div.insertAdjacentHTML('beforeend', await r.getTooltip());
 	let customTooltip = '';
 	const terms = button.dataset.terms.split(/(?=[+-])/);
-	const dataTerms = formula
-		.split(/(?=[+-])/)
-		.filter((e) => e !== '+' && e !== '-'); // filter single + and -
+	const dataTerms = formula.replace(/\s/g, '').split(/(?=[+-])/);
 	// i really sh ould put this into a function............
+	// for (let i = 0; i < terms.length; i++) {
+	// 	const term = terms[i];
+	// 	const num = dataTerms[i].replace(/\s/g, '');
+
+	// 	customTooltip += `
+	// 		<div class="dice">
+	// 			<p class="part-formula">
+	// 				${num}
+	// 				<span class="part-total">${term >= 0 ? '+' + term : term}</span>
+	// 			</p>
+	// 		</div>
+	// 	`;
+	// }
+	console.log(button.dataset.terms, formula);
+	console.log(terms, dataTerms);
+
 	for (let i = 0; i < terms.length; i++) {
 		const term = terms[i];
-		const num = Number(dataTerms[i].replace(/\s/g, ''));
-
-		if (isNaN(num)) continue;
-		customTooltip += `<section class="tooltip-part">
+		const num = Number(dataTerms[i]);
+		if (!term.includes('@') || isNaN(num)) continue;
+		customTooltip += `
 			<div class="dice">
-				<p class="part-formula">
-					${term}
-					<span class="part-total">${num >= 0 ? '+' + num : num}</span>
-				</p>
+				<header class="part-header flexrow">
+          <span class='part-formula'>${term}</span>
+					<span class="part-total">${num}</span>
+				</header>
 			</div>
-		</section>`;
+		`;
 	}
-	div
-		.querySelector('.dice-tooltip')
-		.insertAdjacentHTML('beforeend', customTooltip);
+	div.querySelector('.dice-tooltip').insertAdjacentHTML('beforeend', customTooltip);
 	const tooltip = div.childNodes[1];
 	tooltip.classList.add('hidden');
 
@@ -494,8 +462,7 @@ async function updateMessage(messageId, roll, card, target, div) {
 		let rollMode = game.settings.get('core', 'rollMode');
 		let whispers = null;
 		let blind = false;
-		if (['gmroll', 'blindroll'].includes(rollMode))
-			whispers = ChatMessage.getWhisperIDs('GM');
+		if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperIDs('GM');
 		if (rollMode === 'blindroll') blind = true;
 
 		card.querySelectorAll('button').forEach((e) => (e.disabled = true));
