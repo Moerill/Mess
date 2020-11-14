@@ -4,7 +4,7 @@
 	"description": "This module is a mix of QoL changes, enhancements for my game and stuff i play around with. For a complete feature list check the URL down below.",
 	"version": "0.12.3",
 	"minimumCoreVersion": "0.7.5",
-	"compatibleCoreVersion": "0.7.5",
+	"compatibleCoreVersion": "0.7.9",
 	"author": "Moerill",
 	"packs": [],
 	"esmodules": ["scripts/index.js"],
