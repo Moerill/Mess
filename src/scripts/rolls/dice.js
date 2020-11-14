@@ -68,13 +68,13 @@ export async function rollD20(data) {
 		},
 	};
 	let rollMode = game.settings.get('core', 'rollMode');
-	if (['gmroll', 'blindroll'].includes(rollMode)) chatData['whisper'] = ChatMessage.getWhisperIDs('GM');
+	if (['gmroll', 'blindroll'].includes(rollMode)) chatData['whisper'] = ChatMessage.getWhisperRecipients('GM');
 	if (rollMode === 'blindroll') chatData['blind'] = true;
 	const dsn = game.mess.diceSoNice;
 	if (dsn) {
 		let whispers = null;
 		let blind = false;
-		if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperIDs('GM');
+		if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperRecipients('GM');
 		if (rollMode === 'blindroll') blind = true;
 
 		await game.dice3d.showForRoll(r, game.user, true, whispers, blind);
@@ -462,7 +462,7 @@ async function updateMessage(messageId, roll, card, target, div) {
 		let rollMode = game.settings.get('core', 'rollMode');
 		let whispers = null;
 		let blind = false;
-		if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperIDs('GM');
+		if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperRecipients('GM');
 		if (rollMode === 'blindroll') blind = true;
 
 		card.querySelectorAll('button').forEach((e) => (e.disabled = true));

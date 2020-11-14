@@ -1,3 +1,7 @@
+# v0.12.3
+
+- *FIX* fixes error when throwing private/Gm rolls
+
 # v0.12.2
 
 - Some rolling bugfixes

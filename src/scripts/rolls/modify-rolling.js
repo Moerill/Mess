@@ -276,7 +276,7 @@ async function autoRoll(autoroll, template, rollMode) {
 
 	let whispers = null;
 	let blind = false;
-	if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperIDs('GM');
+	if (['gmroll', 'blindroll'].includes(rollMode)) whispers = ChatMessage.getWhisperRecipients('GM');
 	if (rollMode === 'blindroll') blind = true;
 
 	card.classList.add('message');
