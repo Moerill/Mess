@@ -1,3 +1,7 @@
+# v0.13
+
+- Removed the dice rolling features. I moved them (in an improved way) into my new module <a href="https://github.com/Moerill/fvtt-mars-5e">Mars 5e</a>
+
 # v0.12.3
 
 - *FIX* fixes error when throwing private/Gm rolls
