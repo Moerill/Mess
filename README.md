@@ -30,16 +30,6 @@ Settings allow to granularly dis-/enable features to your liking. *Important*: I
 		- [Drag and Drop animations for sorting lists](#drag-and-drop-animations-for-sorting-lists)
 			- [Some important information and known issues for this feature](#some-important-information-and-known-issues-for-this-feature)
 - [DnD5e specific features](#dnd5e-specific-features)
-	- [Rolling and targeting change](#rolling-and-targeting-change)
-		- [Custom attack and damage roll chat cards](#custom-attack-and-damage-roll-chat-cards)
-			- [Extended tooltip](#extended-tooltip)
-			- [GM only information](#gm-only-information)
-			- [Always show GM attack card to players, but rolls only on demand](#always-show-gm-attack-card-to-players-but-rolls-only-on-demand)
-			- [Custom flavor text](#custom-flavor-text)
-			- [reactive context menu for applying dmg](#reactive-context-menu-for-applying-dmg)
-		- [Autoroll and Advantage toggle](#autoroll-and-advantage-toggle)
-		- [*Dice So Nice* Support](#dice-so-nice-support)
-		- [Use items to add bonus damage to other items](#use-items-to-add-bonus-damage-to-other-items)
 	- [Ability template textures](#ability-template-textures)
 		- [Auto targeting with ability templates](#auto-targeting-with-ability-templates)
 	- [Actor Sheet Changes](#actor-sheet-changes)
@@ -133,61 +123,6 @@ Adds animations for Drag and Drop animations to make them more appealing to the 
 3) sorting to the end of a list/folder is kinda difficult at the moment. For sidebar directories dragging onto the folder itself puts it at the end. (Trying to fix this just introduced quite a few more issues and was not worth the effort. Also to my knowledge its the same for base FVTT dragging)
 
 # DnD5e specific features
-## Rolling and targeting change
-This is a big one and encompasses a variety of features.
-
-### Custom attack and damage roll chat cards
-![Attacking](img/attacking.gif)  
-(While this gif has not all the newest feature in, it does display the main features of the roll cards.)  
-Default DnD5e does need way to many clicks, just to do a single attack. There do exist other approaches to handle this, like BetterRolls, but i am not a fan of those. This feature streamlines the process of attacking or using an item/feature/spell (from now on summarized together as ability).  
-Each time you use an ability the default chat card gets created as well as an *attack card* for each target you selected (or just one if no target is selected or the ability is an AoE skill.). Example card:  
-![attack card example](img/attack-card-example.png)  
-Hovering over the target in the card does highlight it on the map (if visible) and double clicking it pans it into view.  
-If a crit is rolled the dmg formulas are automatically adjusted to respect it by using the double amount of dice.  
-#### Extended tooltip
-The dice tooltip (clicking on a result) now shows extended information. (Modifiers, proficiency bonus, ...)
-
-#### GM only information
-For all rolls  some extra information about the target will be shown:
-* Armor Class
-* Damage resistances
-* Damage immunities
-* Damage vulnerabilities
-
-#### Always show GM attack card to players, but rolls only on demand
-You can set to always ignore the roll mode set for the GM for attack cards only. This will always display basic information, like the attacker, chat flavor for the attack and the target (if existent). You then can decide to show your rolled attack or damage results to your players by clicking on the eye icon beside the section header. (Only the result will be shown to non GMs. Clicking on the result will not show extra information for players, like rolled dice, modifier, etc.)  
-This has the advantage of easier tracking the flow of battle, targets and damage received for player characters. Also the players then can easily apply the damage received using the context menu to their characters.
-
-#### Custom flavor text
-The flavor text (in the example ``The cat swipes at Badger lazily with a clawed paw.``) is the chat flavor text specified for the item. If you want to display the targets name in it, use ``[target.name]`` inside the flavor text.  
-*Rollable Tables as Flavor*: You can also specify to modify the flavor (partially) by adding a rollable table. You can do so similarly as you specify entity links everywhere else in FoundryVTT, by using ``@RollableTable[name]`` or ``@RollableTable[id]`` inside the chat flavor text. The module will automatically roll the table and replace the reference inside the flavor text. ``[target.name]`` will get replaced afterwards, so you can even use that inside your rollable tables.
-
-#### reactive context menu for applying dmg
-![Contextmenu](img/context-menu.png)  
-You can right click on a rolled dmg roll to select whether to apply dmg to the target of the chat card (or all selected tokens if the card has no target).  
-Alternatively you can right click on the *Damage* header to automatically apply the sum of all rolled damage die. (Same rule as above for target) Also if versatile damage was rolled you can choose whether to use the versatile or the non versatile damage as main damage source.
-
-### Autoroll and Advantage toggle
-![Roll toggles](img/roll-toggles.png)  
-The roll change also adds options to toggle between *(dis-)advantage* and *normal* rolls, by clicking on the D20 above the chats roll mode selector. Right click will cycle through in the opposite direction. This will get applied at the time you click on the *to hit* button, not beforehand!  
-This also adds a selection to choose if *to hit* or *damage* rolls should be rolled automatically on *attack card* creation.
-
-### *Dice So Nice* Support
-<img src="img/mess-so-nice.gif" width="1024"/>  
-Automatically rolls *Dice So Nice* dice, when rolling.   
-When autorolling it will always:
-1) roll to Hit
-2) all damage die together
-3) Display Attack card
-4) Repeat for next target
-   
-Of course it will also roll *Dice So Nice* dice for single rolls. Just click on the button and it will roll the dice. For each single die rolled it disables all other buttons on this attack card until the roll is completed and then updates the card.  
-
-*Important*: The dice will respect the current selected roll mode and not how the card was send!
-
-### Use items to add bonus damage to other items
-Adds a new field to actor owned items to specify the first damage field as bonus damage for other damage rolls. Activating this will automatically add the damage to the list of damage rolls for each attack card off an item that is not bonus damage itself.  
-There is an easy script macro command to toggle this for an item: ``game.mess.toggleItemBonusDamage('Item Name')``
 
 ## Ability template textures
 ![Auto Template](img/auto_template.gif)
