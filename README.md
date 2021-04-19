@@ -1,6 +1,10 @@
 # Mess - Moerills enhancing super-suit(e)
 <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/moerill/mess?style=flat-square"> <img alt="GitHub" src="https://img.shields.io/github/license/moerill/mess?style=flat-square"> <img alt="GitHub Releases" src="https://img.shields.io/github/downloads/moerill/mess/latest/total?style=flat-square">  [![PayPal](https://img.shields.io/badge/Donate-PayPal-blue?style=flat-square)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=FYZ294SP2JBGS&source=url)  
 
+> This module is deprecated and won't be developed or maintained anymore. (Maybe, just maybe i'll push an update to it to either remove the big features alltogether or push a small css fix. But no promises and don't expect anything here!) 
+> If you liked the rolling check out [Mars 5e](https://www.foundryvtt-hub.com/package/mars-5e/).
+> If you liked the animated templates, check out [Token Magic FX](https://www.foundryvtt-hub.com/package/tokenmagic/).
+
 This module is a mess!  
 Just kidding! This module does not serve a more specific purpose, like most of my other modules, but is more of a growing collection of stuff, that:
 * me or my player want for my game,
